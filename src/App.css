@@ -1,98 +1,88 @@
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f0f0f0;
+
+/* Общие сбросы */
+* {
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
+  box-sizing: border-box;
 }
 
-.App {
-  text-align: center;
-  position: relative;
+/* Стили для body */
+body {
+  background-color: #121212;
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
 }
 
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: 5px;
-  color: #333;
+/* Контейнер приложения */
+.app-container {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 1rem;
 }
 
-.deck {
-  display: grid;
-  grid-template-columns: repeat(3, 100px);
-  grid-gap: 10px;
-  justify-content: center;
-  margin-bottom: 20px;
+/* Заголовки */
+h1, h2, h3 {
+  margin-bottom: 1rem;
+  font-weight: 600;
 }
 
-.card {
-  width: 100px;
-  height: 100px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: transform 0.3s ease;
-  position: relative;
-  overflow: hidden;
+/* Кнопки */
+button {
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
-.card.flipped {
-  transform: rotateY(180deg);
+button:hover {
+  background-color: #008ecc;
+  transform: scale(1.02);
 }
 
-.card.show {
-  background-color: var(--card-color);
-}
-
-.info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  font-size: 1.2rem;
-}
-
-.game-over {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 2;
-}
-
-.game-over h2 {
-  margin: 0 0 10px 0;
-}
-
-.game-over button {
-  background-color: #ff6347;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.game-over button:hover {
-  background-color: #ff4500;
-}
-
-.overlay {
+/* Нижнее меню */
+.bottom-nav {
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1;
+  right: 0;
+  background-color: #1f1f1f;
+  border-top: 1px solid #333;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5rem 0;
+  z-index: 1000;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #aaa;
+  text-decoration: none;
+  font-size: 0.75rem;
+  transition: color 0.2s ease;
+}
+
+.nav-link.active {
+  color: #00aaff;
+}
+
+.nav-link:hover {
+  color: #00aaff;
+}
+
+
+
+
+
+/* Адаптив */
+@media (max-width: 600px) {
+  .app-container {
+      padding: 0.5rem;
+  }
+
+  .navbar {
+      flex-direction: column;
+      padding: 0.5rem;
+  }
 }
