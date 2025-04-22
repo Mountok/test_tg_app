@@ -41,12 +41,14 @@ button:hover {
 
 /* Нижнее меню */
 .bottom-nav {
+
   position: fixed;
   bottom: 10px;
   left: 10px;
   right: 10px;
   border-radius: 30px;
-  
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.20);
+
   background-color: #ffffff;
   display: flex;
   justify-content: space-around;

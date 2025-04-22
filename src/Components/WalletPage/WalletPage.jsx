@@ -30,7 +30,7 @@ export default function WalletPage() {
                 </div>
                 <div className="wallet-container_header_balance">
                     <div className="wallet-container_header_balance_top">
-                        <p><span>Balance -</span> Tx30drl4d..</p>
+                        <p><span>Wallet: </span> Tx30drl4d..</p>
                     </div>
                     <div className="wallet-container_header_balance_bottom">
                         <p>$17,200</p>
