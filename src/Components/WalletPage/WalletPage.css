@@ -1,40 +1,110 @@
-.wallet-container {
-    padding: 1.5rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #ffffff;
-    background-color: #121212;
-    min-height: calc(100vh - 60px); /* с учетом нижней навигации */
+.wallet-container_header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+    border-radius: 48px;
+    padding: 10px;
+}
+.wallet-container_header_top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.wallet-container_header_top_user {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.wallet-container_header_top_user_avatar{
+    background: linear-gradient(150deg, red 20%, blue);
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+
+}
+.wallet-container_header_top_user_name {
+    margin-left: 14px;
+
+    color: #000000;
+}
+.wallet-container_header_top_user_name p:nth-child(1) {
+    font-size: 19px;
+    font-weight: 600;
+
+}
+.wallet-container_header_top_user_name p:nth-child(2) {
+    font-size: 12px;
+    font-weight: 400;
+    color: hsla(0, 0%, 0%, 0.300);
+}
+.wallet-container_header_top_settings {
+    width: 70px;
+    height: 70px;
+    border: hsla(0, 0%, 0%, 0.1) solid 1px;
+    border-radius: 50%;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.wallet-container_header_top_settings svg {
+    color: #000000;
+
 }
 
-.wallet-title {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-bottom: 1.5rem;
+
+.wallet-container_header_balance{
+    margin: 35px 20px 0px 20px;
 }
 
-.wallet-button {
-    background-color: #007bff;
-    color: white;
-    padding: 0.75rem 1.5rem;
+.wallet-container_header_balance_top{
+
+}
+.wallet-container_header_balance_top p {
+    margin: 0;
+    color: #636363;
+    font-size: 14;
+    font-weight: 500;
+
+}
+.wallet-container_header_balance_top p > span{
+    color: #0000004D;
+}
+.wallet-container_header_balance_bottom {
+    color: #000000;
+    font-size: 50px;
+    font-weight: 700;
+    transform: translateY(-10px);
+}
+
+
+.wallet-container_header_buttons button{
+    height: 85px;
+    outline: none;
+    font-size: 20px;
+    padding: 15px 25px;
+}
+.wallet-container_header_button_send{
+    width: 110px;
+    border-radius: 60px;
     border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+    background-color: #E1FF01;
+    margin-right: 8px;
 }
-
-.wallet-button:hover {
-    background-color: #0056b3;
+.wallet-container_header_button_receive{
+    background-color: #F2F2F2;
+    border-radius: 60px;
+    border: none;
+    margin-right: 8px;
 }
-
-.wallet-info {
-    margin-top: 1.5rem;
-    background-color: #1f1f1f;
-    padding: 1rem;
-    border-radius: 10px;
-    line-height: 1.6;
+.wallet-container_header_button_qr {
+    width: 85px;
+    height: 85px;
+    border: none;
+    border-radius: 50%;
 }
-
-.wallet-info p {
-    margin: 0.5rem 0;
+.wallet-container_header_button_qr svg {
+    font-size: 30px;
 }

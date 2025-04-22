@@ -72,7 +72,7 @@ const QrScanner = () => {
 
   return (
       <div className="qr-wrapper">
-        <h2 className="qr-heading">🔍 Сканер QR СБП</h2>
+        <h2 className="qr-heading">Сканер QR СБП</h2>
 
         {!scanning && !result && (
             <button onClick={startScanner} className="qr-button">

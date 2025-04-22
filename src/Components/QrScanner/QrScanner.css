@@ -3,9 +3,7 @@
     padding-bottom: 4rem; /* чтобы не перекрывалось нижним меню */
     max-width: 480px;
     margin: 0 auto;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #fff;
-    background-color: #1e1e1e;
+    color: #000000;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
