@@ -12,13 +12,14 @@ const QrScanner = () => {
   const sendRequest = async (amount, from, to) => {
     console.log({ amount, from, to });
     try {
-      const response = await axios.post('https://sbpk-server.onrender.com/convert', {
+      const response = await axios.post('http://172.20.10.4:8880/api/wallet/convert', {
         amount,
         from,
         to,
       });
 
-      setResult(`Конвертированная сумма: ${response.data.message}`);
+      console.log(response)
+      setResult(`Конвертированная сумма: ${response.data.data.message}`);
     } catch (error) {
       console.error('Ошибка при отправке запроса:', error);
     }
