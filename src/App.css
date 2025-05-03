@@ -8,14 +8,24 @@
 
 /* Стили для body */
 body {
-  padding: 10px;
-  background-color: #f4f4f4;
+  padding: 0px;
+  background-color: rgb(11, 11, 11);
   color: #ffffff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   min-height: 100vh;
 }
-
+.background_shadow_drop{
+  z-index: -999;
+  position: absolute;
+  right: 0;
+  top: -100px;
+  width: 10px;
+  border-radius: 50%;
+  height: 10px;
+  background-color: rgb(236 229 67);
+  box-shadow: -60px 140px 200px 80px rgb(236 229 67);
+}
 /* Контейнер приложения */
 .app-container {
   max-width: 768px;
@@ -44,8 +54,8 @@ button:hover {
 
   position: fixed;
   bottom: 10px;
-  left: 10px;
-  right: 10px;
+  left: 30px;
+  right: 30px;
   border-radius: 30px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.20);
 
@@ -53,7 +63,7 @@ button:hover {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 1.5rem 0;
+  padding: 1.7rem 0;
   z-index: 1000;
 }
 
@@ -68,11 +78,11 @@ button:hover {
 }
 
 .nav-link.active {
-  color: #00aaff;
+  color: #000000;
 }
 
 .nav-link:hover {
-  color: #00aaff;
+  color: #000000;
 }
 
 

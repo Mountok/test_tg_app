@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@telegram-apps/sdk": "^3.7.1",
+    "@tma.js/sdk": "^2.7.0",
+    "@tma.js/sdk-react": "^2.2.8",
     "axios": "^1.8.4",
     "ethers": "^6.13.5",
     "html5-qrcode": "^2.3.8",

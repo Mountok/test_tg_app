@@ -2,10 +2,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #ffffff;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.20);
     border-radius: 48px;
-    padding: 10px;
+    padding: 20px;
 }
 .wallet-container_header_top {
     display: flex;
@@ -27,94 +25,134 @@
 .wallet-container_header_top_user_name {
     margin-left: 14px;
 
-    color: #000000;
+    color: #ffffff;
 }
-.wallet-container_header_top_user_name p:nth-child(1) {
-    font-size: 22px;
+.wallet-container_header_top_user_name p:nth-child(2) {
+    font-size: 24px;
     font-weight: 600;
 
 }
-.wallet-container_header_top_user_name p:nth-child(2) {
-    font-size: 14px;
+.wallet-container_header_top_user_name p:nth-child(1) {
+    font-size: 16px;
     font-weight: 400;
-    color: hsla(0, 0%, 0%, 0.300);
+    color: hsla(0, 0%, 100%, 0.3);
 }
 .wallet-container_header_top_settings {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
     border: hsla(0, 0%, 0%, 0.1) solid 1px;
-    border-radius: 50%;
-    font-size: 30px;
+    border-radius: 20px;
+    font-size: 25px;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: rgb(20, 20, 19);
 
 }
 .wallet-container_header_top_settings svg {
-    color: #000000;
+    color: #ffffff;
 
 }
 
 
 .wallet-container_header_balance{
-    margin: 35px 20px 0px 20px;
+    margin: 10px 0px 0px 15px;
 }
 
 .wallet-container_header_balance_top{
+    padding-bottom: 10px;
+    font-size: 20px;
 
 }
 .wallet-container_header_balance_top p {
     margin: 0;
-    color: #636363;
-    font-size: 14;
+    color: #ffffff;
     font-weight: 500;
+    display: flex;
+    align-items: center;
 
 }
 .wallet-container_header_balance_top p > span{
-    color: #0000004D;
+    color: #ffffff;
+}
+.wallet-container_header_balance_top_plus 
+{
+    width: 40px;
+    height: 40px;
+    margin-left: 10px;
+    border-radius: 15px;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(30, 30, 30);
+
 }
 .wallet-container_header_balance_bottom {
-    display: flex;
+    margin-bottom: 10px;
+    background-color:   rgb(236 229 67);
+    border-radius: 20px;
+    padding: 20px 20px 5px 20px;
+}
+.wallet-container_header_balance_bottom p:nth-child(1){
+    color: #000000a1;
+    font-size: 14px;
+    line-height: 10px;
+}
+.wallet-container_header_balance_bottom p:nth-child(2){
     color: #000000;
     font-size: 50px;
+    line-height: 60px;
     font-weight: 700;
-    transform: translateY(-10px);
 }
-
 .wallet-container_header_buttons{
     display: flex;
-    justify-content: space-between;
-
+    flex-direction: row;
+    justify-content: center;
 }
 .wallet-container_header_buttons button{
-    color: #000000;
-    height: 85px;
+    color: #ffffff;
+    width:45%;
     outline: none;
-    font-size: 20px;
+    font-size: 14px;
+    background-color: rgb(30 30 30);
+
     padding: 15px 25px;
+    border: none;
+    border-radius: 30px;
 }
 .wallet-container_header_button_send{
-    width: 130px;
-    border-radius: 60px;
-    border: none;
-    background-color: #E1FF01;
     margin-right: 8px;
 }
-.wallet-container_header_button_receive{
-    width: 130px;
-    background-color: rgba(242, 242, 242, 0.5);
-    border-radius: 60px;
-    border: none;
-    margin-right: 8px;
+.wallet-container_header_button_send svg {
+    font-size: 30px;
 }
-.wallet-container_header_button_qr {
-    background-color: rgba(242, 242, 242, 0.5);
 
-    width: 85px;
+.wallet-container_header_button_qr {
     height: 85px;
-    border: none;
-    border-radius: 50%;
 }
 .wallet-container_header_button_qr svg {
     font-size: 30px;
+}
+
+
+.wallet-container_history{
+    padding: 10px 20px 40px 20px;
+    display: flex;
+    flex-direction: column;
+}
+.wallet-container_history_title{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+}
+.wallet-container_history_title p:nth-child(2){
+    color: #FFF001;
+}
+.wallet-container_main_history{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
