@@ -1,101 +1,67 @@
 import { useRef, useState } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
-import axios from 'axios';
 import './QrScanner.css';
+import PaymentModal from '../PaymentModal/PaymentModal';
 
 const QrScanner = () => {
-  const [result, setResult] = useState('');
-  const [scanning, setScanning] = useState(false);
   const html5QrCodeRef = useRef(null);
+  const [scanning, setScanning] = useState(false);
+  const [result, setResult] = useState('');
   const qrRegionId = 'qr-reader';
-
-  const sendRequest = async (amount, from, to) => {
-    console.log({ amount, from, to });
-    try {
-      const response = await axios.post('https://platapay-back.onrender.com/api/wallet/convert', {
-        amount,
-        from,
-        to,
-      });
-
-      console.log(response)
-      setResult(`Конвертированная сумма: ${response.data.data.message}`);
-    } catch (error) {
-      console.error('Ошибка при отправке запроса:', error);
-    }
-  };
-
-  const parseQRCodeData = (qrData) => {
-    try {
-      const urlParams = new URLSearchParams(new URL(qrData).search);
-      const amount = parseFloat(urlParams.get('sum')) / 100;
-      const from = urlParams.get('cur');
-      const to = 'USDT';
-      sendRequest(amount, from, to);
-    } catch (error) {
-      console.error('Ошибка при парсинге QR данных:', error);
-    }
-  };
-
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState({ amountRub: 0, amountUsdt: 0 });
   const startScanner = async () => {
     setScanning(true);
-
-    const config = {
-      fps: 10,
-      qrbox: { width: 250, height: 250 },
-    };
-
     const html5QrCode = new Html5Qrcode(qrRegionId);
     html5QrCodeRef.current = html5QrCode;
 
     try {
       await html5QrCode.start(
-          { facingMode: 'environment' },
-          config,
-          (decodedText) => {
-            setResult(decodedText);
-            html5QrCode.stop().then(() => {
-              html5QrCode.clear();
-              setScanning(false);
-            });
-            parseQRCodeData(decodedText);
-          },
-          (error) => {
-            console.log(error)
-          }
+        { facingMode: 'environment' },
+        { fps: 10 ,qrbox: {width: 250, height: 250}},
+        (decodedText) => {
+          
+          setResult(decodedText);
+          console.log(decodedText)
+          setModalData({ amountRub: 127, amountUsdt: 1.5471 }); // сюда передаёшь реальные данные
+      setShowModal(true);
+          html5QrCode.stop().then(() => html5QrCode.clear());
+        }
       );
+      
     } catch (err) {
-      console.error('Ошибка при доступе к камере:', err);
+      console.error('Ошибка запуска камеры:', err);
       setScanning(false);
     }
   };
 
   return (
-      <div className="qr-wrapper">
-        <h2 className="qr-heading">Сканер QR СБП</h2>
+    <div className="qr-container">
+      <PaymentModal
+        visible={showModal}
+        data={modalData}
+        onClose={() => setShowModal(false)}
+      />
+      <div id="qr-reader" className="qr-camera-wrapper" />
 
-        {!scanning && !result && (
-            <button onClick={startScanner} className="qr-button">
-              Начать сканирование
-            </button>
-        )}
+      <div className="qr-overlay">
+        <p className="qr-hint">Можно распознать только QR код с платёжных терминалов</p>
 
-        <div id={qrRegionId} className="qr-scanner"></div>
-
-        {result && (
-            <div className="qr-result">
-              <strong>📋 Результат:</strong>
-              <br />
-              <span>{result} USDT</span>
-            </div>
-        )}
-
-        {!result && scanning && (
-            <div className="qr-info-text">
-              Наведите камеру на QR код, чтобы начать сканирование.
-            </div>
-        )}
+        <div className="qr-highlight-box">
+          <div className="qr-corner top-left" />
+          <div className="qr-corner top-right" />
+          <div className="qr-corner bottom-left" />
+          <div className="qr-corner bottom-right" />
+          <div className="qr-scan-line" />
+        </div>
       </div>
+
+      {!scanning && (
+        <button className="qr-start-button" onClick={startScanner}>
+          Включить камеру
+        </button>
+      )}
+    </div>
   );
 };
 

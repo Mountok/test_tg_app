@@ -1,0 +1,146 @@
+.modal-backdrop {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-container {
+    width: 90%;
+    max-width: 400px;
+    background: #121212;
+    border-radius: 24px;
+    padding: 1.5rem;
+    color: white;
+    position: relative;
+    font-family: sans-serif;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .modal-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  
+  .logo-icon {
+    background: yellow;
+    color: black;
+    font-weight: bold;
+    border-radius: 50%;
+    padding: 0.3rem 0.6rem;
+  }
+  
+  .logo-title {
+    font-weight: 600;
+  }
+  
+  .logo-subtitle {
+    font-size: 0.8rem;
+    color: #aaa;
+  }
+  
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .modal-box {
+    background: #1d1d1d;
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .modal-box.light {
+    background: #2d2d2d;
+  }
+  
+  .modal-label {
+    font-size: 0.9rem;
+    color: #ccc;
+  }
+  
+  .modal-value {
+    font-size: 1.3rem;
+    margin-top: 0.5rem;
+  }
+  
+  .modal-subtext {
+    margin-top: 0.6rem;
+    font-size: 0.8rem;
+    color: #777;
+  }
+  
+  .modal-rate {
+    margin-top: 0.2rem;
+    font-weight: 500;
+  }
+  
+  .modal-token {
+    display: flex;
+    gap: 0.7rem;
+    align-items: center;
+  }
+  
+  .token-icon {
+    background: #26a17b;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 36px;
+    font-weight: bold;
+  }
+  
+  .token-name {
+    font-weight: 500;
+  }
+  
+  .token-balance {
+    font-size: 0.85rem;
+    color: #aaa;
+  }
+  
+  .modal-summary {
+    display: flex;
+    justify-content: space-between;
+    margin: 1.2rem 0;
+  }
+  
+  .summary-label {
+    font-weight: 500;
+  }
+  
+  .summary-subtext {
+    font-size: 0.8rem;
+    color: #888;
+  }
+  
+  .summary-amount {
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+  
+  .modal-pay {
+    width: 100%;
+    background: #ffe200;
+    color: black;
+    border: none;
+    padding: 1rem;
+    border-radius: 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
