@@ -1,6 +1,6 @@
 import './PaymentModal.css';
 
-const PaymentModal = ({ visible, data, onClose }) => {
+const PaymentModal = ({ result, visible, data, onClose }) => {
   if (!visible) return null;
 
   const { amountRub, amountUsdt } = data;
@@ -22,7 +22,7 @@ const PaymentModal = ({ visible, data, onClose }) => {
         <div className="modal-box dark">
           <div className="modal-label">Сумма</div>
           <div className="modal-value">{amountRub} RUB</div>
-          <div className="modal-subtext">Курс обмена</div>
+          <div className="modal-subtext">Курс обмена {result}</div>
           <div className="modal-rate">USDT → RUB</div>
         </div>
 

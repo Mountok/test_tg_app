@@ -38,6 +38,7 @@ const QrScanner = () => {
   return (
     <div className="qr-container">
       <PaymentModal
+        result={result}
         visible={showModal}
         data={modalData}
         onClose={() => setShowModal(false)}
