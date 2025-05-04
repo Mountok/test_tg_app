@@ -5,28 +5,28 @@ import App from './App.jsx'
 
 
 
-import { init, miniApp } from '@telegram-apps/sdk';
+// import { init, miniApp } from '@telegram-apps/sdk';
 
-const initializeTelegramSDK = async () => {
-  try {
-    await init();
-
-
-    if (miniApp.ready.isAvailable()) {
-      await miniApp.ready();
-      console.log('Mini App готово');
-      miniApp.setHeaderColor('#fcb69f');
-
-    }
+// const initializeTelegramSDK = async () => {
+//   try {
+//     await init();
 
 
-  } catch (error) {
-    console.error('Ошибка инициализации:', error);
-  }
-};
+//     if (miniApp.ready.isAvailable()) {
+//       await miniApp.ready();
+//       console.log('Mini App готово');
+//       miniApp.setHeaderColor('#fcb69f');
+
+//     }
 
 
-initializeTelegramSDK();
+//   } catch (error) {
+//     console.error('Ошибка инициализации:', error);
+//   }
+// };
+
+
+// initializeTelegramSDK();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

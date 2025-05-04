@@ -3,9 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import QrScanner from './Components/QrScanner/QrScanner';
 import './App.css';
 import WalletPage from "./Components/WalletPage/WalletPage.jsx";
-import { FaQrcode } from 'react-icons/fa';
-import { BsQrCodeScan } from "react-icons/bs";
-import { IoSettingsOutline } from "react-icons/io5";
 import {Login, Me} from "./utils/auth.js";
 import { HiCreditCard } from "react-icons/hi2";
 import { TbTransfer } from "react-icons/tb";
