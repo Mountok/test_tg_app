@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 import './QrScanner.css';
 import PaymentModal from '../PaymentModal/PaymentModal';
+import { ConvertRUBToUSDT } from '../../utils/convert';
 
 const QrScanner = () => {
   const html5QrCodeRef = useRef(null);
@@ -23,8 +24,16 @@ const QrScanner = () => {
           
           setResult(decodedText);
           console.log(decodedText)
-          setModalData({ amountRub: 127, amountUsdt: 1.5471 }); // сюда передаёшь реальные данные
-      setShowModal(true);
+
+          ConvertRUBToUSDT(decodedText).then(resp => {
+            setModalData({ amountRub: resp.amountRub, amountUsdt: resp.amountUsdt }); // сюда передаёшь реальные данные
+            setShowModal(true);
+            
+          }).catch(err => {
+            setResult(err)
+            setModalData({ amountRub: 999, amountUsdt: 1.5471 }); // сюда передаёшь реальные данные
+          })
+          
           html5QrCode.stop().then(() => html5QrCode.clear());
         }
       );
