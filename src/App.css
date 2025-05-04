@@ -39,15 +39,8 @@ h1, h2, h3 {
   font-weight: 600;
 }
 
-/* Кнопки */
-button {
-  transition: background-color 0.2s ease, transform 0.1s ease;
-}
 
-button:hover {
-  background-color: #008ecc;
-  transform: scale(1.02);
-}
+
 
 /* Нижнее меню */
 .bottom-nav {
