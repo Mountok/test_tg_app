@@ -38,8 +38,12 @@ export default function WalletPage() {
                     setTelegramId(id);
                     setUsername(name);
 
+                    alert(name)
+
                     console.log("Telegram user loaded:", id, name);
                 } else {
+                    alert("Данные пользователя Telegram не найдены")
+
                     console.warn("Данные пользователя Telegram не найдены");
                 }
 
