@@ -30,6 +30,9 @@ const initializeTelegramSDK = async () => {
 
       
       console.log('Пользователь:', telegramId, nickname);
+      alert(JSON.stringify('Пользователь:', telegramId, nickname));
+
+      
     } else {
       console.warn('Пользовательские данные не доступны');
     }
