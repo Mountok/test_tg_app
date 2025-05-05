@@ -22,6 +22,8 @@ export default function WalletPage() {
 
     useEffect(() => {
         const initializeTelegram = async () => {
+            alert("initData:", window.Telegram?.WebApp?.initData);
+            alert("initDataUnsafe:", window.Telegram?.WebApp?.initDataUnsafe);
           try {
             await init();
       
