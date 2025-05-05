@@ -9,8 +9,6 @@ import { GoPlus } from "react-icons/go";
 import { LuDownload } from "react-icons/lu";
 import TransferItem from "../TransferItem/TransferItem.jsx";
 
-// 🧩 Добавляем Telegram SDK
-import { init, miniApp } from "@telegram-apps/sdk";
 
 export default function WalletPage() {
     const [username, setUsername] = useState("Islam");
@@ -21,40 +19,23 @@ export default function WalletPage() {
     const [idBalanceCreated, setIsBalanceCreated] = useState(false);
 
     useEffect(() => {
-        const initializeTelegram = async () => {
-          try {
-            await init();
+        const tg = window.Telegram?.WebApp;
       
-            const initData = miniApp.initData;
-            const initDataUnsafe = miniApp.initDataUnsafe;
+        alert("initData: " + tg?.initData);
+        alert("initDataUnsafe: " + JSON.stringify(tg?.initDataUnsafe, null, 2));
       
-            alert("initData: " + initData);
-            alert("initDataUnsafe: " + JSON.stringify(initDataUnsafe, null, 2));
+        const user = tg?.initDataUnsafe?.user;
       
-            const user = initDataUnsafe?.user;
+        if (!user) {
+          alert("Telegram user not found");
+          return;
+        }
       
-            if (!user) {
-              alert("Данные пользователя Telegram не найдены");
-              return;
-            }
+        const id = user.id;
+        const name = user.username || user.first_name;
       
-            const id = user.id;
-            const name = user.username || user.first_name || "Неизвестный";
-      
-            alert("User ID: " + id + "\nИмя: " + name);
-      
-            localStorage.setItem("telegramId", id.toString());
-            localStorage.setItem("nickname", name);
-      
-            setTelegramId(id);
-            setUsername(name);
-      
-          } catch (error) {
-            alert("Ошибка инициализации Telegram SDK:\n" + error.message);
-          }
-        };
-      
-        initializeTelegram();
+        setTelegramId(id);
+        setUsername(name);
       }, []);
 
     useEffect(() => {
