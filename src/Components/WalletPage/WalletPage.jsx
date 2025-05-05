@@ -51,7 +51,7 @@ export default function WalletPage() {
                        
                         <div className="wallet-container_header_top_user_name">
                             <p>Дорый день,</p>
-                            <p>{username}</p>
+                            <p>{localStorage.getItem("nickname")} {localStorage.getItem("telegramId")}</p>
                         </div>
                     </div> 
                     <div className="wallet-container_header_top_settings">
