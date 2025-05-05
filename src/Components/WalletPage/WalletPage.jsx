@@ -22,29 +22,35 @@ export default function WalletPage() {
 
     useEffect(() => {
         const initializeTelegram = async () => {
-            alert("initData:", window.Telegram?.WebApp?.initData);
-            alert("initDataUnsafe:", window.Telegram?.WebApp?.initDataUnsafe);
           try {
             await init();
       
-            if (!window.Telegram.WebApp?.initDataUnsafe?.user) {
-              alert("Открой через Telegram, иначе данные не получим");
-              console.warn("Нет user-данных от Telegram");
+            const initData = miniApp.initData;
+            const initDataUnsafe = miniApp.initDataUnsafe;
+      
+            alert("initData: " + initData);
+            alert("initDataUnsafe: " + JSON.stringify(initDataUnsafe, null, 2));
+      
+            const user = initDataUnsafe?.user;
+      
+            if (!user) {
+              alert("Данные пользователя Telegram не найдены");
               return;
             }
       
-            const user = window.Telegram.WebApp.initDataUnsafe.user;
             const id = user.id;
-            const name = user.username || user.first_name || "Без имени";
+            const name = user.username || user.first_name || "Неизвестный";
+      
+            alert("User ID: " + id + "\nИмя: " + name);
       
             localStorage.setItem("telegramId", id.toString());
             localStorage.setItem("nickname", name);
       
             setTelegramId(id);
             setUsername(name);
-          } catch (e) {
-            alert("Ошибка инициализации Telegram SDK:",JSON.stringify(e));
-            console.error("Ошибка инициализации Telegram SDK:", e);
+      
+          } catch (error) {
+            alert("Ошибка инициализации Telegram SDK:\n" + error.message);
           }
         };
       
