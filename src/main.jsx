@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.jsx';
 
-import { init, miniApp } from '@telegram-apps/sdk';
+import { init, miniApp, retrieveLaunchParams } from '@telegram-apps/sdk';
 
 const initializeTelegramSDK = async () => {
   try {
@@ -17,24 +17,22 @@ const initializeTelegramSDK = async () => {
       miniApp.setHeaderColor('#fcb69f');
     }
 
-    // Получаем данные пользователя
-    const user = miniApp.initDataUnsafe.user;
+    // Получаем инициализационные данные
+    const { initData } = retrieveLaunchParams();
 
-    if (user) {
-      const telegramId = user.id;
-      const nickname = user.username || user.first_name;
+    if (initData && initData.user) {
+      const telegramId = initData.user.id;
+      const nickname = initData.user.username || initData.user.firstName;
 
       // Сохраняем в localStorage
       localStorage.setItem('telegramId', telegramId.toString());
       localStorage.setItem('nickname', nickname);
 
-      alert('Пользователь:', telegramId, nickname)
-
+      
       console.log('Пользователь:', telegramId, nickname);
     } else {
       console.warn('Пользовательские данные не доступны');
     }
-
   } catch (error) {
     console.error('Ошибка инициализации:', error);
   }
@@ -44,6 +42,6 @@ initializeTelegramSDK();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App  />
+    <App />
   </StrictMode>,
 );
