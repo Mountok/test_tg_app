@@ -21,39 +21,33 @@ export default function WalletPage() {
     const [idBalanceCreated, setIsBalanceCreated] = useState(false);
 
     useEffect(() => {
-        // Инициализация Telegram SDK
         const initializeTelegram = async () => {
-            try {
-                await init();
-
-                const user = miniApp.initDataUnsafe?.user;
-
-                if (user) {
-                    const id = user.id;
-                    const name = user.username || user.first_name || "Неизвестный";
-
-                    localStorage.setItem("telegramId", id.toString());
-                    localStorage.setItem("nickname", name);
-
-                    setTelegramId(id);
-                    setUsername(name);
-
-                    alert(name)
-
-                    console.log("Telegram user loaded:", id, name);
-                } else {
-                    alert("Данные пользователя Telegram не найдены")
-
-                    console.warn("Данные пользователя Telegram не найдены");
-                }
-
-            } catch (error) {
-                console.error("Ошибка инициализации Telegram:", error);
+          try {
+            await init();
+      
+            if (!window.Telegram.WebApp?.initDataUnsafe?.user) {
+              alert("Открой через Telegram, иначе данные не получим");
+              console.warn("Нет user-данных от Telegram");
+              return;
             }
+      
+            const user = window.Telegram.WebApp.initDataUnsafe.user;
+            const id = user.id;
+            const name = user.username || user.first_name || "Без имени";
+      
+            localStorage.setItem("telegramId", id.toString());
+            localStorage.setItem("nickname", name);
+      
+            setTelegramId(id);
+            setUsername(name);
+          } catch (e) {
+            alert("Ошибка инициализации Telegram SDK:",JSON.stringify(e));
+            console.error("Ошибка инициализации Telegram SDK:", e);
+          }
         };
-
+      
         initializeTelegram();
-    }, []);
+      }, []);
 
     useEffect(() => {
         GetBalance().then(res => {
