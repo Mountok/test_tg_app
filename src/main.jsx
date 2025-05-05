@@ -16,26 +16,6 @@ const initializeTelegramSDK = async () => {
       // Устанавливаем цвет заголовка
       miniApp.setHeaderColor('#fcb69f');
     }
-
-    // Получаем инициализационные данные
-    const { initData } = retrieveLaunchParams();
-
-    if (initData && initData.user) {
-      const telegramId = initData.user.id;
-      const nickname = initData.user.username || initData.user.firstName;
-
-      // Сохраняем в localStorage
-      localStorage.setItem('telegramId', telegramId.toString());
-      localStorage.setItem('nickname', nickname);
-
-      
-      console.log('Пользователь:', telegramId, nickname);
-      alert(JSON.stringify('Пользователь:', telegramId, nickname));
-
-      
-    } else {
-      console.warn('Пользовательские данные не доступны');
-    }
   } catch (error) {
     console.error('Ошибка инициализации:', error);
   }
