@@ -10,33 +10,31 @@ import { LuDownload } from "react-icons/lu";
 import TransferItem from "../TransferItem/TransferItem.jsx";
 
 
-export default function WalletPage() {
-    const [username, setUsername] = useState("Islam");
-    const [telegramId, setTelegramId] = useState(null);
+export default function WalletPage({username}) {
     const navigateTo = useNavigate();
     const [address, setAddress] = useState();
     const [balance, setBalance] = useState();
     const [idBalanceCreated, setIsBalanceCreated] = useState(false);
 
-    useEffect(() => {
-        const tg = window.Telegram?.WebApp;
+    // useEffect(() => {
+    //     const tg = window.Telegram?.WebApp;
       
-        alert("initData: " + tg?.initData);
-        alert("initDataUnsafe: " + JSON.stringify(tg?.initDataUnsafe, null, 2));
+    //     alert("initData: " + tg?.initData);
+    //     alert("initDataUnsafe: " + JSON.stringify(tg?.initDataUnsafe, null, 2));
       
-        const user = tg?.initDataUnsafe?.user;
+    //     const user = tg?.initDataUnsafe?.user;
       
-        if (!user) {
-          alert("Telegram user not found");
-          return;
-        }
+    //     if (!user) {
+    //       alert("Telegram user not found");
+    //       return;
+    //     }
       
-        const id = user.id;
-        const name = user.username || user.first_name;
+    //     const id = user.id;
+    //     const name = user.username || user.first_name;
       
-        setTelegramId(id);
-        setUsername(name);
-      }, []);
+    //     setTelegramId(id);
+    //     setUsername(name);
+    //   }, []);
 
     useEffect(() => {
         GetBalance().then(res => {
@@ -68,7 +66,7 @@ export default function WalletPage() {
                     <div className="wallet-container_header_top_user">
                         <div className="wallet-container_header_top_user_name">
                             <p>Добрый день,</p>
-                            <p>{username} {telegramId}</p>
+                            <p>{username}</p>
                         </div>
                     </div>
                     <div className="wallet-container_header_top_settings">
