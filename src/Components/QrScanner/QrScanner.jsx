@@ -31,6 +31,7 @@ const QrScanner = () => {
             
           }).catch(err => {
             setResult(err)
+            
             setModalData({ amountRub: 999, amountUsdt: 1.5471 }); // сюда передаёшь реальные данные
           })
           

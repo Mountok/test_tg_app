@@ -2,19 +2,17 @@ import axios from "axios";
 
 
 export const Login = async (telegramId,username,firstname,lastname) => {
-    var {data} = await axios.post("http://localhost:8880/auth/login", {
+    const jsonBody = {
         telegram_id: telegramId,
         username: username,
-        first_name: firstname,
-        last_name: lastname,
-    }).then(res => {
-        console.log(res)
-    }).catch(err => {
-        console.log(err)
-    })
+        first_name: firstname == "" ? " " : firstname,
+        last_name: lastname == "" ? " " : lastname,
+    }
+    alert(JSON.stringify(jsonBody))
+    var {data} = await axios.post("https://plataplay.duckdns.org/auth/login",jsonBody)
     return data
 }
 export const Me = async (telegramId) => {
-    var {data} = await axios.get(`http://localhost:8880/auth/me?telegram_id=${telegramId}`)
+    var {data} = await axios.get(`https://plataplay.duckdns.org/auth/me?telegram_id=${telegramId}`)
     return data
 }

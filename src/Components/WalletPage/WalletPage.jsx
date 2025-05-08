@@ -16,25 +16,6 @@ export default function WalletPage({username}) {
     const [balance, setBalance] = useState();
     const [idBalanceCreated, setIsBalanceCreated] = useState(false);
 
-    // useEffect(() => {
-    //     const tg = window.Telegram?.WebApp;
-      
-    //     alert("initData: " + tg?.initData);
-    //     alert("initDataUnsafe: " + JSON.stringify(tg?.initDataUnsafe, null, 2));
-      
-    //     const user = tg?.initDataUnsafe?.user;
-      
-    //     if (!user) {
-    //       alert("Telegram user not found");
-    //       return;
-    //     }
-      
-    //     const id = user.id;
-    //     const name = user.username || user.first_name;
-      
-    //     setTelegramId(id);
-    //     setUsername(name);
-    //   }, []);
 
     useEffect(() => {
         GetBalance().then(res => {

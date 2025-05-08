@@ -9,10 +9,21 @@ import { TbTransfer } from "react-icons/tb";
 import { LuHistory } from "react-icons/lu";
 import { TbSettings2 } from "react-icons/tb";
 
+
+// {
+//     "id": 5038590531,
+//     "first_name": "Teneres",
+//     "last_name": "",
+//     "username": "fsociality",
+//     "language_code":"ru", 
+//     "is_premium": true,
+//     "allows_write_to_pm": true,
+//     "photo_url" : "https://t.me/i/userpic/320/ERfguPp5YC6yy9N801pk_h_sWtwxl776jEqZ3Rm-fVWFx29G4q6wOLDQ8nxM7RIr.svg"
+// }
+
 function App() {
 
     const [userName, SetUserName] = useState()
-
     useEffect(() => {
         const tg = window.Telegram?.WebApp;
 
@@ -22,41 +33,63 @@ function App() {
     }, []);
 
     useEffect(() => {
-        const tg = window.Telegram?.WebApp;
-
-        // alert("initData: " + tg?.initData);
-        // alert("initDataUnsafe: " + JSON.stringify(tg?.initDataUnsafe, null, 2));
-
-        const user = tg?.initDataUnsafe?.user;
+        const tg = window.Telegram.WebApp;
+        const user = tg.initDataUnsafe.user;
 
         if (!user) {
             alert("Telegram user not found");
-            return;
+            // return;
         }
 
-        const telegramId = user.id;
-        const firstname = user.first_name;
-        const lastname = user.last_name;
-        const username = user.username;
+
+        // const userObj = JSON.parse(JSON.stringify(user))
+        const userObj = {"telegram_id":5038590531,"username":"fsociality","first_name":"Teneres","last_name":" "}
+        const firstname = userObj["first_name"];
+        const lastname = userObj["last_name"];
+        const telegramId = userObj["id"];
+        const username = userObj["username"];
+
 
         SetUserName(firstname + lastname)
 
-        alert("telegramId - ", telegramId)
-        alert("firstname - ", firstname)
-        alert("lastname - ", lastname)
-        alert("username - ", username)
-
-        Me(telegramId).then((res) => {
+        var isLogin = false;
+        //  Проверка авторизации
+        Me(user.id).then((res) => {
             console.log(res);
+            isLogin = true
+
         }).catch((err) => {
             if (err.status === 401) {
                 console.log("Unauthorization ", err);
-                Login(telegramId, username, firstname, lastname).then((res) => {
-                    console.log(res);
-                })
+                isLogin = false
             }
+            tg.showAlert("err  /me - ", JSON.stringify(err), err.status)
             console.log(err);
         })
+
+        if (!isLogin) {
+            //  Авторизация
+            Login(telegramId, username, firstname, lastname).then((res) => {
+                tg.showAlert("resp  /login - ", JSON.stringify(res))
+                console.log("resp  /login - ", JSON.stringify(res))
+                console.log(res);
+            })
+            //  Создание кошелька
+            tg.showAlert("Создание кошелька")
+
+            CreateWallet(telegramId).then((res) => {
+                tg.showAlert("resp  /create - ", JSON.stringify(res))
+                console.log("resp  /create - ", JSON.stringify(res))
+                console.log(res);
+            }).catch((err) => {
+                tg.showAlert("err  /create - ", JSON.stringify(err), err.status)
+                console.log("err  /create - ", JSON.stringify(err), err.status)
+                console.log(err);
+            })
+        } else {
+            alert("Добро пожаловать")
+        }
+       
     }, []);
     return (
         <Router>

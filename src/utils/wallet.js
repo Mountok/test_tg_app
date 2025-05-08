@@ -1,6 +1,5 @@
 import axios from "axios";
 
-var telegramId = 123456780;
 
 export const GetBalance = async () => {
     var {data} = await axios.get("http://localhost:8880/api/wallet/balance", {
@@ -12,7 +11,7 @@ export const GetBalance = async () => {
 }
 
 export const CreateWallet = async () => {
-    var data = await axios.post("http://localhost:8880/api/wallet/create", {}, {
+    var data = await axios.post("https://plataplay.duckdns.org/api/wallet/create", {}, {
         headers: {
             "X-Telegram-ID": telegramId,
         }
