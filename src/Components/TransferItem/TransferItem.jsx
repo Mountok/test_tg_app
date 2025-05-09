@@ -7,11 +7,11 @@ const TransferItem = ({date, amount}) => {
             <img src="./public/Vector.svg" alt="#" />
         </div>
         <div className="wallet-history_transfer_title">
-            <p>Оплата в магазине</p>
+            <p>Тут будет история операций</p>
             <p>{date}</p>
         </div>
         <div className="wallet-history_transfer_amount">
-            <p>+ <span>${amount}</span></p>
+            <p>- <span>${amount}</span></p>
             <p>Покупка</p>
         </div>
     </div>

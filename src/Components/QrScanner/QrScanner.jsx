@@ -9,7 +9,7 @@ const QrScanner = () => {
   const [scanning, setScanning] = useState(false);
   const [result, setResult] = useState('none');
   const qrRegionId = 'qr-reader';
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({ amountRub: 0, amountUsdt: 0 });
   const startScanner = async () => {
     setScanning(true);
@@ -73,9 +73,7 @@ const QrScanner = () => {
         </button>
       )}
 
-      <div className="result">
-        {result}
-      </div>
+     
     </div>
   );
 };

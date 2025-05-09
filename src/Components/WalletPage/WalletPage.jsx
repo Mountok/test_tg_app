@@ -4,41 +4,74 @@ import "./WalletPage.css";
 import { IoNotifications } from "react-icons/io5";
 import { BsQrCodeScan } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { CreateWallet, GetBalance } from "../../utils/wallet.js";
+import { CreateWallet, GetBalance, GetWallet } from "../../utils/wallet.js";
 import { GoPlus } from "react-icons/go";
 import { LuDownload } from "react-icons/lu";
 import TransferItem from "../TransferItem/TransferItem.jsx";
 
 
-export default function WalletPage({username}) {
+export default function WalletPage({ username, telegramID }) {
     const navigateTo = useNavigate();
+    const [tgID, SetTgID] = useState(telegramID)
     const [address, setAddress] = useState();
     const [balance, setBalance] = useState();
+    const [usdtBalance, setUSDTBalance] = useState();
     const [idBalanceCreated, setIsBalanceCreated] = useState(false);
+    const [privatKeyPlatapay, setPrivatKeyPlatapay] = useState("");
 
-
+    const [wallet, SetWallet] = useState({})
     useEffect(() => {
-        GetBalance().then(res => {
-            if (res.balances == null) {
-                console.log("Кошелек не создан");
-                setIsBalanceCreated(false);
-            } else {
-                console.log("Кошелек создан");
-                setIsBalanceCreated(true);
-                setAddress(localStorage.getItem("address_platapay"));
-                setBalance(res.balances);
-            }
-        }).catch(err => console.log(err));
-    }, []);
+        // Ждём, пока у вас появятся оба ID
+        if (!tgID || !telegramID) return;
 
-    const handleBalanceCreate = () => {
-        CreateWallet().then(res => {
+        const loadWalletThenBalance = async () => {
+            try {
+                // 1) Сначала грузим сам кошелёк
+                const walletRes = await GetWallet(tgID);
+                SetWallet(walletRes.data);
+                setIsBalanceCreated(true);
+
+                // 2) После успешного GetWallet — грузим баланс
+                const balanceRes = await GetBalance(telegramID);
+                const bal = balanceRes.wallet_balance;
+                const usdt = balanceRes.ton;
+
+                alert("bal = ", JSON.stringify(bal))
+                alert("usdt = ", JSON.stringify(usdt))
+
+                if (bal != null) {
+                    setBalance(bal);
+                    setUSDTBalance(usdt)
+                    // адрес обычно хранится в localStorage после создания кошелька
+                    setAddress(localStorage.getItem('address_platapay'));
+                } else {
+                    // если баланса нет — считается, что кошелька нет
+                    setIsBalanceCreated(false);
+                }
+            } catch (err) {
+                console.error('Ошибка при загрузке кошелька или баланса:', err);
+                alert('Ошибка при загрузке кошелька или баланса:', JSON.stringify(err))
+                // здесь можно уведомить пользователя через alert или стейт
+            }
+        };
+
+        loadWalletThenBalance();
+    }, [tgID, telegramID]);
+
+
+
+    const handleCreateWallet = async (e, telegramID) => {
+        e.preventDefault()
+        CreateWallet(telegramID).then(res => {
             console.log(res.data);
-            localStorage.setItem("address_platapay", res.data.address);
-            localStorage.setItem("privat_key_platapay", res.data.private_key);
+            setAddress(res.data.address);
+            setPrivatKeyPlatapay(res.data.private_key);
+            setIsBalanceCreated(true)
             window.location.reload();
-        }).catch(err => console.log(err));
-    };
+        }
+        ).catch(err => console.log(err));
+
+    }
 
     return (
         <div className="wallet-container_main_title">
@@ -58,10 +91,10 @@ export default function WalletPage({username}) {
                 <div className="wallet-container_header_balance">
                     <div className="wallet-container_header_balance_top">
                         {idBalanceCreated ?
-                            <p><span>Мой кошелек {address} </span></p>
+                            <p><span>Мой кошелек</span> <sub className="wallet-container_header_balance_top_address"> {wallet.address} </sub></p>
                             :
                             <p><span>Создать кошелек: </span>
-                                <div className="wallet-container_header_balance_top_plus" onClick={handleBalanceCreate}>
+                                <div className="wallet-container_header_balance_top_plus" onClick={(e) => { handleCreateWallet(e, telegramID) }}>
                                     <GoPlus />
                                 </div>
                             </p>
@@ -69,7 +102,7 @@ export default function WalletPage({username}) {
                     </div>
                     <div className="wallet-container_header_balance_bottom">
                         <p>Баланс в USDT</p>
-                        <p>{balance ? `$${balance}` : "$0.0"}</p>
+                        <p>{balance ? `$${usdtBalance}` : "0.0"}</p>
                     </div>
                 </div>
 
@@ -91,7 +124,6 @@ export default function WalletPage({username}) {
                     <p>Вся история</p>
                 </div>
                 <div className="wallet-container_main_history">
-                    <TransferItem date={"20.01.25"} amount={100} />
                     <TransferItem date={"20.01.25"} amount={100} />
                 </div>
             </div>

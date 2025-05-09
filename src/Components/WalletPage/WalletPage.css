@@ -75,6 +75,11 @@
 .wallet-container_header_balance_top p > span{
     color: #ffffff;
 }
+.wallet-container_header_balance_top_address{
+    color: hsla(0, 0%, 60%, 0.4);
+    font-size: 8px;
+    font-weight: 400;
+}
 .wallet-container_header_balance_top_plus 
 {
     width: 40px;

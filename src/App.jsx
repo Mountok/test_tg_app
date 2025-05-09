@@ -24,9 +24,10 @@ import { TbSettings2 } from "react-icons/tb";
 function App() {
 
     const [userName, SetUserName] = useState()
-    useEffect(() => {
-        const tg = window.Telegram?.WebApp;
+    const [telegramID, SetTelegramID] = useState(0)
 
+    useEffect(() => {
+        const tg = window.Telegram.WebApp;
         if (tg) {
             tg.setHeaderColor?.('#FFF001');
         }
@@ -35,69 +36,59 @@ function App() {
     useEffect(() => {
         const tg = window.Telegram.WebApp;
         const user = tg.initDataUnsafe.user;
-
         if (!user) {
             alert("Telegram user not found");
             // return;
         }
 
-
-        // const userObj = JSON.parse(JSON.stringify(user))
-        const userObj = {"telegram_id":5038590531,"username":"fsociality","first_name":"Teneres","last_name":" "}
+        const userObj = JSON.parse(JSON.stringify(user))
         const firstname = userObj["first_name"];
         const lastname = userObj["last_name"];
         const telegramId = userObj["id"];
         const username = userObj["username"];
 
-
+        SetTelegramID(telegramId)
         SetUserName(firstname + lastname)
 
         var isLogin = false;
         //  Проверка авторизации
-        Me(user.id).then((res) => {
+        Me(telegramId).then((res) => {
             console.log(res);
+            // alert("Рады вас видеть сново")
             isLogin = true
 
         }).catch((err) => {
+            isLogin == false
             if (err.status === 401) {
                 console.log("Unauthorization ", err);
-                isLogin = false
             }
-            tg.showAlert("err  /me - ", JSON.stringify(err), err.status)
+            // tg.showAlert("err  /me - ", JSON.stringify(err), err.status)
             console.log(err);
         })
 
-        if (!isLogin) {
+        if (isLogin == false) {
             //  Авторизация
             Login(telegramId, username, firstname, lastname).then((res) => {
-                tg.showAlert("resp  /login - ", JSON.stringify(res))
                 console.log("resp  /login - ", JSON.stringify(res))
                 console.log(res);
             })
-            //  Создание кошелька
-            tg.showAlert("Создание кошелька")
-
-            CreateWallet(telegramId).then((res) => {
-                tg.showAlert("resp  /create - ", JSON.stringify(res))
-                console.log("resp  /create - ", JSON.stringify(res))
-                console.log(res);
-            }).catch((err) => {
-                tg.showAlert("err  /create - ", JSON.stringify(err), err.status)
-                console.log("err  /create - ", JSON.stringify(err), err.status)
-                console.log(err);
-            })
         } else {
-            alert("Добро пожаловать")
+            // alert("Добро пожаловать вы зарегитрированы")
         }
-       
     }, []);
     return (
         <Router>
             <div className="background_shadow_drop"></div>
             <div className="app-wrapper">
                 <Routes>
-                    <Route path="/" element={<WalletPage username={userName} />} />
-                    <Route path="/scanner" element={<QrScanner />} />
+                    <Route
+                        path="/"
+                        element={
+                            telegramID
+                                ? <WalletPage telegramID={telegramID} username={userName} />
+                                : <div>Загрузка…</div>
+                        }
+                    />                    <Route path="/scanner" element={<QrScanner />} />
                 </Routes>
                 <BottomNav />
             </div>
