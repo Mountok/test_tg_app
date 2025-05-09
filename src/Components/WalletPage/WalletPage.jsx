@@ -36,8 +36,8 @@ export default function WalletPage({ username, telegramID }) {
                 const bal = balanceRes.wallet_balance;
                 const usdt = balanceRes.ton;
 
-                alert("bal = ", JSON.stringify(bal))
-                alert("usdt = ", JSON.stringify(usdt))
+                // alert("bal = ", JSON.stringify(bal))
+                // alert("usdt = ", JSON.stringify(usdt))
 
                 if (bal != null) {
                     setBalance(bal);
@@ -50,7 +50,7 @@ export default function WalletPage({ username, telegramID }) {
                 }
             } catch (err) {
                 console.error('Ошибка при загрузке кошелька или баланса:', err);
-                alert('Ошибка при загрузке кошелька или баланса:', JSON.stringify(err))
+                // alert('Ошибка при загрузке кошелька или баланса:', JSON.stringify(err))
                 // здесь можно уведомить пользователя через alert или стейт
             }
         };
@@ -91,7 +91,7 @@ export default function WalletPage({ username, telegramID }) {
                 <div className="wallet-container_header_balance">
                     <div className="wallet-container_header_balance_top">
                         {idBalanceCreated ?
-                            <p><span>Мой кошелек</span> <sub className="wallet-container_header_balance_top_address"> {wallet.address} </sub></p>
+                            <p><span>Мой кошелек</span><sup className="wallet-container_header_balance_top_address"> {wallet.address} </sup></p>
                             :
                             <p><span>Создать кошелек: </span>
                                 <div className="wallet-container_header_balance_top_plus" onClick={(e) => { handleCreateWallet(e, telegramID) }}>

@@ -8,7 +8,7 @@ export const Login = async (telegramId,username,firstname,lastname) => {
         first_name: firstname == "" ? " " : firstname,
         last_name: lastname == "" ? " " : lastname,
     }
-    alert(JSON.stringify(jsonBody))
+    // alert(JSON.stringify(jsonBody))
     var {data} = await axios.post("https://plataplay.duckdns.org/auth/login",jsonBody)
     return data
 }
