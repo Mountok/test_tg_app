@@ -1,9 +1,18 @@
+import { useNavigate } from 'react-router-dom';
 import './PaymentModal.css';
+import { useState } from 'react';
 
-const PaymentModal = ({ result, visible, data, onClose }) => {
+const PaymentModal = ({ qrLink, result, visible, data, onClose }) => {
   if (!visible) return null;
+  const [isPay, SetIsPay] = useState(false)
 
   const { amountRub, amountUsdt } = data;
+
+  const handleButton = () => {
+    alert(qrLink)
+    SetIsPay(true)
+    window.open(result, "_blank")
+  }
 
   return (
     <div className="modal-backdrop">
@@ -43,8 +52,9 @@ const PaymentModal = ({ result, visible, data, onClose }) => {
           </div>
           <div className="summary-amount">{amountUsdt.toFixed(4)} USDT</div>
         </div>
-
-        <button className="modal-pay">Оплатить</button>
+        {isPay ? <button className="modal-pay done" onClick={handleButton}>Оплачено</button>
+          : <button className="modal-pay" onClick={handleButton}>Оплатить</button>
+        }
       </div>
     </div>
   );

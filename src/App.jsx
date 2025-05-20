@@ -1,115 +1,102 @@
-import React, { use, useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+// src/App.jsx
+import React, { useEffect, useState } from 'react';
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Link,
+    Navigate,
+    useLocation
+} from 'react-router-dom';
+
 import QrScanner from './Components/QrScanner/QrScanner';
+import WalletPage from './Components/WalletPage/WalletPage';
 import './App.css';
-import WalletPage from "./Components/WalletPage/WalletPage.jsx";
-import { Login, Me } from "./utils/auth.js";
-import { HiCreditCard } from "react-icons/hi2";
-import { TbTransfer } from "react-icons/tb";
-import { LuHistory } from "react-icons/lu";
-import { TbSettings2 } from "react-icons/tb";
 
-
-// {
-//     "id": 5038590531,
-//     "first_name": "Teneres",
-//     "last_name": "",
-//     "username": "fsociality",
-//     "language_code":"ru", 
-//     "is_premium": true,
-//     "allows_write_to_pm": true,
-//     "photo_url" : "https://t.me/i/userpic/320/ERfguPp5YC6yy9N801pk_h_sWtwxl776jEqZ3Rm-fVWFx29G4q6wOLDQ8nxM7RIr.svg"
-// }
+import { Login, Me } from './utils/auth.js';
+import { HiCreditCard } from 'react-icons/hi2';
+import { TbTransfer } from 'react-icons/tb';
+import { LuHistory } from 'react-icons/lu';
+import { TbSettings2 } from 'react-icons/tb';
+import Onboarding from './Components/OnBoarding/Onboarding.jsx';
 
 function App() {
-
-    const [userName, SetUserName] = useState()
-    const [telegramID, SetTelegramID] = useState(0)
-
-    useEffect(() => {
-        const tg = window.Telegram.WebApp;
-        if (tg) {
-            tg.setHeaderColor?.('#FFF001');
-        }
-    }, []);
+    const [userName, setUserName] = useState();
+    const [telegramID, setTelegramID] = useState(null);
+    const [onboardDone, setOnboardDone] = useState(true); // fasle
 
     useEffect(() => {
-        const tg = window.Telegram.WebApp;
-        const user = tg.initDataUnsafe.user;
+        const tg = window.Telegram?.WebApp;
+        if (!tg) return;
+        tg.setHeaderColor?.('#FFF001');
+
+        const user = tg.initDataUnsafe?.user;
         if (!user) {
-            alert("Telegram user not found");
-            // return;
+            alert('Telegram user not found');
+            return;
         }
 
-        const userObj = JSON.parse(JSON.stringify(user))
-        const firstname = userObj["first_name"];
-        const lastname = userObj["last_name"];
-        const telegramId = userObj["id"];
-        const username = userObj["username"];
+        const { id, first_name, last_name, username } = user;
+        setTelegramID(id);
+        setUserName(`${first_name} ${last_name}`);
 
-        SetTelegramID(telegramId)
-        SetUserName(firstname + lastname)
-
-        var isLogin = false;
-        //  Проверка авторизации
-        Me(telegramId).then((res) => {
-            console.log(res);
-            // alert("Рады вас видеть сново")
-            isLogin = true
-
-        }).catch((err) => {
-            isLogin == false
-            if (err.status === 401) {
-                console.log("Unauthorization ", err);
-            }
-            // tg.showAlert("err  /me - ", JSON.stringify(err), err.status)
-            console.log(err);
-        })
-
-        if (isLogin == false) {
-            //  Авторизация
-            Login(telegramId, username, firstname, lastname).then((res) => {
-                console.log("resp  /login - ", JSON.stringify(res))
-                console.log(res);
+        Me(id)
+            .then(() => {
+                // если /me отработал без ошибок — пропускаем онбординг
+                setOnboardDone(true);
             })
-        } else {
-            // alert("Добро пожаловать вы зарегитрированы")
-        }
+            .catch(err => {
+                if (err.status === 401) {
+                    // новый пользователь — оставить онбординг
+                    setOnboardDone(true); // false 
+                    // выполнить регистрацию на бэке
+                    Login(id, username, first_name, last_name).catch(console.error);
+                } else {
+                    console.error(err);
+                }
+            });
     }, []);
+
     return (
         <Router>
-            <div className="background_shadow_drop"></div>
+            <div className="background_shadow_drop" />
             <div className="app-wrapper">
                 <Routes>
                     <Route
+                        path="/onboarding"
+                        element={<Onboarding telegramID={telegramID} onFinish={() => setOnboardDone(true)} />}
+                    />
+                    <Route
                         path="/"
                         element={
-                            telegramID
+                            onboardDone
                                 ? <WalletPage telegramID={telegramID} username={userName} />
-                                : <div>Загрузка…</div>
+                                : <Onboarding telegramID={telegramID} onFinish={() => setOnboardDone(true)} />
                         }
-                    />                    <Route path="/scanner" element={<QrScanner />} />
+                    />
+                    <Route path='/history' element={<History/>} />
+                    <Route path="/scanner" element={<QrScanner />} />
                 </Routes>
-                <BottomNav />
+                {onboardDone && <BottomNav />}
             </div>
         </Router>
     );
 }
+
 function BottomNav() {
     const location = useLocation();
-
     return (
         <nav className="bottom-nav">
             <Link to="/" className={location.pathname === '/' ? 'nav-link active' : 'nav-link'}>
                 <HiCreditCard size={30} />
             </Link>
-            <Link to="/scanner" className={location.pathname === '/scanner' ? 'nav-link active' : 'nav-link'}>
+            <Link to="/history" className={location.pathname === '/history' ? 'nav-link active' : 'nav-link'}>
                 <TbTransfer size={30} />
             </Link>
             <Link to="/scanner" className={location.pathname === '/scanner' ? 'nav-link active' : 'nav-link'}>
                 <LuHistory size={30} />
             </Link>
-            <Link to="/settings" className={location.pathname === '/scanner' ? 'nav-link active' : 'nav-link'}>
+            <Link to="/settings" className={location.pathname === '/settings' ? 'nav-link active' : 'nav-link'}>
                 <TbSettings2 size={30} />
             </Link>
         </nav>

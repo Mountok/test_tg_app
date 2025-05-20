@@ -71,18 +71,52 @@
   
   
   .qr-start-button {
-    width: 60%;
-    position: absolute;
-    bottom: 150px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-    background-color:  rgb(236 229 67);
-    color: #000000;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-  
+  /* убрали position/bottom/left/transform/z-index */
+  flex: 1;               /* пусть растёт вместе с соседней кнопкой */
+  max-width: 200px;      /* можно ограничить, если нужно */
+  background-color: rgb(236 229 67);
+  color: #000;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+  .qr-buttons {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  width: calc(100% - 2rem);
+  max-width: 480px;
+  padding: 0 1rem;
+  z-index: 10;
+}
+
+.qr-start-button,
+.qr-gallery-button {
+  flex: 1;
+  max-width: 200px;
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.qr-start-button {
+  background-color: rgb(236 229 67);
+  color: #000;
+}
+
+.qr-gallery-button {
+  background-color: #ffaa00;
+  color: #fff;
+  box-shadow: 0 3px 6px rgba(255, 170, 0, 0.25);
+  transition: background-color 0.2s ease;
+}
+.qr-gallery-button:hover {
+  background-color: #e69500;
+}

@@ -38,20 +38,18 @@
     color: hsla(0, 0%, 100%, 0.3);
 }
 .wallet-container_header_top_settings {
-    width: 50px;
-    height: 50px;
-    border: hsla(0, 0%, 0%, 0.1) solid 1px;
-    border-radius: 20px;
-    font-size: 25px;
+    font-size: 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: rgb(20, 20, 19);
-
+    gap: 10px;
 }
 .wallet-container_header_top_settings svg {
+    border-radius: 10px;
+    width: 40px;
+    height: 40px;
     color: #ffffff;
-
+    background-color: rgb(20, 20, 19);
+    border: hsla(0, 0%, 0%, 0.1) solid 1px;
 }
 
 
@@ -160,4 +158,18 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.favorites-list {
+    margin:  0 auto;
+}
+/* общий контейнер */
+.favorites-list h2 {
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.favorites-cards {
+  display: flex;
+  gap: 1rem;
 }

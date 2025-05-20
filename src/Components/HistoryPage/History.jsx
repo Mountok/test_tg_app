@@ -11,6 +11,11 @@ const History = () => {
                 <p>История операций</p>
             </div>
         </div>
+        <div className="history_filter">
+
+        </div>
+        <div className="history"></div>
+        
     </div>
   )
 }

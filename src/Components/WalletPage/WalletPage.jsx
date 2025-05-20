@@ -9,6 +9,8 @@ import { GoPlus } from "react-icons/go";
 import { LuDownload } from "react-icons/lu";
 import TransferItem from "../TransferItem/TransferItem.jsx";
 
+import { PiHeadsetFill } from "react-icons/pi";
+import PriceCard from "../PriceCard/PriceCard.jsx";
 
 export default function WalletPage({ username, telegramID }) {
     const navigateTo = useNavigate();
@@ -56,7 +58,7 @@ export default function WalletPage({ username, telegramID }) {
         };
 
         loadWalletThenBalance();
-    }, [tgID, telegramID]);
+    }, [tgID, telegramID, privatKeyPlatapay]);
 
 
 
@@ -84,6 +86,7 @@ export default function WalletPage({ username, telegramID }) {
                         </div>
                     </div>
                     <div className="wallet-container_header_top_settings">
+                        <PiHeadsetFill />
                         <IoNotifications />
                     </div>
                 </div>
@@ -91,18 +94,22 @@ export default function WalletPage({ username, telegramID }) {
                 <div className="wallet-container_header_balance">
                     <div className="wallet-container_header_balance_top">
                         {idBalanceCreated ?
-                            <p><span>Мой кошелек</span><sup className="wallet-container_header_balance_top_address"> {wallet.address} </sup></p>
+                            <>
+                                <p><span>Мой кошелек</span></p>
+                                <p><sup className="wallet-container_header_balance_top_address"> {wallet.address} </sup></p>
+                            </>
                             :
-                            <p><span>Создать кошелек: </span>
-                                <div className="wallet-container_header_balance_top_plus" onClick={(e) => { handleCreateWallet(e, telegramID) }}>
-                                    <GoPlus />
-                                </div>
-                            </p>
+                            null
+                            // <p><span>Создать кошелек: </span>
+                            //     <div className="wallet-container_header_balance_top_plus" onClick={(e) => { handleCreateWallet(e, telegramID) }}>
+                            //         <GoPlus />
+                            //     </div>
+                            // </p>
                         }
                     </div>
                     <div className="wallet-container_header_balance_bottom">
                         <p>Баланс в USDT</p>
-                        <p>{balance ? `$${usdtBalance}` : "0.0"}</p>
+                        <p>{balance ? `${usdtBalance}` : ""}</p>
                     </div>
                 </div>
 
@@ -119,13 +126,32 @@ export default function WalletPage({ username, telegramID }) {
             </div>
 
             <div className="wallet-container_history">
-                <div className="wallet-container_history_title">
+                <div className="favorites-list">
+                    <h2>Избранное</h2>
+                    <div className="favorites-cards">
+                        <PriceCard
+                            coinId="ethereum"
+                            title="Ethereum"
+                            symbol="ETH"
+                            color="#34d399"
+                        />
+                        <PriceCard
+                            coinId="bitcoin"
+                            title="Bitcoin"
+                            symbol="BTC"
+                            color="#f87171"
+                        />
+                    </div>
+                </div>
+                {/* <div className="wallet-container_history_title">
                     <p>Последние транзакции</p>
                     <p>Вся история</p>
                 </div>
                 <div className="wallet-container_main_history">
-                    <TransferItem date={"20.01.25"} amount={100} />
-                </div>
+                    <TransferItem dateTime={"20.01.25"} title={"Магазин"} amount={12.943454} type={"покупка"} />
+                    <TransferItem dateTime={"20.01.25"} title={"Магазин"} amount={12.943454} type={"покупка"} />
+                    <TransferItem dateTime={"20.01.25"} title={"Магазин"} amount={-12.943454} type={"покупка"} />
+                </div> */}
             </div>
         </div>
     );

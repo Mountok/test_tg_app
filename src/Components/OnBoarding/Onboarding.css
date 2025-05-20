@@ -1,0 +1,172 @@
+/* src/Components/Onboarding/Onboarding.css */
+
+.onboarding {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #000; /* Black background */
+  color: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.onboarding-slide {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.logo-slide {
+  background: radial-gradient(circle at center 30%, rgba(255, 226, 0, 0.3), transparent 70%);
+  position: relative;
+}
+
+.logo-container {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  background: #0d0d0d;
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(255, 226, 0, 0.4);
+}
+
+.logo {
+  width: 60px;
+  height: auto;
+}
+
+.qr-slide {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.qr-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20%;
+  margin-bottom: 20px;
+}
+
+.qr-code {
+  width: 250px;
+  height: 250px;
+  background-color: transparent;
+  /* The QR code in the image has a yellow bottom half */
+  mask-image: linear-gradient(to bottom, white 50%, #FFE200 50%);
+  -webkit-mask-image: linear-gradient(to bottom, white 50%, #FFE200 50%);
+}
+
+.qr-scan-text {
+  margin-top: 10px;
+  color: #FFE200;
+  font-size: 16px;
+}
+
+.wallet-slide {
+  position: relative;
+}
+
+.wallet-id-container {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.wallet-id {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  font-family: monospace;
+  font-size: 14px;
+  color: #FFE200;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.onboarding-content {
+  color: #fff;
+  padding: 0 20px 20px;
+}
+
+.onboarding-content h1 {
+  margin: 0 0 10px;
+  font-size: 24px;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+.onboarding-content p {
+  margin: 0;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+}
+
+.onboarding-footer {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.pagination-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  margin: 0 5px;
+}
+
+.pagination-dot.active {
+  background-color: #FFE200;
+  width: 25px;
+  border-radius: 4px;
+}
+
+.btn-next {
+  background-color: #FFE200;
+  color: #000;
+  border: none;
+  border-radius: 30px;
+  padding: 15px;
+  width: 100%;
+  max-width: 600px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-next:hover {
+  background-color: #e6cb00;
+}
+
+.btn-next:disabled {
+  background-color: #666;
+  color: #999;
+  cursor: not-allowed;
+}

@@ -153,3 +153,7 @@
     font-weight: 600;
     cursor: pointer;
   }
+
+  .modal-pay.done{
+    background-color: #26a17b;
+  }

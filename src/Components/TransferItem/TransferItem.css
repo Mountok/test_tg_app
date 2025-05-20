@@ -1,46 +1,76 @@
-.wallet-history_transfer{
-    background-color: #131313;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: row;
-    padding: 10px 0;
+/* src/Components/TransferItem/TransferItem.css */
+.transfer-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #1e1e1e;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
 }
-.wallet-history_transfer_logo{
-    width: 20%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.wallet-history_transfer_title{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 60%;
 
+.transfer-item-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
-.wallet-history_transfer_title p:nth-child(1) {
-    font-size: 14px;
+
+.transfer-item-icon {
+position: relative;
+  width: 40px;
+  height: 40px;
 }
-.wallet-history_transfer_title p:nth-child(2) {
-    color: #969696;
-    font-size: 12px;
+.transfer-item-info {
+  display: flex;
+  flex-direction: column;
 }
-.wallet-history_transfer_amount{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 20%;
+.transfer-item-icon_svg{
+    background-color: rgb(255, 255, 255);
+    color: black;
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(30px,15px);
 }
-.wallet-history_transfer_amount p {
-    font-size: 12px;
-    color: #969696;
+.transfer-item-title {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
 }
-.wallet-history_transfer_amount p:nth-child(1){
-    font-weight: 500;
-    font-size: 14px;
+
+.transfer-item-date {
+  color: #aaa;
+  font-size: 0.85rem;
+  margin: 0.25rem 0 0;
 }
-.wallet-history_transfer_amount p span{
-    color: rgb(255, 255, 255);
+
+.transfer-item-status {
+  color: #fbbf24;
+  font-size: 0.85rem;
+  margin: 0.25rem 0 0;
 }
+
+.transfer-item-right {
+  text-align: right;
+}
+
+.transfer-item-amount {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.transfer-item-amount.negative {
+  color: #f87171;
+}
+
+.transfer-item-amount.positive {
+  color: #34d399;
+}
+
+.transfer-item-type {
+  color: #aaa;
+  font-size: 0.85rem;
+  margin: 0.25rem 0 0;
+}
+

@@ -1,0 +1,48 @@
+/* src/components/PriceCard/PriceCard.css */
+.price-card {
+  background: #171717;
+  border-radius: 16px;
+  padding: 1rem;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 300px;
+}
+
+.price-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-card-header h3 {
+  margin: 0;
+  font-size: .7rem;
+}
+
+.price-card-change {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.price-card-change.up   { color: #34d399; }
+.price-card-change.down { color: #f87171; }
+
+.price-card-chart {
+  flex: 1;
+  min-height: 120px;
+}
+
+.price-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-card-symbol {
+  font-weight: 600;
+}
+
+.price-card-current {
+  font-size: .8rem;
+}
