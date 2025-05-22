@@ -23,7 +23,7 @@ import Onboarding from './Components/OnBoarding/Onboarding.jsx';
 function App() {
     const [userName, setUserName] = useState();
     const [telegramID, setTelegramID] = useState(null);
-    const [onboardDone, setOnboardDone] = useState(true); // fasle
+    const [onboardDone, setOnboardDone] = useState(false); // Default to false until Me() succeeds
 
     useEffect(() => {
         const tg = window.Telegram?.WebApp;
@@ -42,16 +42,18 @@ function App() {
 
         Me(id)
             .then(() => {
-                // если /me отработал без ошибок — пропускаем онбординг
+                // If Me() executes successfully, skip onboarding
                 setOnboardDone(true);
             })
             .catch(err => {
                 if (err.status === 401) {
-                    // новый пользователь — оставить онбординг
-                    setOnboardDone(true); // false 
-                    // выполнить регистрацию на бэке
+                    // New user - show onboarding
+                    setOnboardDone(false);
+                    // Register on backend
                     Login(id, username, first_name, last_name).catch(console.error);
                 } else {
+                    // Any other error - show onboarding anyway
+                    setOnboardDone(false);
                     console.error(err);
                 }
             });
