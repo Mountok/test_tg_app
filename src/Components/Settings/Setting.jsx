@@ -20,7 +20,7 @@ const Setting = () => {
             </div>
             <div className="settings-profile">
                 <div className="settings-avatar" />
-                <span className="settings-username">@{username}</span>
+                <span className="settings-username">@{userInfo}</span>
             </div>
             <div className="settings-section-label">Параметры</div>
             <div className="settings-section">
