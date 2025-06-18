@@ -1,0 +1,131 @@
+.settings-container {
+  background: #000;
+  min-height: 100vh;
+  color: #fff;
+  padding: 0 16px 100px 16px;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 64px;
+  border-bottom: 1px solid #222;
+}
+
+.settings-back-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+.settings-title {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.settings-profile {
+  display: flex;
+  align-items: center;
+  background: #181818;
+  border-radius: 24px;
+  padding: 20px 24px;
+}
+
+.settings-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #333;
+  margin-right: 18px;
+}
+
+.settings-username {
+  font-size: 18px;
+  color: #fff;
+}
+
+.settings-section-label {
+  color: #888;
+  font-size: 15px;
+  margin-bottom: 8px;
+  margin-top: 5px;
+  font-weight: 400;
+}
+
+.settings-section {
+  background: none;
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  background: #181818;
+  border-radius: 18px;
+  padding: 12px 12px;
+  margin-bottom: 10px;
+  font-size: 17px;
+  font-weight: 400;
+  color: #fff;
+  position: relative;
+  transition: background 0.2s;
+}
+
+.settings-item:not(.logout):not(.agreement):hover {
+  background: #232323;
+  cursor: pointer;
+}
+
+.settings-icon {
+  font-size: 22px;
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+}
+
+.settings-icon.yellow {
+  color: #ffe600;
+}
+
+.settings-icon.red {
+  color: #ff4d4f;
+}
+
+.settings-arrow {
+  margin-left: auto;
+  color: #888;
+  font-size: 22px;
+}
+
+.logout {
+  background: #181818;
+  color: #ff4d4f;
+  font-weight: 500;
+}
+
+.logout .settings-icon {
+  color: #ff4d4f;
+}
+
+.agreement {
+  background: none;
+  justify-content: center;
+  color: #ffe600;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 8px;
+  margin-bottom: 24px;
+}
+
+.settings-agreement-text {
+  color: #ffe600;
+  font-size: 16px;
+  font-weight: 500;
+} 

@@ -1,0 +1,95 @@
+.favorites_coin{
+    padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+.favorites_coin_filter{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    width: 100%;
+    height: 50px;
+    padding: 0 20px;
+    background-color: var(--color-background);
+}
+.favorites_coin_filter_item{
+    margin-left: 4px;
+    gap: 10px;
+}
+.favorites_coin_filter .favorites_coin_filter_item:nth-child(1){
+    color: black;
+    background-color: #FFF001;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid #FFF001;
+
+    
+}
+
+.favorites_coin_filter .favorites_coin_filter_item:nth-child(2){
+    color: #9b9b9b;
+    background-color: #0F0F0F;
+    border: 1px solid #9b9b9b;
+    padding: 12px 16px;
+    border-radius: 12px;
+    
+}
+.favorites_coin_filter .favorites_coin_filter_item:nth-child(3){
+    color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 12px;   
+}
+
+
+.favorite_coin_item{
+    display: flex;
+    background-color: #161616;
+    border-radius: 20px;
+    padding: 16px;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 8px;
+    margin-top: 12px;
+    width: 100%;
+    height: 80px;
+    padding: 0 20px;
+}
+.favorite_coin_item_icon{
+
+}
+.favorite_coin_item_icon img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.favorite_coin_item_info{
+    width: 100%;
+    padding-left: 12px;
+    font-size: 14px;
+}
+.favorite_coin_item_name{
+    font-weight: 500;
+    color: #E8E8E8;
+}
+.favorite_coin_item_shortname{
+    color: #858585;
+}
+.favorite_coin_item_price{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    
+}
+.favorite_coin_item_price_value{}
+.favorite_coin_item_price_percent{
+    font-weight: 400;
+}
+
+.favorites_coin_filter_item.active {
+  color: black;
+  background-color: #FFF001;
+  border: 1px solid #FFF001;
+}

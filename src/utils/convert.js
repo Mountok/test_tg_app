@@ -1,6 +1,8 @@
 import axios from "axios"
 
 
+const API_URL = "https://plataplay.duckdns.org";
+// const API_URL = "http://localhost:8880";
 
 
 export const ConvertRUBToUSDT = async (QRLink) => {
@@ -15,7 +17,7 @@ export const ConvertRUBToUSDT = async (QRLink) => {
 
     const amount = parseFloat(sumParam) / 100; // из копеек → в рубли
 
-    const response = await axios.post('https://plataplay.duckdns.org/api/wallet/convert', {
+    const response = await axios.post(API_URL+'/api/wallet/convert', {
       amount,
       from: currency,
       to: 'USDT'
@@ -24,6 +26,16 @@ export const ConvertRUBToUSDT = async (QRLink) => {
             "X-Telegram-ID": "123456789"
         }
     });
+
+    // const response = await axios.post('https://plataplay.duckdns.org/api/wallet/convert', {
+    //   amount,
+    //   from: currency,
+    //   to: 'USDT'
+    // },{
+    //     headers: {
+    //         "X-Telegram-ID": "123456789"
+    //     }
+    // });
 
     const data = response.data?.data;
 

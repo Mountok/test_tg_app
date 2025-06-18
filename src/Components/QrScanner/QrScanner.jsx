@@ -6,15 +6,22 @@ import jsQR from 'jsqr';
 import './QrScanner.css';
 import PaymentModal from '../PaymentModal/PaymentModal';
 import { ConvertRUBToUSDT } from '../../utils/convert';
+import { useNavigate } from 'react-router-dom';
+import { MdFlashlightOn, MdFlashlightOff } from 'react-icons/md';
+import { FiImage } from 'react-icons/fi';
+import { RxCross2 } from 'react-icons/rx';
+import { BsCamera } from 'react-icons/bs';
 
-const QrScanner = () => {
+const QrScanner = ({telegramID}) => {
   const html5QrCodeRef = useRef(null);
   const fileInputRef   = useRef(null);
+  const navigate = useNavigate();
 
   const [scanning,   setScanning]   = useState(false);
   const [qrLink,     setQrLink]     = useState('');
   const [showModal,  setShowModal]  = useState(false);
   const [modalData,  setModalData]  = useState({ amountRub: 0, amountUsdt: 0 });
+  const [flashlight, setFlashlight] = useState(false);
 
   const qrRegionId = 'qr-reader';
 
@@ -95,10 +102,30 @@ const QrScanner = () => {
     e.target.value = '';
   };
 
+  // Функция для переключения фонарика
+  const toggleFlashlight = async () => {
+    if (!html5QrCodeRef.current) return;
+    try {
+      const stream = document.querySelector('#qr-reader video')?.srcObject;
+      if (!stream) return;
+      const track = stream.getVideoTracks()[0];
+      const capabilities = track.getCapabilities();
+      if (!capabilities.torch) {
+        alert('Фонарик не поддерживается на этом устройстве');
+        return;
+      }
+      await track.applyConstraints({ advanced: [{ torch: !flashlight }] });
+      setFlashlight(f => !f);
+    } catch (e) {
+      alert('Не удалось включить фонарик');
+    }
+  };
+
   return (
     <div className="qr-container">
       {/* Модалка с результатом */}
       <PaymentModal
+        telegramID={telegramID}
         qrLink={qrLink}
         visible={showModal}
         data={modalData}
@@ -123,26 +150,57 @@ const QrScanner = () => {
       </div>
 
       {/* Кнопки управления */}
-      {!scanning && (
-        <div className="qr-buttons">
-          <button onClick={startScanner} className="qr-start-button">
-            Включить камеру
-          </button>
-          <button
-            onClick={() => fileInputRef.current.click()}
-            className="qr-gallery-button"
-          >
-            Выбрать из галереи
-          </button>
-          <input
-            type="file"
-            accept="image/*"
-            ref={fileInputRef}
-            onChange={handleFileChange}
-            style={{ display: 'none' }}
-          />
-        </div>
-      )}
+      <div className="qr-buttons" style={{ justifyContent: 'center', gap: '48px' }}>
+        {/* Фонарик */}
+        <button
+          type="button"
+          className="qr-icon-btn"
+          onClick={toggleFlashlight}
+          aria-label="Фонарик"
+          disabled={!scanning}
+        >
+          {flashlight ? (
+            <MdFlashlightOn size={32} color={scanning ? '#fff' : '#888'} />
+          ) : (
+            <MdFlashlightOff size={32} color={scanning ? '#fff' : '#888'} />
+          )}
+        </button>
+        {/* Камера */}
+        <button
+          type="button"
+          className="qr-icon-btn"
+          onClick={startScanner}
+          aria-label="Включить камеру"
+        >
+          <BsCamera size={28} color="#fff" />
+        </button>
+        {/* Галерея */}
+        <button
+          type="button"
+          className="qr-icon-btn"
+          onClick={() => fileInputRef.current.click()}
+          aria-label="Галерея"
+          disabled={scanning}
+        >
+          <FiImage size={32} color={scanning ? '#888' : '#fff'} />
+        </button>
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          style={{ display: 'none' }}
+        />
+        {/* Закрыть */}
+        <button
+          type="button"
+          className="qr-icon-btn"
+          onClick={() => navigate('/')}
+          aria-label="Закрыть"
+        >
+          <RxCross2 size={32} color="#fff" />
+        </button>
+      </div>
     </div>
   );
 };

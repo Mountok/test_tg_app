@@ -7,8 +7,10 @@
 }
 
 /* Стили для body */
+html {
+  background-color: rgb(11, 11, 11);
+}
 body {
-  padding: 0px;
   background-color: rgb(11, 11, 11);
   color: #ffffff;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -26,6 +28,11 @@ body {
   background-color: rgb(236 229 67);
   box-shadow: -60px 140px 200px 80px rgb(236 229 67);
 }
+
+.app-wrapper{
+  margin-bottom: 70px;
+}
+
 /* Контейнер приложения */
 .app-container {
   max-width: 768px;
@@ -52,7 +59,7 @@ h1, h2, h3 {
   border-radius: 30px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.20);
 
-  background-color: #ffffff;
+  background-color: #181818;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -71,13 +78,15 @@ h1, h2, h3 {
 }
 
 .nav-link.active {
-  color: #000000;
+  color: #FFF001;
 }
 
 .nav-link:hover {
-  color: #000000;
+  color: #FFF001;
 }
 
+ 
+/* snanner nav */
 
 
 

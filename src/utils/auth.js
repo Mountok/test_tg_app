@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const API_URL = "https://plataplay.duckdns.org";
+// const API_URL = "http://localhost:8880";
 
-export const Login = async (telegramId,username,firstname,lastname) => {
+export const Login = async (telegramId, username, firstname, lastname) => {
     const jsonBody = {
         telegram_id: telegramId,
         username: username,
@@ -9,10 +11,24 @@ export const Login = async (telegramId,username,firstname,lastname) => {
         last_name: lastname == "" ? " " : lastname,
     }
     // alert(JSON.stringify(jsonBody))
-    var {data} = await axios.post("https://plataplay.duckdns.org/auth/login",jsonBody)
+    var { data } = await axios.post(API_URL+"/auth/login", jsonBody)
     return data
 }
 export const Me = async (telegramId) => {
-    var {data} = await axios.get(`https://plataplay.duckdns.org/auth/me?telegram_id=${telegramId}`)
+    var { data } = await axios.get(`${API_URL}/auth/me?telegram_id=${telegramId}`)
     return data
+}
+
+
+export const TelegramInfo = () => {
+    const tg = window.Telegram?.WebApp;
+    if (!tg) return;
+    tg.setHeaderColor?.('#FFF001');
+
+    const user = tg.initDataUnsafe?.user;
+    if (!user) {
+        alert('Telegram user not found');
+        return;
+    }
+    return user;
 }

@@ -85,7 +85,8 @@
 
   .qr-buttons {
   position: absolute;
-  bottom: 100px;
+  bottom: 20px;
+  width: 100%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -99,24 +100,68 @@
 .qr-start-button,
 .qr-gallery-button {
   flex: 1;
-  max-width: 200px;
+  border: none;
+
+  max-width: 180px;
   padding: 0.6rem 1.2rem;
-  border-radius: 10px;
+  border-radius: 20px;
   font-size: 1rem;
   cursor: pointer;
 }
 
 .qr-start-button {
-  background-color: rgb(236 229 67);
+  background-color: rgb(255, 255, 255);
   color: #000;
 }
-
 .qr-gallery-button {
-  background-color: #ffaa00;
+  background-color: #8d8d8d;
   color: #fff;
-  box-shadow: 0 3px 6px rgba(255, 170, 0, 0.25);
   transition: background-color 0.2s ease;
 }
-.qr-gallery-button:hover {
-  background-color: #e69500;
+
+.qr-icon-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  cursor: pointer;
+  outline: none;
+}
+.qr-icon-btn:hover {
+  background: #232323;
+}
+.qr-icon-btn svg {
+  color: #fff;
+  width: 32px;
+  height: 32px;
+}
+
+.qr-icon-btn:disabled {
+  background: #232323;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.qr-icon-btn:disabled svg {
+  color: #888 !important;
+}
+
+@media (max-width: 430px) {
+  .qr-buttons {
+    gap: 20px !important;
+    padding: 0 4px;
+  }
+  .qr-icon-btn {
+    width: 60px;
+    height: 60px;
+  }
+  .qr-icon-btn svg {
+    width: 30px;
+    height: 30px;
+  }
 }

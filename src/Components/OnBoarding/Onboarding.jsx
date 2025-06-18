@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CreateWallet } from '../../utils/wallet.js';
 import './Onboarding.css';
+import { TelegramInfo } from '../../utils/auth.js';
 
 const pages = [
   {
@@ -27,7 +28,7 @@ const pages = [
   },
 ];
 
-export default function Onboarding({ telegramID, onFinish }) {
+export default function Onboarding({ onFinish }) {
   const [idx, setIdx] = useState(0);
   const [loading, setLoading] = useState(false);
   const [walletId, setWalletId] = useState('');
@@ -39,8 +40,12 @@ export default function Onboarding({ telegramID, onFinish }) {
     if (idx === 2) {
       try {
         setLoading(true);
-        const wallet = await CreateWallet(telegramID);
-        setWalletId(wallet?.address || 'TOjVuc1CeL7WEe7hHF7XZMWi6J89JgxQW');
+        const { id } = TelegramInfo() || {};
+        alert("tgid - ", id)
+        const wallet = await CreateWallet(id);
+        const addr = wallet?.data?.address || '';
+        alert(JSON.stringify(addr))
+        setWalletId(addr); 
       } catch (err) {
         console.error('Ошибка создания кошелька:', err);
         alert('Не удалось создать кошелёк. Попробуйте ещё раз.');
@@ -61,7 +66,7 @@ export default function Onboarding({ telegramID, onFinish }) {
   };
 
   const renderContent = () => {
-    switch(idx) {
+    switch (idx) {
       case 0:
         return (
           <div className="onboarding-slide logo-slide">
@@ -127,8 +132,8 @@ export default function Onboarding({ telegramID, onFinish }) {
     return (
       <div className="pagination">
         {pages.map((_, i) => (
-          <div 
-            key={i} 
+          <div
+            key={i}
             className={`pagination-dot ${i === idx ? 'active' : ''}`}
           />
         ))}
@@ -152,3 +157,4 @@ export default function Onboarding({ telegramID, onFinish }) {
     </div>
   );
 }
+

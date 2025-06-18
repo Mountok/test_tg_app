@@ -13,30 +13,41 @@ import QrScanner from './Components/QrScanner/QrScanner';
 import WalletPage from './Components/WalletPage/WalletPage';
 import './App.css';
 
-import { Login, Me } from './utils/auth.js';
+import { Login, Me, TelegramInfo } from './utils/auth.js';
 import { HiCreditCard } from 'react-icons/hi2';
 import { TbTransfer } from 'react-icons/tb';
 import { LuHistory } from 'react-icons/lu';
 import { TbSettings2 } from 'react-icons/tb';
 import Onboarding from './Components/OnBoarding/Onboarding.jsx';
+import ManualPayQR from './admin/ManualPayQR/ManualPayQR.jsx';
+import History from './Components/HistoryPage/History.jsx';
+import Deposit from './Components/DepositPage/Deposit.jsx';
+import Setting from './Components/Settings/Setting.jsx';
 
 function App() {
     const [userName, setUserName] = useState();
     const [telegramID, setTelegramID] = useState(null);
-    const [onboardDone, setOnboardDone] = useState(false); // Default to false until Me() succeeds
+    const [onboardDone, setOnboardDone] = useState(true); // Default to false until Me() succeeds
+
+
 
     useEffect(() => {
-        const tg = window.Telegram?.WebApp;
-        if (!tg) return;
-        tg.setHeaderColor?.('#FFF001');
+        // const tg = window.Telegram?.WebApp;
+        // if (!tg) return;
+        // tg.setHeaderColor?.('#FFF001');
 
-        const user = tg.initDataUnsafe?.user;
-        if (!user) {
-            alert('Telegram user not found');
+        // const user = tg.initDataUnsafe?.user;
+        // if (!user) {
+        //     alert('Telegram user not found');
+        //     return;
+        // }
+
+        const { id, first_name, last_name, username } = TelegramInfo() || {};
+        // alert(`Telegram user: ${first_name} ${last_name} (${id})`);
+        if (!id || !first_name) {
+            alert('Telegram user ID or first name is missing');
             return;
         }
-
-        const { id, first_name, last_name, username } = user;
         setTelegramID(id);
         setUserName(`${first_name} ${last_name}`);
 
@@ -66,18 +77,22 @@ function App() {
                 <Routes>
                     <Route
                         path="/onboarding"
-                        element={<Onboarding telegramID={telegramID} onFinish={() => setOnboardDone(true)} />}
+                        element={<Onboarding  onFinish={() => setOnboardDone(true)} />}
                     />
                     <Route
                         path="/"
                         element={
                             onboardDone
-                                ? <WalletPage telegramID={telegramID} username={userName} />
-                                : <Onboarding telegramID={telegramID} onFinish={() => setOnboardDone(true)} />
+                                ? <WalletPage  username={userName} />
+                                : <Onboarding onFinish={() => setOnboardDone(true)} />
                         }
                     />
                     <Route path='/history' element={<History/>} />
-                    <Route path="/scanner" element={<QrScanner />} />
+                    <Route path="/scanner" element={<QrScanner telegramID={telegramID} />} />
+                    <Route path='/admin/manual-pay' element={<ManualPayQR telegramID={telegramID}/>} />
+                    <Route path='/deposit' element={<Deposit telegramID={telegramID}/>} />
+                    <Route path='/settings' element={<Setting/>} />
+
                 </Routes>
                 {onboardDone && <BottomNav />}
             </div>
@@ -88,20 +103,28 @@ function App() {
 function BottomNav() {
     const location = useLocation();
     return (
+        <>
+        {location.pathname === '/scanner' || location.pathname === '/deposit' || location.pathname == "/admin/manual-pay" ? 
+        (null)
+        : (
         <nav className="bottom-nav">
             <Link to="/" className={location.pathname === '/' ? 'nav-link active' : 'nav-link'}>
                 <HiCreditCard size={30} />
             </Link>
-            <Link to="/history" className={location.pathname === '/history' ? 'nav-link active' : 'nav-link'}>
+            <Link to="/" className={location.pathname === '/history' ? 'nav-link active' : 'nav-link'}>
                 <TbTransfer size={30} />
             </Link>
-            <Link to="/scanner" className={location.pathname === '/scanner' ? 'nav-link active' : 'nav-link'}>
+            <Link to="/history" className={location.pathname === '/scanner' ? 'nav-link active' : 'nav-link'}>
                 <LuHistory size={30} />
             </Link>
             <Link to="/settings" className={location.pathname === '/settings' ? 'nav-link active' : 'nav-link'}>
                 <TbSettings2 size={30} />
             </Link>
         </nav>
+        )}
+        </>
+
+
     );
 }
 
