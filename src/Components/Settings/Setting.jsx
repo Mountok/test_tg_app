@@ -5,11 +5,11 @@ import { RiTelegram2Fill } from "react-icons/ri";
 import { TelegramInfo } from '../../utils/auth';
 
 const Setting = () => {
-    const [userInfo,setUserinfo] = useState({})
+    const [userInfo,setUserinfo] = useState()
     useEffect(()=>{
-        var result = TelegramInfo()
-        alert(result)
-        setUserinfo(result)
+        var {username} = TelegramInfo()
+        alert(username)
+        setUserinfo(username)
     },[])
 
     return (
@@ -20,7 +20,7 @@ const Setting = () => {
             </div>
             <div className="settings-profile">
                 <div className="settings-avatar" />
-                <span className="settings-username">@username</span>
+                <span className="settings-username">@{username}</span>
             </div>
             <div className="settings-section-label">Параметры</div>
             <div className="settings-section">
