@@ -1,0 +1,92 @@
+.design-container {
+  background: #000;
+  min-height: 100vh;
+  color: #fff;
+  padding: 0 16px 100px 16px;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+.design-header {
+  display: flex;
+  align-items: center;
+  height: 64px;
+  border-bottom: 1px solid #222;
+  justify-content: space-between;
+  position: relative;
+}
+
+.design-back-btn-area {
+  width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.design-back-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.design-title {
+  flex: 1;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.design-section-label {
+  color: #888;
+  font-size: 15px;
+  margin-bottom: 8px;
+  margin-top: 24px;
+  font-weight: 400;
+}
+
+.design-section {
+  background: none;
+  margin-bottom: 8px;
+}
+
+.design-item {
+  display: flex;
+  align-items: center;
+  background: #181818;
+  border-radius: 18px;
+  padding: 16px 18px;
+  margin-bottom: 2px;
+  font-size: 17px;
+  font-weight: 400;
+  color: #fff;
+  position: relative;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.design-item.selected {
+  font-weight: 500;
+  color: #ffe600;
+}
+
+.design-item.selected .design-check {
+  color: #ffe600;
+  font-size: 20px;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.design-check {
+  color: #ffe600;
+  font-size: 20px;
+  margin-right: 12px;
+  display: flex;
+  align-items: center;
+} 

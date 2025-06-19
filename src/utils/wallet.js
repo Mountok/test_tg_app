@@ -29,6 +29,15 @@ export const GetOrders = async () => {
     return data
 }
 
+export const GetOrdersByTelegramId = async (telegramId) => {
+    var { data } = await axios.get(API_URL+"/api/wallet/orders/history", {
+        headers: {
+            "X-Telegram-ID": telegramId,
+        }
+    })
+    return data
+}
+
 export const PayQR = async (orderId) => {
     var { data } = await axios.post(`${API_URL}/api/admin/payqr/${orderId}`)
     console.log(data)
@@ -36,18 +45,18 @@ export const PayQR = async (orderId) => {
 }
 
 
-export const CreateOrder = async (telegramId, summa, qr_link) => {
+export const CreateOrder = async (telegramId, summa, qr_link,crypto) => {
+    alert(crypto)
     var { data } = await axios.post(API_URL+"/api/wallet/create/sbp/order", {
 	    "amount":summa,
-	    "from":"",
-	    "to":"",
+        "crypto": crypto,
 	    "qr_link":qr_link
-
     }, {
         headers: {"X-Telegram-ID": telegramId ? telegramId : 0}
     })
     return data
 }
+
 
 
 export const GetBalanceTRX = async (telegramId,address) => {

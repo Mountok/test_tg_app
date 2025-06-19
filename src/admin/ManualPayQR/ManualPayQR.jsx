@@ -45,7 +45,7 @@ const ManualPayQR = ({telegramID}) => {
 
                 <div className="manual_pay_panel-list">
                     {ordersList.map(el => (
-                        <PayListItem key={el.id} order_id={el.id} qr_code={el.qr_code} summa={el.summa} tg_id={el.telegram_id}/>
+                        <PayListItem crypto={el.crypto} key={el.id} order_id={el.id} qr_code={el.qr_code} summa={el.summa} tg_id={el.telegram_id}/>
                     ))}
                 </div>
             </div>

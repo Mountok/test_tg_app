@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import "../ManualPayQR.css"
 import { PayQR } from '../../../utils/wallet'
-const PayListItem = ({order_id,qr_code,summa,tg_id}) => {
+const PayListItem = ({order_id,qr_code,summa,tg_id,crypto}) => {
 
     const [isPay,setIsPay] = useState(false)
 
@@ -23,7 +23,12 @@ const PayListItem = ({order_id,qr_code,summa,tg_id}) => {
     return (
         <div className="manual_pay_panel-list_item">
             <p className='manual_pay_panel-list_item_num'>№{order_id}</p>
-            <p className='manual_pay_panel-list_item_text'>Сумма: {summa}р. <br /> TelegramId: {tg_id}</p>
+            <p className='manual_pay_panel-list_item_text'>Сумма: {summa}р. 
+                <br />
+                USDT: {crypto}
+                <br /> 
+                TelegramId: {tg_id}
+                </p>
             <div className='manual_pay_panel-list_item_pay_buttons'>
                 {isPay ? (
                     <p className='manual_pay_panel-list_item_done'>Оплачен</p>

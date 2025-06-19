@@ -1,0 +1,66 @@
+.history-filter-row {
+  display: flex;
+  gap: 12px;
+  margin: 18px 0 18px 0;
+}
+.history-filter-dropdown {
+  position: relative;
+  min-width: 120px;
+}
+.history-filter-btn {
+  width: 100%;
+  background: #232323;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 10px 18px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.history-filter-btn:focus {
+  outline: none;
+  background: #2c2c2c;
+}
+.history-filter-arrow {
+  margin-left: 8px;
+  font-size: 13px;
+}
+.history-filter-list-wrapper {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.history-filter-dropdown.open .history-filter-list-wrapper {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0);
+}
+.history-filter-list {
+  background: #232323;
+  border-radius: 14px;
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.history-filter-list li {
+  padding: 10px 18px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.15s;
+}
+.history-filter-list li.selected,
+.history-filter-list li:hover {
+  background: #2c2c2c;
+} 

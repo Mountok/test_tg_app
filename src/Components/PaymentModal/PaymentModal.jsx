@@ -1,25 +1,25 @@
 import { useNavigate } from 'react-router-dom';
 import './PaymentModal.css';
 import { useEffect, useState } from 'react';
-import { CheckOrderStatus, CreateOrder,  } from '../../utils/wallet';
+import { CheckOrderStatus, CreateOrder, } from '../../utils/wallet';
 import { FiChevronRight, FiChevronDown, FiCalendar, FiDollarSign } from 'react-icons/fi';
 import PaymentDetails from './PaymentDetails';
 
-const PaymentModal = ({ qrLink,telegramID, result, visible, data, onClose }) => {
+const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) => {
   if (!visible) return null;
   const [paymentState, setPaymentState] = useState("idle")
   const [orderID, setOrderID] = useState(null)
   const { amountRub, amountUsdt } = data;
   const [detailsOpen, setDetailsOpen] = useState(false);
 
-// после того как orderID установился, запускаем опрос статуса
+  // после того как orderID установился, запускаем опрос статуса
   useEffect(() => {
     if (!orderID) return;
 
     setPaymentState('in process');
     const interval = setInterval(async () => {
       try {
-        const resp = await CheckOrderStatus(orderID,telegramID);
+        const resp = await CheckOrderStatus(orderID, telegramID);
         console.log('Проверка статуса заказа:', resp.data);
         // если платёж завершён
         if (resp.data === true) {
@@ -39,14 +39,29 @@ const PaymentModal = ({ qrLink,telegramID, result, visible, data, onClose }) => 
   const handleButton = (e) => {
     e.preventDefault()
     // alert(qrLink)
+    const balanceControl = false
+
+    GetBalanceUSDT(id, addr).then((res) => {
+      setUSDTBalance(res.balance);
+      if (res.balance > amountUsdt) {
+        balanceControl = true
+      } else {
+        alert("Не достаточно USDT на балансе")
+      }
+    }).catch((err) => {
+      console.log(err)
+    })
+
+    if (!balanceControl) {return}
 
     console.log({
       telegramID: telegramID ? telegramID : 0,
       summa: amountRub,
-      qrlink : qrLink,
+      crypto: Number(amountUsdt.toFixed(4)),
+      qrlink: qrLink,
     })
 
-    CreateOrder(telegramID,amountRub, qrLink).then((resp) => {
+    CreateOrder(telegramID, amountRub, qrLink, Number(amountUsdt.toFixed(4))).then((resp) => {
       console.log(resp)
       setOrderID(resp.order_id);
     }).catch(err => {
@@ -112,7 +127,7 @@ const PaymentModal = ({ qrLink,telegramID, result, visible, data, onClose }) => 
             <div className="summary-amount">{amountUsdt.toFixed(4)} USDT</div>
           </div>
           {paymentState == "in process" ? <button className="modal-pay process">Обработка платежа</button>
-            : paymentState == "idle"  ? <button className="modal-pay" onClick={(e) => handleButton(e)}>Оплатить</button> : null
+            : paymentState == "idle" ? <button className="modal-pay" onClick={(e) => handleButton(e)}>Оплатить</button> : null
           }
         </div>
       )}

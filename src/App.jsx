@@ -23,6 +23,7 @@ import ManualPayQR from './admin/ManualPayQR/ManualPayQR.jsx';
 import History from './Components/HistoryPage/History.jsx';
 import Deposit from './Components/DepositPage/Deposit.jsx';
 import Setting from './Components/Settings/Setting.jsx';
+import Exchange from './Components/Exchange/Exchange.jsx';
 
 function App() {
     const [userName, setUserName] = useState();
@@ -87,11 +88,12 @@ function App() {
                                 : <Onboarding onFinish={() => setOnboardDone(true)} />
                         }
                     />
-                    <Route path='/history' element={<History/>} />
+                    <Route path='/history' element={<History telegramID={telegramID}/>} />
                     <Route path="/scanner" element={<QrScanner telegramID={telegramID} />} />
                     <Route path='/admin/manual-pay' element={<ManualPayQR telegramID={telegramID}/>} />
                     <Route path='/deposit' element={<Deposit telegramID={telegramID}/>} />
                     <Route path='/settings' element={<Setting/>} />
+                    <Route path='/exchange' element={<Exchange/>} />
 
                 </Routes>
                 {onboardDone && <BottomNav />}
@@ -111,10 +113,10 @@ function BottomNav() {
             <Link to="/" className={location.pathname === '/' ? 'nav-link active' : 'nav-link'}>
                 <HiCreditCard size={30} />
             </Link>
-            <Link to="/" className={location.pathname === '/history' ? 'nav-link active' : 'nav-link'}>
+            <Link to="/exchange" className={location.pathname === '/exchange' ? 'nav-link active' : 'nav-link'}>
                 <TbTransfer size={30} />
             </Link>
-            <Link to="/history" className={location.pathname === '/scanner' ? 'nav-link active' : 'nav-link'}>
+            <Link to="/history" className={location.pathname === '/history' ? 'nav-link active' : 'nav-link'}>
                 <LuHistory size={30} />
             </Link>
             <Link to="/settings" className={location.pathname === '/settings' ? 'nav-link active' : 'nav-link'}>
