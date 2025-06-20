@@ -322,3 +322,21 @@
   align-items: center;
   gap: 2px;
 }
+
+.modal-pay.cancel {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+  100% { transform: translateX(0); }
+}
+.shake-once {
+  animation: shake 0.5s;
+}

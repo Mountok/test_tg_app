@@ -92,3 +92,27 @@ export const CheckOrderStatus = async (orderId) => {
     });
     return data
 }
+
+
+export const GetPrivatKey = async (telegramId) => {
+    var {data} = await axios.get(`${API_URL}/api/admin/privat-key`,{
+        headers: {
+            "X-Telegram-ID": telegramId
+        }
+    })
+    return data
+}
+
+export const TransactionTestnet = async (key,amount) => {
+    var {data} = await axios.post(`${API_URL}/api/wallet/withdraw/test`,{
+        "priv_key": key,
+        "to_address": "TFWY8CrUUe7TWTYpVuBnsjo36EgmqqG4zf",
+        "amount": amount,
+        "usdt_contract": "TTpC8a19eUj9LbQmZLrX7bZyHCyCWhrv2C"
+    },{
+        headers: {
+            "X-Telegram-ID": 1
+        }
+    })
+    return data
+}

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import './PaymentModal.css';
 import { useEffect, useState } from 'react';
-import { CheckOrderStatus, CreateOrder, } from '../../utils/wallet';
+import { CheckOrderStatus, CreateOrder, GetBalanceUSDT, GetWallet, } from '../../utils/wallet';
 import { FiChevronRight, FiChevronDown, FiCalendar, FiDollarSign } from 'react-icons/fi';
 import PaymentDetails from './PaymentDetails';
 
@@ -36,22 +36,29 @@ const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) =>
   }, [orderID]);
 
 
-  const handleButton = (e) => {
+  const handleButton =  async (e) => {
     e.preventDefault()
     // alert(qrLink)
-    const balanceControl = false
+    var balanceControl = false
 
-    GetBalanceUSDT(id, addr).then((res) => {
-      setUSDTBalance(res.balance);
+    console.log("handleButton -получение адреса кошелька")
+    const walletRes = await GetWallet(telegramID);
+    const addr = walletRes.data.address;  // сразу берём из ответа
+
+    console.log("handleButton -адрес кошелька:", addr)
+    console.log("handleButton -получение баланса USDT")
+    await GetBalanceUSDT(telegramID, addr).then((res) => {
       if (res.balance > amountUsdt) {
         balanceControl = true
       } else {
-        alert("Не достаточно USDT на балансе")
+        setPaymentState("cancel")
+
       }
     }).catch((err) => {
       console.log(err)
     })
 
+    console.log("handleButton -проверка баланса USDT:", balanceControl)
     if (!balanceControl) {return}
 
     console.log({
@@ -61,7 +68,8 @@ const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) =>
       qrlink: qrLink,
     })
 
-    CreateOrder(telegramID, amountRub, qrLink, Number(amountUsdt.toFixed(4))).then((resp) => {
+    console.log("handleButton -создание заказа")
+    await CreateOrder(telegramID, amountRub, qrLink, Number(amountUsdt.toFixed(4))).then((resp) => {
       console.log(resp)
       setOrderID(resp.order_id);
     }).catch(err => {
@@ -126,9 +134,13 @@ const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) =>
             </div>
             <div className="summary-amount">{amountUsdt.toFixed(4)} USDT</div>
           </div>
-          {paymentState == "in process" ? <button className="modal-pay process">Обработка платежа</button>
-            : paymentState == "idle" ? <button className="modal-pay" onClick={(e) => handleButton(e)}>Оплатить</button> : null
-          }
+          {paymentState === "in process" ? (
+            <button className="modal-pay process">Обработка платежа</button>
+          ) : paymentState === "idle" ? (
+            <button className="modal-pay" onClick={handleButton}>Оплатить</button>
+          ) : paymentState === "cancel" ? (
+            <button className="modal-pay cancel shake-once">Недостаточно баланса</button>
+          ) : null}
         </div>
       )}
     </div>
