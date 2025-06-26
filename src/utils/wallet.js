@@ -76,7 +76,7 @@ export const GetBalanceUSDT = async (telegramId,address) => {
     var { data } = await axios.post(API_URL+"/api/wallet/check-balance",
         {
             "address": address,
-            "usdt_contract": "TTpC8a19eUj9LbQmZLrX7bZyHCyCWhrv2C"
+            "usdt_contract": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"
         }, 
         {
             headers:  {"X-Telegram-ID": telegramId ? telegramId : 0}

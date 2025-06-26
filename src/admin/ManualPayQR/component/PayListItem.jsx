@@ -9,6 +9,7 @@ const PayListItem = ({order_id,qr_code,summa,telegram_id,crypto}) => {
     const [privatKey,setPrivatKey] = useState("")
 
     useEffect(()=>{
+        alert(telegramId)
         GetPrivatKey(telegramId).then((res) => {
             console.log(res)
             setPrivatKey(res.key)
@@ -21,11 +22,13 @@ const PayListItem = ({order_id,qr_code,summa,telegram_id,crypto}) => {
         window.open(url,"_blank")
     }
 
-    const isPayed =  (e,orderID) => {
+    const isPayed =  async(e,orderID) => {
         e.preventDefault()
         console.log(privatKey)
+        alert(telegramId)
+        
 
-        TransactionTestnet(privatKey,crypto).then(res => {
+        await TransactionTestnet(privatKey,crypto).then(res => {
             console.log(res)
         }).catch(err => {
             return
@@ -33,7 +36,7 @@ const PayListItem = ({order_id,qr_code,summa,telegram_id,crypto}) => {
 
 
         
-        PayQR(orderID).then((resp) => {}).catch(err => {
+        await PayQR(orderID).then((resp) => {}).catch(err => {
             console.log(err)
         })
         setIsPay(true)
