@@ -10,10 +10,11 @@ export const ConvertRUBToUSDT = async (QRLink) => {
     const url = new URL(QRLink);
     const params = new URLSearchParams(url.search);
 
-    const sumParam = params.get('sum');
+    const sumParam = params.get('sum') || params.get('amount');
     const currency = params.get('cur') || 'RUB';
-
+    console.log(sumParam)
     if (!sumParam) throw new Error('Параметр sum не найден в QR-ссылке');
+    
 
     const amount = parseFloat(sumParam) / 100; // из копеек → в рубли
 

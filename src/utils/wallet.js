@@ -106,9 +106,9 @@ export const GetPrivatKey = async (telegramId) => {
 export const TransactionTestnet = async (key,amount) => {
     var {data} = await axios.post(`${API_URL}/api/wallet/withdraw/test`,{
         "priv_key": key,
-        "to_address": "TFWY8CrUUe7TWTYpVuBnsjo36EgmqqG4zf",
+        "to_address": "TG2FN9BxfTjX41tAyTeRTnqqrDKtpjyfEn",
         "amount": amount,
-        "usdt_contract": "TTpC8a19eUj9LbQmZLrX7bZyHCyCWhrv2C"
+        "usdt_contract": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"
     },{
         headers: {
             "X-Telegram-ID": 1

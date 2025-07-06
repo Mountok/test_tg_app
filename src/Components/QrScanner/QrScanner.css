@@ -15,13 +15,14 @@
     z-index: 0;
   }
   
-  #qr-reader video {
+  .qr-camera-video {
     width: 100vw !important;
     height: 100vh !important;
     object-fit: cover !important;
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 0;
   }
   
   .qr-overlay {
@@ -63,6 +64,69 @@
     padding: 0.5rem 1rem;
     border-radius: 12px;
     z-index: 3;
+  }
+
+  .qr-highlight-box {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    z-index: 3;
+  }
+
+  .qr-corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+  }
+
+  .qr-corner.top-left {
+    top: -3px;
+    left: -3px;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 12px 0 0 0;
+  }
+
+  .qr-corner.top-right {
+    top: -3px;
+    right: -3px;
+    border-left: none;
+    border-bottom: none;
+    border-radius: 0 12px 0 0;
+  }
+
+  .qr-corner.bottom-left {
+    bottom: -3px;
+    left: -3px;
+    border-right: none;
+    border-top: none;
+    border-radius: 0 0 0 12px;
+  }
+
+  .qr-corner.bottom-right {
+    bottom: -3px;
+    right: -3px;
+    border-left: none;
+    border-top: none;
+    border-radius: 0 0 12px 0;
+  }
+
+  .qr-scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00ff00, transparent);
+    animation: scan 2s linear infinite;
+  }
+
+  @keyframes scan {
+    0% { top: 0; }
+    100% { top: 100%; }
   }
   
   
@@ -164,4 +228,78 @@
     width: 30px;
     height: 30px;
   }
+}
+
+.qr-nodetect-modal {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #232323;
+  color: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
+  min-width: 220px;
+  max-width: 90vw;
+  padding: 14px 18px 14px 14px;
+  z-index: 1000;
+  font-size: 15px;
+  animation: fadeInUp 0.35s cubic-bezier(.4,1.4,.6,1) both;
+}
+.qr-nodetect-modal.leaving {
+  animation: fadeOutUp 0.35s cubic-bezier(.4,1.4,.6,1) both;
+}
+.qr-nodetect-close {
+  background: none;
+  border: none;
+  margin-left: 10px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+.qr-nodetect-close:hover {
+  background: #333;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translate(-50%, 24px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+@keyframes fadeOutUp {
+  from { opacity: 1; transform: translate(-50%, 0); }
+  to   { opacity: 0; transform: translate(-50%, -24px); }
+}
+
+.qr-processing-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #232323;
+  color: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
+  padding: 20px 24px;
+  z-index: 1000;
+  font-size: 16px;
+  animation: fadeInUp 0.35s cubic-bezier(.4,1.4,.6,1) both;
+}
+
+.qr-processing-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #444;
+  border-top: 2px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 12px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
