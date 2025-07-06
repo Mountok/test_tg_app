@@ -228,7 +228,11 @@ const QrScanner = ({telegramID}) => {
         qrLink={qrLink}
         visible={showModal}
         data={modalData}
-        onClose={() => setShowModal(false)}
+        onClose={() => {
+          setShowModal(false);
+          setQrLink('');
+          setModalData({ amountRub: 0, amountUsdt: 0 });
+        }}
       />
 
       {/* Минималистичная модалка */}
