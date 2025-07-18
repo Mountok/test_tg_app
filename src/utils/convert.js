@@ -15,8 +15,11 @@ export const ConvertRUBToUSDT = async (QRLink) => {
     console.log(sumParam)
     if (!sumParam) throw new Error('Параметр sum не найден в QR-ссылке');
     
-
-    const amount = parseFloat(sumParam) / 100; // из копеек → в рубли
+    // Проверяем, является ли это multiqr.ru - там суммы уже в рублях
+    const isMultiQR = url.hostname === 'multiqr.ru';
+    const amount = isMultiQR 
+      ? parseFloat(sumParam) // для multiqr.ru сумма уже в рублях
+      : parseFloat(sumParam) / 100; // для СБП и других - из копеек в рубли
 
     const response = await axios.post(API_URL+'/api/wallet/convert', {
       amount,

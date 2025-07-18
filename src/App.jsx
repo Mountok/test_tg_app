@@ -24,6 +24,7 @@ import History from './Components/HistoryPage/History.jsx';
 import Deposit from './Components/DepositPage/Deposit.jsx';
 import Setting from './Components/Settings/Setting.jsx';
 import Exchange from './Components/Exchange/Exchange.jsx';
+import AdminWalletsHistoryPage from './admin/ManualPayQR/component/AdminWalletsHistoryPage.jsx';
 
 function App() {
     const [userName, setUserName] = useState();
@@ -91,6 +92,7 @@ function App() {
                     <Route path='/history' element={<History telegramID={telegramID}/>} />
                     <Route path="/scanner" element={<QrScanner telegramID={telegramID} />} />
                     <Route path='/admin/manual-pay' element={<ManualPayQR telegramID={telegramID}/>} />
+                    <Route path='/admin/wallets-history' element={<AdminWalletsHistoryPage />} />
                     <Route path='/deposit' element={<Deposit telegramID={telegramID}/>} />
                     <Route path='/settings' element={<Setting/>} />
                     <Route path='/exchange' element={<Exchange/>} />

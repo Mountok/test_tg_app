@@ -56,7 +56,7 @@ export default function WalletPage({ username }) {
 
                 // 2) После успешного GetBalanceUSDT — грузим баланс
                 GetBalanceUSDT(id,addr).then((res) => {
-                    setUSDTBalance(res.balance);
+                    setUSDTBalance(res.available_balance);
                 }).catch((err) => {
                     console.log(err)
                 })

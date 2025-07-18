@@ -3,8 +3,10 @@ import "./ManualPayQR.css"
 import PayListItem from './component/PayListItem'
 import { IoReloadCircleOutline } from "react-icons/io5";
 import { GetOrders } from '../../utils/wallet';
+import { Routes, Route, Link } from 'react-router-dom';
+import AdminWalletsHistoryPage from './component/AdminWalletsHistoryPage';
 
-const ManualPayQR = ({telegramID}) => {
+const ManualPayQR = () => {
     const [ordersList, setOrdersList] = useState([])
     const [isReload, setIsReload] = useState(false)
 
@@ -36,17 +38,27 @@ const ManualPayQR = ({telegramID}) => {
 
 
     return (
-        <div className="manual_pay_panel">
-            <div className="manual_pay_panel-header">
-                <h1>Active Orders</h1>
-                <IoReloadCircleOutline className='manual_pay_panel-list_reload' />
-            </div>
-            <div className="manual_pay_panel-body">
+        <div>
+            <nav style={{ marginBottom: 18 }}>
+                <Link to="/admin/wallets-history" style={{ marginRight: 16 }}>История по кошелькам</Link>
+                {/* другие ссылки, если есть */}
+            </nav>
+            <Routes>
+                <Route path="/admin/wallets-history" element={<AdminWalletsHistoryPage />} />
+                {/* другие роуты, если есть */}
+            </Routes>
+            <div className="manual_pay_panel">
+                <div className="manual_pay_panel-header">
+                    <h1>Active Orders</h1>
+                    <IoReloadCircleOutline className='manual_pay_panel-list_reload' />
+                </div>
+                <div className="manual_pay_panel-body">
 
-                <div className="manual_pay_panel-list">
-                    {ordersList.map(el => (
-                        <PayListItem crypto={el.crypto} key={el.id} order_id={el.id} qr_code={el.qr_code} summa={el.summa} telegram_id={el.telegram_id}/>
-                    ))}
+                    <div className="manual_pay_panel-list">
+                        {ordersList.map(el => (
+                            <PayListItem crypto={el.crypto} key={el.id} order_id={el.id} qr_code={el.qr_code} summa={el.summa} telegram_id={el.telegram_id}/>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

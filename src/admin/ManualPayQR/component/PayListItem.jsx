@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import "../ManualPayQR.css"
-import { GetPrivatKey, PayQR, TransactionTestnet } from '../../../utils/wallet'
+import { GetPrivatKey, GetWallet, PayQR, TransactionTestnet, TransactionVirtual } from '../../../utils/wallet'
 const PayListItem = ({order_id,qr_code,summa,telegram_id,crypto}) => {
 
     const [isPay,setIsPay] = useState(false)
@@ -24,16 +24,23 @@ const PayListItem = ({order_id,qr_code,summa,telegram_id,crypto}) => {
 
     const isPayed =  async(e,orderID) => {
         e.preventDefault()
-        console.log(privatKey)
         alert(telegramId)
-        
+        const walletRes = await GetWallet(telegramId);
+        const addr = walletRes.data.address;  // сразу берём из ответа
 
-        await TransactionTestnet(privatKey,crypto).then(res => {
+        // await TransactionTestnet(privatKey,crypto).then(res => {
+        //     console.log(res)
+        // }).catch(err => {
+        //     return
+        // }) 
+        
+        await TransactionVirtual(crypto,addr).then(res => {
+            alert("addr for vtx =",addr)
+            alert(res)
             console.log(res)
         }).catch(err => {
             return
         }) 
-
 
         
         await PayQR(orderID).then((resp) => {}).catch(err => {

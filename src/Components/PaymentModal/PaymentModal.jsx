@@ -44,11 +44,11 @@ const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) =>
     console.log("handleButton -получение адреса кошелька")
     const walletRes = await GetWallet(telegramID);
     const addr = walletRes.data.address;  // сразу берём из ответа
-
     console.log("handleButton -адрес кошелька:", addr)
+    
     console.log("handleButton -получение баланса USDT")
     await GetBalanceUSDT(telegramID, addr).then((res) => {
-      if (res.balance > amountUsdt) {
+      if (res.available_balance > amountUsdt) {
         balanceControl = true
       } else {
         setPaymentState("cancel")

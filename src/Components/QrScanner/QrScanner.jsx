@@ -232,6 +232,8 @@ const QrScanner = ({telegramID}) => {
           setShowModal(false);
           setQrLink('');
           setModalData({ amountRub: 0, amountUsdt: 0 });
+          // Останавливаем сканер при закрытии модального окна
+          stopScanner();
         }}
       />
 

@@ -72,6 +72,9 @@ export const GetBalanceTRX = async (telegramId,address) => {
 
 
 
+
+
+
 export const GetBalanceUSDT = async (telegramId,address) => {
     var { data } = await axios.post(API_URL+"/api/wallet/check-balance",
         {
@@ -116,3 +119,21 @@ export const TransactionTestnet = async (key,amount) => {
     })
     return data
 }
+export const TransactionVirtual = async (amount,addr) => {
+    var {data} = await axios.post(`${API_URL}/api/wallet/virtual-withdraw`,{
+        "address": addr,
+        "amount": amount
+    },{
+        headers: {
+            "X-Telegram-ID": 1
+        }
+    })
+    return data
+}
+
+export const GetAdminWalletsWithHistory = async (adminSecret) => {
+    const { data } = await axios.get(API_URL + "/api/admin/wallets-with-history", {
+        headers: { 'X-Admin-Secret': adminSecret }
+    });
+    return data;
+}  
