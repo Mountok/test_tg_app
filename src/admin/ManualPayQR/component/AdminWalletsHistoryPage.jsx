@@ -35,13 +35,16 @@ const AdminWalletsHistoryPage = () => {
     if (!adminSecret) return;
     setLoading(true);
     GetAdminWalletsWithHistory(adminSecret)
-      .then(setWallets)
+      .then(data => {
+        setWallets(data);
+        console.log('wallets:', data);
+      })
       .catch(e => setError(e.message))
       .finally(() => setLoading(false));
   }, [adminSecret]);
 
   const filteredHistory = (history) =>
-    history.filter(item =>
+    (history || []).filter(item =>
       (typeFilter ? item.type === typeFilter : true) &&
       (statusFilter ? item.status === statusFilter : true)
     );
@@ -78,7 +81,7 @@ const AdminWalletsHistoryPage = () => {
                   {statusOptions.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
                 </select>
               </div>
-              <table style={{ width: '100%', fontSize: 15, borderCollapse: 'collapse' }}>
+              <table className="admin-wallets-history-table" style={{ width: '100%', fontSize: 15, borderCollapse: 'collapse' }}>
                 <thead>
                   <tr style={{ background: '#f3f3f3', color: 'black' }}>
                     <th style={{ textAlign: 'left', padding: 6 }}>ID</th>
@@ -91,8 +94,8 @@ const AdminWalletsHistoryPage = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredHistory(wallet.history).map(item => (
-                    <tr key={item.id}>
+                  {filteredHistory(wallet.history || []).map((item, idx) => (
+                    <tr key={item.id + '-' + idx}>
                       <td style={{ padding: 6 }}>{item.id}</td>
                       <td>{item.amount}</td>
                       <td>{item.type}</td>
@@ -102,7 +105,7 @@ const AdminWalletsHistoryPage = () => {
                       <td style={{ fontSize: 12 }}>{item.tx_hash || '-'}</td>
                     </tr>
                   ))}
-                  {filteredHistory(wallet.history).length === 0 && (
+                  {filteredHistory(wallet.history || []).length === 0 && (
                     <tr><td colSpan={7} style={{ textAlign: 'center', color: '#aaa', padding: 12 }}>Нет операций</td></tr>
                   )}
                 </tbody>

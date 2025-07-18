@@ -60,6 +60,7 @@
 .admin-wallets-history-table th, .admin-wallets-history-table td {
   padding: 7px 6px;
   border-bottom: 1px solid #f0f0f0;
+  color: #222;
 }
 .admin-wallets-history-table th {
   background: #f3f3f3;
@@ -67,6 +68,12 @@
 }
 .admin-wallets-history-table tr:last-child td {
   border-bottom: none;
+}
+.admin-wallets-history-table tr:nth-child(even) {
+  background: #f6f7fa;
+}
+.admin-wallets-history-table tr:nth-child(odd) {
+  background: #fff;
 }
 .admin-wallets-history-total {
   margin-top: 12px;
