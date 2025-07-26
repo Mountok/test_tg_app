@@ -41,10 +41,10 @@ export default function Onboarding({ onFinish }) {
       try {
         setLoading(true);
         const { id } = TelegramInfo() || {};
-        alert("tgid - ", id)
+        // alert("tgid - ", id)
         const wallet = await CreateWallet(id);
         const addr = wallet?.data?.address || '';
-        alert(JSON.stringify(addr))
+        // alert(JSON.stringify(addr))
         setWalletId(addr); 
       } catch (err) {
         console.error('Ошибка создания кошелька:', err);

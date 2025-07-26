@@ -46,7 +46,7 @@ export const PayQR = async (orderId) => {
 
 
 export const CreateOrder = async (telegramId, summa, qr_link,crypto) => {
-    alert(crypto)
+    // alert(crypto)
     var { data } = await axios.post(API_URL+"/api/wallet/create/sbp/order", {
 	    "amount":summa,
         "crypto": crypto,

@@ -9,7 +9,7 @@ const PayListItem = ({order_id,qr_code,summa,telegram_id,crypto}) => {
     const [privatKey,setPrivatKey] = useState("")
 
     useEffect(()=>{
-        alert(telegramId)
+        // alert(telegramId)
         GetPrivatKey(telegramId).then((res) => {
             console.log(res)
             setPrivatKey(res.key)
@@ -24,7 +24,7 @@ const PayListItem = ({order_id,qr_code,summa,telegram_id,crypto}) => {
 
     const isPayed =  async(e,orderID) => {
         e.preventDefault()
-        alert(telegramId)
+        // alert(telegramId)
         const walletRes = await GetWallet(telegramId);
         const addr = walletRes.data.address;  // сразу берём из ответа
 
@@ -35,8 +35,8 @@ const PayListItem = ({order_id,qr_code,summa,telegram_id,crypto}) => {
         // }) 
         
         await TransactionVirtual(crypto,addr).then(res => {
-            alert("addr for vtx =",addr)
-            alert(res)
+            // alert("addr for vtx =",addr)
+            // alert(res)
             console.log(res)
         }).catch(err => {
             return
