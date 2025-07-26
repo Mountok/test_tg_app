@@ -37,21 +37,31 @@ self.addEventListener('activate', (event) => {
 
 // Перехват запросов
 self.addEventListener('fetch', (event) => {
-  // Пропускаем запросы к API и динамические ресурсы
-  if (event.request.url.includes('/api/') || 
-      event.request.url.includes('chrome-extension') ||
-      event.request.url.includes('safari-extension')) {
+  if (
+    event.request.url.includes('/api/') ||
+    event.request.url.includes('chrome-extension') ||
+    event.request.url.includes('safari-extension')
+  ) {
     return;
   }
 
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
-        // Возвращаем кэшированный ответ или делаем сетевой запрос
-        return response || fetch(event.request);
+        return response || fetch(event.request).then((networkResponse) => {
+          // Проверяем, что ответ не HTML для CSS/JS
+          const contentType = networkResponse.headers.get('content-type') || '';
+          if (
+            (event.request.destination === 'style' && !contentType.includes('text/css')) ||
+            (event.request.destination === 'script' && !contentType.includes('javascript'))
+          ) {
+            // Возвращаем пустой ответ или 404
+            return new Response('', { status: 404, statusText: 'Not Found' });
+          }
+          return networkResponse;
+        });
       })
       .catch(() => {
-        // Fallback для офлайн-режима
         if (event.request.destination === 'image') {
           return caches.match('/images/logo.png');
         }

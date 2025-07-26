@@ -137,3 +137,19 @@ export const GetAdminWalletsWithHistory = async (adminSecret) => {
     });
     return data;
 }  
+
+
+export const GetEstimateTRX = async (address,amount) => {
+    const {data} = await axios.post(API_URL + "/api/wallet/estimate-trx", {
+        "from_address": address,
+        "to_address": "TG2FN9BxfTjX41tAyTeRTnqqrDKtpjyfEn",
+        "amount": amount,
+        "usdt_contract": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"
+        
+    }, {
+        headers: {
+            "X-Telegram-ID": 1
+        }
+    })
+    return data
+}

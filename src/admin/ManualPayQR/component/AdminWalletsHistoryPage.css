@@ -80,3 +80,21 @@
   font-weight: 500;
   font-size: 16px;
 } 
+
+
+.wallet_controll{
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+
+}
+.wallet_controll button {
+  padding: 10px 5px;
+  font-size: 14px;
+  border: none;
+  border-radius: 10px;
+  background-color: #000000;
+  color: white;
+}

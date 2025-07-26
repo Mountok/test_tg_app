@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './AdminWalletsHistoryPage.css';
-import { GetAdminWalletsWithHistory } from '../../../utils/wallet';
+import { GetAdminWalletsWithHistory, GetEstimateTRX } from '../../../utils/wallet';
 
 const typeOptions = [
   { value: '', label: 'Все типы' },
@@ -25,7 +25,8 @@ const AdminWalletsHistoryPage = () => {
 
   useEffect(() => {
     if (!adminSecret) {
-      const key = window.prompt('Введите секретный ключ для доступа к истории кошельков:');
+
+      const key = prompt('Введите секретный ключ для доступа к истории кошельков:');
       if (!key) return;
       setAdminSecret(key);
     }
@@ -48,6 +49,21 @@ const AdminWalletsHistoryPage = () => {
       (typeFilter ? item.type === typeFilter : true) &&
       (statusFilter ? item.status === statusFilter : true)
     );
+
+  const handleEstimateTrx = async (address, amount) => {
+    try {
+      const data = await GetEstimateTRX(address, amount);
+      alert(
+        `Комиссия TRX:\n` +
+        `Не хватает TRX: ${data.missing_trx}\n` +
+        `Требуется TRX: ${data.required_trx}\n` +
+        `Текущий TRX: ${data.current_trx}\n` +
+        `Текущий USDT: ${data.current_usdt}`
+      );
+    } catch (e) {
+      alert(`Ошибка при получении комиссии: ${e.message}`);
+    }
+  };
 
   const totalAmount = (history) =>
     filteredHistory(history).reduce((sum, item) => sum + (item.amount || 0), 0);
@@ -110,8 +126,15 @@ const AdminWalletsHistoryPage = () => {
                   )}
                 </tbody>
               </table>
-              <div style={{ marginTop: 12, fontWeight: 500 }}>
+              <div style={{ color: "black", marginTop: 12, fontWeight: 500 }}>
                 Итого по фильтру: {totalAmount(wallet.history)}
+              </div>
+
+              <div className='wallet_controll'>
+                <button onClick={() => handleEstimateTrx(wallet.address, totalAmount(wallet.history))}>
+                  Посчитать комиссию TRX
+                </button>
+                <button>Перевести USDT</button>
               </div>
             </div>
           )}
