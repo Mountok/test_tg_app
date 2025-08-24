@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react';
 import { CheckOrderStatus, CreateOrder, GetBalanceUSDT, GetWallet, } from '../../utils/wallet';
 import { FiChevronRight, FiChevronDown, FiCalendar, FiDollarSign } from 'react-icons/fi';
 import PaymentDetails from './PaymentDetails';
+import { useI18n } from '../../i18n/I18nProvider.jsx';
 
 const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) => {
   if (!visible) return null;
+  const { t } = useI18n();
   const [paymentState, setPaymentState] = useState("idle")
   const [orderID, setOrderID] = useState(null)
   const { amountRub, amountUsdt } = data;
@@ -85,8 +87,8 @@ const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) =>
       {paymentState === 'success' ? (
         <div className="modal-success-fullscreen">
           <div className="modal-success-header">
-            <button className="modal-success-back" onClick={onClose} aria-label="Назад">&#8592;</button>
-            <span className="modal-success-title">Информация о платеже</span>
+            <button className="modal-success-back" onClick={onClose} aria-label={t('common.back') || 'Назад'}>&#8592;</button>
+            <span className="modal-success-title">{t('payment.info') || 'Информация о платеже'}</span>
           </div>
           <div className="modal-success-content">
             <div className="modal-success-checkmark">
@@ -94,11 +96,11 @@ const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) =>
                 <span className="modal-success-check">&#10003;</span>
               </div>
             </div>
-            <div className="modal-success-text">Оплата успешно проведена!</div>
+            <div className="modal-success-text">{t('payment.success') || 'Оплата успешно проведена!'}</div>
             <div className="modal-success-amount">{amountUsdt.toFixed(4)} USDT</div>
             <PaymentDetails open={detailsOpen} onToggle={() => setDetailsOpen(o => !o)} amountUsdt={amountUsdt} />
           </div>
-          <button className="modal-success-btn" onClick={onClose}>Вернуться назад</button>
+          <button className="modal-success-btn" onClick={onClose}>{t('common.back') || 'Вернуться назад'}</button>
         </div>
       ) : (
         <div className="modal-container">
@@ -110,12 +112,12 @@ const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) =>
                 <div className="logo-subtitle">wallet</div>
               </span>
             </div>
-            {paymentState == "in process" ? (null) : (<button className="modal-close" onClick={onClose}>×</button>)}
+            {paymentState == "in process" ? (null) : (<button className="modal-close" onClick={onClose} aria-label={t('common.close') || 'Закрыть'}>×</button>)}
           </div>
           <div className="modal-box dark">
-            <div className="modal-label">Сумма</div>
+            <div className="modal-label">{t('payment.amount') || 'Сумма'}</div>
             <div className="modal-value">{amountRub} RUB</div>
-            <div className="modal-subtext">Курс обмена</div>
+            <div className="modal-subtext">{t('payment.rate') || 'Курс обмена'}</div>
             <div className="modal-rate">USDT → RUB</div>
           </div>
           <div className="modal-box light">
@@ -129,17 +131,17 @@ const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) =>
           </div>
           <div className="modal-summary">
             <div>
-              <div className="summary-label">Итого:</div>
-              <div className="summary-subtext">Комиссия x%</div>
+              <div className="summary-label">{t('payment.total') || 'Итого:'}</div>
+              <div className="summary-subtext">{t('payment.fee') || 'Комиссия x%'}</div>
             </div>
             <div className="summary-amount">{amountUsdt.toFixed(4)} USDT</div>
           </div>
           {paymentState === "in process" ? (
-            <button className="modal-pay process">Обработка платежа</button>
+            <button className="modal-pay process">{t('payment.processing') || 'Обработка платежа'}</button>
           ) : paymentState === "idle" ? (
-            <button className="modal-pay" onClick={handleButton}>Оплатить</button>
+            <button className="modal-pay" onClick={handleButton}>{t('payment.pay') || 'Оплатить'}</button>
           ) : paymentState === "cancel" ? (
-            <button className="modal-pay cancel shake-once">Недостаточно баланса</button>
+            <button className="modal-pay cancel shake-once">{t('payment.noBalance') || 'Недостаточно баланса'}</button>
           ) : null}
         </div>
       )}

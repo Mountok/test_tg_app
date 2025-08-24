@@ -55,7 +55,7 @@
   
   .logo-subtitle {
     font-size: 0.8rem;
-    color: #aaa;
+color: var(--muted);
   }
   
   .modal-close {
@@ -120,7 +120,7 @@
   
   .token-balance {
     font-size: 0.85rem;
-    color: #aaa;
+color: var(--muted);
   }
   
   .modal-summary {
@@ -135,7 +135,7 @@
   
   .summary-subtext {
     font-size: 0.8rem;
-    color: #888;
+color: var(--muted);
   }
   
   .summary-amount {
@@ -166,7 +166,7 @@
   position: fixed;
   top: 0; left: 0;
   width: 100vw; height: 100vh;
-  background: #000;
+background: var(--bg);
   z-index: 10001;
   display: flex;
   flex-direction: column;
@@ -186,14 +186,14 @@
 .modal-success-back {
   background: none;
   border: none;
-  color: #fff;
+color: var(--text);
   font-size: 2.2rem;
   margin-left: 18px;
   margin-right: 12px;
   cursor: pointer;
 }
 .modal-success-title {
-  color: #fff;
+color: var(--text);
   font-size: 1.25rem;
   font-weight: 500;
 }
@@ -226,12 +226,12 @@
   box-shadow: 0 0 0 24px rgba(255,226,0,0.15), 0 0 0 48px rgba(255,226,0,0.07);
 }
 .modal-success-check {
-  color: #000;
+color: var(--text);
   font-size: 4.5rem;
   font-weight: bold;
 }
 .modal-success-text {
-  color: #fff;
+color: var(--text);
   font-size: 0.8rem;
   margin-top: 8px;
   text-align: center;
@@ -246,7 +246,7 @@
   width: 90vw;
   max-width: 420px;
   background: #ffe200;
-  color: #000;
+color: var(--text);
   border: none;
   padding: 1.1rem 0;
   border-radius: 18px;
@@ -267,7 +267,7 @@
   max-width: 420px;
   margin: 0 auto 18px auto;
   border-radius: 18px;
-  background: #181818;
+background: var(--card);
   overflow: hidden;
   transition: box-shadow 0.2s;
   box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
@@ -276,7 +276,7 @@
   width: 100%;
   background: none;
   border: none;
-  color: #aaa;
+color: var(--muted);
   font-size: 1.1rem;
   font-weight: 400;
   padding: 10px 22px 10px 18px;
@@ -289,7 +289,7 @@
   transition: background 0.15s;
 }
 .modal-details-toggle:hover {
-  background: #222;
+background: var(--bg-secondary);
 }
 .modal-details-content {
   max-height: 0;
@@ -308,7 +308,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px dashed #333;
+border-bottom: 1px dashed var(--border);
   padding: 12px 0 0 0;
   font-size: 1.05rem;
 }
@@ -316,7 +316,7 @@
   border-bottom: none;
 }
 .modal-details-value {
-  color: #fff;
+color: var(--text);
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -325,7 +325,7 @@
 
 .modal-pay.cancel {
   background: #e74c3c;
-  color: #fff;
+color: var(--text);
   border: none;
 }
 

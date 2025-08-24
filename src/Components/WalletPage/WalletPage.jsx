@@ -6,15 +6,17 @@ import { BsQrCodeScan } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { CreateWallet, GetBalanceTRX, GetBalanceUSDT, GetWallet } from "../../utils/wallet.js";
 import { GoPlus } from "react-icons/go";
-import { LuDownload } from "react-icons/lu";
+import { LuDownload, LuUpload } from "react-icons/lu";
 import TransferItem from "../TransferItem/TransferItem.jsx";
 
 import { PiHeadsetFill } from "react-icons/pi";
 import PriceCard from "../PriceCard/PriceCard.jsx";
 import FavoritesCoin from "../FavoritesCoin/FavoritesCoin.jsx";
 import { TelegramInfo } from "../../utils/auth.js";
+import { useI18n } from "../../i18n/I18nProvider.jsx";
 
 export default function WalletPage({ username }) {
+    const { t } = useI18n();
     const navigateTo = useNavigate();
     const [address, setAddress] = useState();
     const [balance, setBalance] = useState(0);
@@ -99,7 +101,7 @@ export default function WalletPage({ username }) {
                 <div className="wallet-container_header_top">
                     <div className="wallet-container_header_top_user">
                         <div className="wallet-container_header_top_user_name">
-                            <p>Добрый день,</p>
+                            <p>{t('wallet.greeting')}</p>
                             <p>{username}</p>
                         </div>
                     </div>
@@ -113,7 +115,7 @@ export default function WalletPage({ username }) {
                     <div className="wallet-container_header_balance_top">
                         {idBalanceCreated ?
                             <>
-                                <p><span>Мой кошелек <sup>v0.06</sup></span></p>
+                                <p><span>Wallet<sup>v0.06</sup></span></p>
                                 <p><sup className="wallet-container_header_balance_top_address"> {wallet.address} - {trxBalance}TRX </sup></p>
                             </>
                             :
@@ -126,7 +128,7 @@ export default function WalletPage({ username }) {
                         }
                     </div>
                     <div className="wallet-container_header_balance_bottom">
-                        <p>Баланс в USDT</p>
+                        <p>{t('wallet.balanceUSDT')}</p>
                         <p>{usdtBalance}</p>
                     </div>
                 </div>
@@ -134,18 +136,22 @@ export default function WalletPage({ username }) {
                 <div className="wallet-container_header_buttons">
                     <button onClick={() => navigateTo("/deposit")} className="wallet-container_header_button_send">
                         <LuDownload />
-                        <p>Пополнить</p>
+                        <p>{t('wallet.topUp')}</p>
+                    </button>
+                    <button onClick={() => navigateTo("/withdraw")} className="wallet-container_header_button_withdraw">
+                        <LuUpload />
+                        <p>{t('wallet.withdraw') || 'Вывод'}</p>
                     </button>
                     <button onClick={() => navigateTo("/scanner")} className="wallet-container_header_button_qr">
                         <BsQrCodeScan />
-                        <p>Оплатить по QR</p>
+                        <p>{t('wallet.payByQR')}</p>
                     </button>
                 </div>
             </div>
 
             <div className="wallet-container_history">
                 <div className="favorites-list">
-                    <h2>Избранное</h2>
+                    <h2>{t('favorites.title')}</h2>
                     <div className="favorites-cards">
                         <PriceCard
                             coinId="ethereum"

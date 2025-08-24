@@ -41,6 +41,8 @@ const ManualPayQR = () => {
         <div>
             <nav style={{ marginBottom: 18 }}>
                 <Link to="/admin/wallets-history" style={{ marginRight: 16 }}>История по кошелькам</Link>
+                <Link to="/admin/withdraw-orders" style={{ marginRight: 16 }}>Заказы на вывод</Link>
+                <Link to="/admin/withdraw-history" style={{ marginRight: 16 }}>История выводов</Link>
                 {/* другие ссылки, если есть */}
             </nav>
             <Routes>

@@ -1,0 +1,246 @@
+.withdraw-order-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease;
+}
+
+.withdraw-order-card:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.withdraw-order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.order-amount {
+    display: flex;
+    align-items: center;
+}
+
+.amount-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.order-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-badge.pending {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.status-badge.completed {
+    background-color: #d1edff;
+    color: #0066cc;
+    border: 1px solid #74b9ff;
+}
+
+.withdraw-order-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.copy-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.copy-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.copy-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 8px 12px;
+    transition: border-color 0.2s ease;
+}
+
+.copy-container:hover {
+    border-color: #ced4da;
+}
+
+.copy-text {
+    flex: 1;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #495057;
+    word-break: break-all;
+    line-height: 1.4;
+}
+
+.copy-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    color: #6c757d;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+}
+
+.copy-button:hover {
+    background-color: #e9ecef;
+    color: #495057;
+}
+
+.copy-button.copied {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.copy-button svg {
+    width: 14px;
+    height: 14px;
+}
+
+.process-button {
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.process-button:hover:not(:disabled) {
+    background: #218838;
+    transform: translateY(-1px);
+}
+
+.process-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.process-button.processing {
+    background: #6c757d;
+}
+
+.process-button svg {
+    width: 12px;
+    height: 12px;
+}
+
+.process-button svg.spinning {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.order-date {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 8px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.date-value {
+    font-size: 13px;
+    color: #495057;
+    font-family: 'Courier New', monospace;
+}
+
+.order-id {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 8px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.id-value {
+    font-size: 13px;
+    color: #495057;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 480px) {
+    .withdraw-order-card {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+    
+    .withdraw-order-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .amount-value {
+        font-size: 16px;
+    }
+    
+    .copy-text {
+        font-size: 12px;
+    }
+    
+    .copy-container {
+        padding: 6px 8px;
+    }
+    
+    .process-button {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+    
+    .order-status {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}

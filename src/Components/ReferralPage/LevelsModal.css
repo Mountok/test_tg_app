@@ -1,0 +1,96 @@
+.levels-modal {
+  max-width: 100%;
+}
+
+.levels-table-container {
+  overflow-x: auto;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+.levels-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #0b0b0b;
+}
+
+.levels-table th,
+.levels-table td {
+  padding: 12px 8px;
+  text-align: left;
+  border-bottom: 1px solid #333;
+}
+
+.levels-table th {
+  background-color: #181818;
+  color: #FFF001;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.levels-table td {
+  color: #fff;
+  font-size: 14px;
+}
+
+.levels-table tr:last-child td {
+  border-bottom: none;
+}
+
+.levels-table tr:hover {
+  background-color: rgba(255, 240, 1, 0.05);
+}
+
+.levels-table .commission {
+  color: #FFF001;
+  font-weight: 600;
+}
+
+.levels-table .requirements {
+  color: #ccc;
+  font-size: 12px;
+}
+
+.definition {
+  background-color: rgba(255, 240, 1, 0.1);
+  border: 1px solid rgba(255, 240, 1, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.definition h4 {
+  margin: 0 0 8px 0;
+  color: #FFF001;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.definition p {
+  margin: 0;
+  color: #ccc;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* Адаптив */
+@media (max-width: 600px) {
+  .levels-table {
+    font-size: 12px;
+  }
+  
+  .levels-table th,
+  .levels-table td {
+    padding: 8px 6px;
+  }
+  
+  .levels-table th {
+    font-size: 10px;
+  }
+  
+  .levels-table .requirements {
+    font-size: 11px;
+  }
+}

@@ -2,11 +2,16 @@ import React, { useEffect, useState } from 'react'
 import './Setting.css'
 import { BiSolidLock } from "react-icons/bi";
 import { RiTelegram2Fill } from "react-icons/ri";
+import { FiUsers } from "react-icons/fi";
 import { TelegramInfo } from '../../utils/auth';
+import { useNavigate } from 'react-router-dom';
 import Design from './Design/Design';
 import Privacy from './Privacy/Privacy';
+import { useI18n } from '../../i18n/I18nProvider';
 
 const Setting = () => {
+    const navigate = useNavigate();
+    const { t } = useI18n();
     const [userInfo, setUserinfo] = useState("username")
     const [photo_url, setPhoto_url] = useState("")
     const [showDesign, setShowDesign] = useState(false);
@@ -20,8 +25,8 @@ const Setting = () => {
     return (
         <div className="settings-container">
             <div className="settings-header">
-                <button className="settings-back-btn">&#8592;</button>
-                <span className="settings-title">Настройки</span>
+                <button className="settings-back-btn" onClick={() => navigate(-1)}>&#8592;</button>
+                <span className="settings-title">{t('settings.title')}</span>
             </div>
             <div className="settings-profile">
                 <div className="settings-avatar">
@@ -31,13 +36,13 @@ const Setting = () => {
                 </div>
                 <span className="settings-username">@{userInfo}</span>
             </div>
-            <div className="settings-section-label">Параметры</div>
+            <div className="settings-section-label">{t('settings.parameters')}</div>
             <div className="settings-section">
                 <div className="settings-item" onClick={() => setShowPrivacy(true)}>
                     <span className="settings-icon yellow">
                         <BiSolidLock />
                     </span>
-                    <span>Приватность</span>
+                    <span>{t('settings.privacy')}</span>
                     <span className="settings-arrow">&gt;</span>
                 </div>
                 <div className="settings-item" onClick={() => setShowDesign(true)}>
@@ -53,26 +58,36 @@ const Setting = () => {
                             </defs>
                         </svg>
                     </span>
-                    <span>Оформление</span>
+                    <span>{t('settings.design')}</span>
+                    <span className="settings-arrow">&gt;</span>
+                </div>
+                <div className="settings-item" onClick={() => navigate('/referral')}>
+                    <span className="settings-icon yellow">
+                        <FiUsers />
+                    </span>
+                    <div className="settings-item-content">
+                        <span className="settings-item-title">{t('settings.referral.title')}</span>
+                        <span className="settings-item-subtitle">{t('settings.referral.subtitle')}</span>
+                    </div>
                     <span className="settings-arrow">&gt;</span>
                 </div>
             </div>
-            <div className="settings-section-label">О нас</div>
+            <div className="settings-section-label">{t('settings.aboutUs')}</div>
             <div className="settings-section">
-                <div className="settings-item">
+                <div className="settings-item" onClick={() => window.open('https://t.me/platapaynews', '_blank')}>
                     <span className="settings-icon yellow">
                         <RiTelegram2Fill />
                     </span>
-                    <span>Официальные аккаунты</span>
+                    <span>{t('settings.officialAccounts')}</span>
                     <span className="settings-arrow">&gt;</span>
                 </div>
-                <div className="settings-item">
+                <div className="settings-item" onClick={() => window.open('https://t.me/Platapay_support_bot', '_blank')}>
                     <span className="settings-icon yellow">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10 2C12.1217 2 14.1566 2.84285 15.6569 4.34315C17.1571 5.84344 18 7.87827 18 10C18 12.1217 17.1571 14.1566 15.6569 15.6569C14.1566 17.1571 12.1217 18 10 18C7.87827 18 5.84344 17.1571 4.34315 15.6569C2.84285 14.1566 2 12.1217 2 10C2 7.87827 2.84285 5.84344 4.34315 4.34315C5.84344 2.84285 7.87827 2 10 2ZM10.424 5.41943C9.49372 5.41943 8.76457 5.68343 8.224 6.21143C7.67086 6.73943 7.40686 7.46857 7.40686 8.39886H8.84C8.84 7.87086 8.94057 7.456 9.15429 7.16686C9.39314 6.81486 9.78286 6.65143 10.336 6.65143C10.7634 6.65143 11.1029 6.76457 11.3417 7.00343C11.568 7.24229 11.6937 7.56914 11.6937 7.984C11.6937 8.29829 11.5806 8.6 11.3543 8.87657L11.2034 9.05257C10.3863 9.78171 9.896 10.3097 9.73257 10.6491C9.55657 10.9886 9.48114 11.4034 9.48114 11.8811V12.0571H10.9269V11.8811C10.9269 11.5794 10.9897 11.3154 11.1154 11.064C11.2286 10.8377 11.392 10.624 11.6183 10.4354C12.2217 9.90743 12.5863 9.568 12.6994 9.44229C13.0011 9.04 13.1646 8.52457 13.1646 7.896C13.1646 7.12914 12.9131 6.52571 12.4103 6.08571C11.9074 5.63314 11.2411 5.41943 10.424 5.41943ZM10.1977 12.6731C9.94139 12.6662 9.69276 12.7611 9.50629 12.9371C9.41422 13.0239 9.34188 13.1294 9.29416 13.2465C9.24644 13.3636 9.22446 13.4896 9.22971 13.616C9.22971 13.8926 9.31771 14.1189 9.50629 14.2949C9.69136 14.4745 9.93981 14.5739 10.1977 14.5714C10.4743 14.5714 10.7006 14.4834 10.8891 14.3074C10.9832 14.2189 11.0575 14.1116 11.1073 13.9925C11.1571 13.8734 11.1813 13.7451 11.1783 13.616C11.1807 13.49 11.1574 13.3648 11.1099 13.2481C11.0623 13.1314 10.9915 13.0256 10.9017 12.9371C10.7104 12.7608 10.4578 12.6661 10.1977 12.6731Z" fill="#FFF001" />
                         </svg>
                     </span>
-                    <span>F.A.Q.</span>
+                    <span>{t('settings.faq')}</span>
                     <span className="settings-arrow">&gt;</span>
                 </div>
                 <div className="settings-item">
@@ -81,7 +96,7 @@ const Setting = () => {
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58174 0 0 3.58169 0 8C0 12.4183 3.58174 16 8 16C12.4183 16 16 12.4183 16 8C16 3.58169 12.4183 0 8 0ZM9.00175 4.8C9.00175 5.38003 8.57944 5.8 8.00813 5.8C7.4137 5.8 7.00175 5.38003 7.00175 4.7889C7.00175 4.22076 7.42486 3.8 8.00813 3.8C8.57944 3.8 9.00175 4.22076 9.00175 4.8ZM7.20175 7.2H8.80175V12H7.20175V7.2Z" fill="#FFF001" />
                         </svg>
                     </span>
-                    <span>О проекте</span>
+                    <span>{t('settings.aboutProject')}</span>
                     <span className="settings-arrow">&gt;</span>
                 </div>
             </div>
@@ -92,7 +107,7 @@ const Setting = () => {
                             <path d="M3.32752 15C3.68158 15 4.02114 14.8525 4.2715 14.5899C4.52186 14.3274 4.66251 13.9713 4.66251 13.6V9.4C4.66251 9.0287 4.52186 8.6726 4.2715 8.41005C4.02114 8.1475 3.68158 8 3.32752 8V7.3C3.32752 6.00044 3.81979 4.7541 4.69605 3.83518C5.57232 2.91625 6.76078 2.4 8 2.4C9.23922 2.4 10.4277 2.91625 11.3039 3.83518C12.1802 4.7541 12.6725 6.00044 12.6725 7.3V8C12.3184 8 11.9789 8.1475 11.7285 8.41005C11.4781 8.6726 11.3375 9.0287 11.3375 9.4V13.6H9.335C9.15796 13.6 8.98818 13.6737 8.863 13.805C8.73782 13.9363 8.6675 14.1143 8.6675 14.3C8.6675 14.4857 8.73782 14.6637 8.863 14.795C8.98818 14.9263 9.15796 15 9.335 15H12.6725C13.4374 14.9976 14.1784 14.7197 14.7713 14.2128C15.3642 13.7059 15.7731 13.0008 15.9295 12.2156C16.0859 11.4303 15.9803 10.6125 15.6304 9.89915C15.2805 9.18577 14.7076 8.62008 14.0075 8.2968V7.3C14.0075 5.62914 13.3746 4.02671 12.2479 2.84523C11.1213 1.66375 9.59328 1 8 1C6.40672 1 4.87869 1.66375 3.75207 2.84523C2.62545 4.02671 1.99252 5.62914 1.99252 7.3V8.2968C1.29242 8.62008 0.719468 9.18577 0.36958 9.89915C0.0196916 10.6125 -0.0858943 11.4303 0.0704982 12.2156C0.226891 13.0008 0.635769 13.7059 1.22868 14.2128C1.8216 14.7197 2.56255 14.9976 3.32752 15Z" fill="#FFF001" />
                         </svg>
                     </span>
-                    <span>Написать в поддержку</span>
+                    <span>{t('settings.support')}</span>
                     <span className="settings-arrow">&gt;</span>
                 </div>
             </div>
@@ -104,12 +119,13 @@ const Setting = () => {
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M7.08884 10.6046C7.08884 10.2472 7.37466 9.95077 7.73844 9.95077L14.2346 9.95062C14.2259 8.85216 14.1651 7.75385 14.0785 6.65539V6.64667C13.758 3.13333 12.173 2 7.58253 2C1 2 1 4.48462 1 10.5C1 16.5154 1 19 7.58253 19C12.173 19 13.758 17.8667 14.0785 14.3446C14.1651 13.3246 14.2173 12.2957 14.2346 11.2583L7.73844 11.2585C7.37466 11.2585 7.08884 10.9708 7.08884 10.6046Z" fill="#FF6B6B" />
                         </svg>
                     </span>
-                    <span>Выйти из аккаунта</span>
+                    <span>{t('settings.logout')}</span>
                 </div>
             </div>
             <div className="settings-section">
-                <div className="settings-item agreement">
-                    <span className="settings-agreement-text">Пользовательское соглашение</span>
+                <div className="settings-item agreement" onClick={() => navigate('/settings/user-agreement')}>
+                    <span className="settings-agreement-text">{t('settings.userAgreement')}</span>
+                    <span className="settings-arrow">&gt;</span>
                 </div>
             </div>
             <div className={`design-modal${showDesign ? ' open' : ''}`}>

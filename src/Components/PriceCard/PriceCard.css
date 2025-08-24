@@ -3,7 +3,7 @@
   background: #171717;
   border-radius: 16px;
   padding: 1rem;
-  color: #fff;
+color: var(--text);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;

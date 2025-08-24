@@ -5,16 +5,17 @@ import { BsWallet2 } from 'react-icons/bs';
 import DepositNetworkSelect from './DepositNetworkSelect';
 import DepositQrScreen from './DepositQrScreen';
 import './Deposit.css';
+import { useI18n } from '../../i18n/I18nProvider.jsx';
 import { GetWallet } from '../../utils/wallet';
 import { json } from '@tma.js/sdk';
 
-const TEST_WALLET_ADDR = 'TQjVtuc1CeL7WEe7hHF7XZMWi6J89JgxQW';
 
 const Deposit = ({telegramID}) => {
   const [step, setStep] = useState(0); // 0 - способ, 1 - сеть, 2 - QR
   const [anim, setAnim] = useState(false);
-  const [walletAddr, SetWalletAddr] = useState(TEST_WALLET_ADDR);
+  const [walletAddr, SetWalletAddr] = useState("");
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   useEffect(() => {
     getWalletByTgId(telegramID)
@@ -24,6 +25,7 @@ const Deposit = ({telegramID}) => {
       const walletRes = await GetWallet(telegramID);
       const addr = walletRes.data.address;  // сразу берём из ответа
       SetWalletAddr(addr);
+      alert(addr)
       console.log(addr)
     } catch (error) {
       console.log(error)
@@ -68,10 +70,10 @@ const Deposit = ({telegramID}) => {
           <button className="deposit-back-btn" onClick={handleBackToRoot}>
             <FiArrowLeft />
           </button>
-          <span className="deposit-title">Пополнить</span>
+          <span className="deposit-title">{t('deposit.title') || 'Пополнить'}</span>
         </div>
         <div className="deposit-question">
-          Каким способом вы хотите<br />купить криптовалюту
+          {t('deposit.question') || 'Каким способом вы хотите'}<br />{t('deposit.question2') || 'купить криптовалюту'}
         </div>
         <div className="deposit-options">
           <button className="deposit-option-btn" onClick={goToNetwork}>
@@ -79,19 +81,19 @@ const Deposit = ({telegramID}) => {
               <BsWallet2 size={22} color="#000" />
             </span>
             <span className="deposit-option-label">
-              <span className="deposit-option-title">Внешний кошелек</span><br />
-              <span className="deposit-option-desc">Перевод с другого кошелька</span>
+              <span className="deposit-option-title">{t('deposit.extWallet') || 'Внешний кошелек'}</span><br />
+              <span className="deposit-option-desc">{t('deposit.extWalletDesc') || 'Перевод с другого кошелька'}</span>
             </span>
             <span className="deposit-option-arrow">&#8250;</span>
           </button>
-          <div className="deposit-soon-label">Скоро</div>
+          <div className="deposit-soon-label">{t('deposit.soon') || 'Скоро'}</div>
           <div className="deposit-option-disabled">
             <span className="deposit-option-icon-disabled">
               <FiCreditCard size={22} color="#fff" />
             </span>
             <span className="deposit-option-label">
-              <span className="deposit-option-title">Банковская карта</span><br />
-              <span className="deposit-option-desc">Покупка криптовалюты по карте</span>
+              <span className="deposit-option-title">{t('deposit.card') || 'Банковская карта'}</span><br />
+              <span className="deposit-option-desc">{t('deposit.cardDesc') || 'Покупка криптовалюты по карте'}</span>
             </span>
           </div>
           <div className="deposit-option-disabled">
@@ -99,8 +101,8 @@ const Deposit = ({telegramID}) => {
               <FiUsers size={22} color="#fff" />
             </span>
             <span className="deposit-option-label">
-              <span className="deposit-option-title">P2P маркет</span><br />
-              <span className="deposit-option-desc">Покупка без посредников</span>
+              <span className="deposit-option-title">{t('deposit.p2p') || 'P2P маркет'}</span><br />
+              <span className="deposit-option-desc">{t('deposit.p2pDesc') || 'Покупка без посредников'}</span>
             </span>
           </div>
         </div>

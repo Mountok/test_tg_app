@@ -3,6 +3,7 @@ import { GetOrdersByTelegramId } from '../../utils/wallet'
 import HistoryItem from './HistoryItem'
 import HistoryFilter from './HistoryFilter'
 import './History.css'
+import { useI18n } from '../../i18n/I18nProvider.jsx'
 
 const History = ({ telegramID }) => {
   // {
@@ -14,12 +15,13 @@ const History = ({ telegramID }) => {
   //   telegram_id: 0
   // }
   const [orders, setOrders] = useState([])
+  const { t } = useI18n()
   const [filters, setFilters] = useState({ type: '', period: '', sum: '' })
 
   useEffect(() => {
     GetOrdersByTelegramId(telegramID).then((resp) => {
       if (Array.isArray(resp)) {
-        setOrders(resp)
+        setOrders(resp) 
       } else if (resp && Array.isArray(resp.data)) {
         setOrders(resp.data)
       } else {
@@ -52,12 +54,12 @@ const History = ({ telegramID }) => {
 
         </div>
         <div className="history-header_title">
-          <p>История операций</p>
+          <p>{t('history.title') || 'История операций'}</p>
         </div>
       </div>
       <HistoryFilter filters={filters} setFilters={setFilters} />
       <div className="history-list">
-        {filteredOrders.length === 0 && <div className="history-empty">Нет операций</div>}
+        {filteredOrders.length === 0 && <div className="history-empty">{t('history.empty') || 'Нет операций'}</div>}
         {filteredOrders.map((order, idx) => (
           <HistoryItem
             key={order.id || idx}

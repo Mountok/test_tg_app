@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { fetchMarketChart } from '../../utils/coinGecko';
 import './FavoritesCoin.css';
 import FavoritesCoinItem from './components/FavoritesCoinIItem';
+import { useI18n } from '../../i18n/I18nProvider.jsx';
 
 const ALL_COINS = [
   {
@@ -21,8 +22,9 @@ const ALL_COINS = [
 ];
 
 export default function FavoritesCoin() {
+  const { t } = useI18n();
   // фильтр: "В тренде" | "Избранное" | "Все"
-  const [filter, setFilter]     = useState('Избранное');
+  const [filter, setFilter]     = useState(t('favorites.filter.favorites') || 'Избранное');
   // state — массив объектов { coinId, icon, name, shortname, price, percent }
   const [coinsData, setCoinsData] = useState([]);
 
@@ -53,12 +55,12 @@ export default function FavoritesCoin() {
 
   // вычисляем, какой список показывать
   let shown = coinsData;
-  if (filter === 'В тренде') {
+  if (filter === (t('favorites.filter.trending') || 'В тренде')) {
     // тренд = сортировка по % убыванию, берём топ-3
     shown = [...coinsData]
       .sort((a, b) => b.percent - a.percent)
       .slice(0, 3);
-  } else if (filter === 'Избранное') {
+  } else if (filter === (t('favorites.filter.favorites') || 'Избранное')) {
     // условно любимые — первые две из ALL_COINS
     shown = coinsData.filter(c =>
       ALL_COINS.slice(0, 2).some(x => x.coinId === c.coinId)
@@ -69,7 +71,7 @@ export default function FavoritesCoin() {
   return (
     <div className="favorites_coin">
       <div className="favorites_coin_filter">
-        {['В тренде', 'Избранное', 'Все'].map(tab => (
+        {[(t('favorites.filter.trending') || 'В тренде'), (t('favorites.filter.favorites') || 'Избранное'), (t('favorites.filter.all') || 'Все')].map(tab => (
           <div
             key={tab}
             className={`favorites_coin_filter_item ${

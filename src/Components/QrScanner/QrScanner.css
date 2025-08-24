@@ -56,7 +56,7 @@
   }
   
   .qr-hint {
-    color: #fff;
+color: var(--text);
     font-size: 0.9rem;
     text-align: center;
     margin-bottom: 1.5rem;
@@ -79,7 +79,7 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    border: 3px solid #fff;
+border: 3px solid var(--text);
   }
 
   .qr-corner.top-left {
@@ -139,7 +139,7 @@
   flex: 1;               /* пусть растёт вместе с соседней кнопкой */
   max-width: 200px;      /* можно ограничить, если нужно */
   background-color: rgb(236 229 67);
-  color: #000;
+color: var(--text);
   border: none;
   padding: 0.6rem 1.2rem;
   border-radius: 10px;
@@ -175,11 +175,11 @@
 
 .qr-start-button {
   background-color: rgb(255, 255, 255);
-  color: #000;
+color: var(--text);
 }
 .qr-gallery-button {
   background-color: #8d8d8d;
-  color: #fff;
+color: var(--text);
   transition: background-color 0.2s ease;
 }
 
@@ -198,21 +198,21 @@
   outline: none;
 }
 .qr-icon-btn:hover {
-  background: #232323;
+background: var(--bg-secondary);
 }
 .qr-icon-btn svg {
-  color: #fff;
+color: var(--text);
   width: 32px;
   height: 32px;
 }
 
 .qr-icon-btn:disabled {
-  background: #232323;
+background: var(--bg-secondary);
   cursor: not-allowed;
   pointer-events: none;
 }
 .qr-icon-btn:disabled svg {
-  color: #888 !important;
+color: var(--muted) !important;
 }
 
 @media (max-width: 430px) {
@@ -235,8 +235,8 @@
   top: 24px;
   left: 50%;
   transform: translateX(-50%);
-  background: #232323;
-  color: #fff;
+background: var(--bg-secondary);
+color: var(--text);
   border-radius: 14px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.18);
   display: flex;
@@ -293,7 +293,7 @@
   width: 20px;
   height: 20px;
   border: 2px solid #444;
-  border-top: 2px solid #fff;
+border-top: 2px solid var(--text);
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-right: 12px;

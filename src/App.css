@@ -7,11 +7,11 @@
 
 /* Стили для body */
 html {
-  background-color: rgb(11, 11, 11) !important;
+  background-color: var(--bg) !important;
 }
 body {
-  background-color: rgb(11, 11, 11) !important;
-  color: #ffffff;
+  background-color: var(--bg) !important;
+  color: var(--text);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   min-height: 100vh;
@@ -31,6 +31,54 @@ body {
 
 .app-wrapper{
   margin-bottom: 70px;
+}
+
+/* Блокирующий экран для не-Telegram окружения */
+.blocked-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  padding: 24px;
+}
+
+.blocked-card {
+  width: 100%;
+  max-width: 520px;
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.blocked-logo {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  margin: 0 auto 16px;
+  display: block;
+}
+
+.blocked-title {
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.blocked-text {
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.btn-telegram {
+  display: inline-block;
+  background: #24A1DE;
+  color: #fff;
+  text-decoration: none;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-weight: 600;
 }
 
 /* Контейнер приложения */
@@ -59,7 +107,7 @@ h1, h2, h3 {
   border-radius: 30px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.20);
 
-  background-color: #181818;
+  background-color: var(--card);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -71,18 +119,18 @@ h1, h2, h3 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #aaa;
+  color: var(--muted);
   text-decoration: none;
   font-size: 0.75rem;
   transition: color 0.2s ease;
 }
 
 .nav-link.active {
-  color: #FFF001;
+  color: var(--accent);
 }
 
 .nav-link:hover {
-  color: #FFF001;
+  color: var(--accent);
 }
 
  

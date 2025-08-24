@@ -1,7 +1,7 @@
 // Service Worker для кэширования QR-библиотек
-const CACHE_NAME = 'qr-scanner-v1';
+const CACHE_NAME = 'qr-scanner-v2';
+// Не кэшируем '/' (index.html), чтобы не держать старые ссылки на хэш-ассеты
 const urlsToCache = [
-  '/',
   '/manifest.json',
   '/images/logo.png',
   // Кэшируем основные библиотеки
@@ -37,6 +37,11 @@ self.addEventListener('activate', (event) => {
 
 // Перехват запросов
 self.addEventListener('fetch', (event) => {
+  // Для переходов (SPA навигация) всегда сеть: не кэшируем index.html
+  if (event.request.mode === 'navigate') {
+    event.respondWith(fetch(event.request).catch(() => caches.match('/index.html')));
+    return;
+  }
   if (
     event.request.url.includes('/api/') ||
     event.request.url.includes('chrome-extension') ||

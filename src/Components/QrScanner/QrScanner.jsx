@@ -12,11 +12,13 @@ import { FiImage } from 'react-icons/fi';
 import { RxCross2 } from 'react-icons/rx';
 import { BsCamera } from 'react-icons/bs';
 import { FiAlertTriangle } from 'react-icons/fi';
+import { useI18n } from '../../i18n/I18nProvider.jsx';
 
 const QrScanner = ({telegramID}) => {
   const videoRef = useRef(null);
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
+  const { t } = useI18n();
 
   const [scanning, setScanning] = useState(false);
   const [qrLink, setQrLink] = useState('');
@@ -119,7 +121,7 @@ const QrScanner = ({telegramID}) => {
     } catch (error) {
       console.error('[QR] Ошибка запуска камеры:', error);
       setScanning(false);
-      alert('Не удалось получить доступ к камере. Проверьте разрешения.');
+      alert(t('qr.cameraAccessError') || 'Не удалось получить доступ к камере. Проверьте разрешения.');
     }
   };
 
@@ -180,7 +182,7 @@ const QrScanner = ({telegramID}) => {
       }
     } catch (error) {
       console.error('[QR] Ошибка обработки изображения:', error);
-      alert('Ошибка обработки изображения');
+      alert(t('qr.imageProcessError') || 'Ошибка обработки изображения');
       setProcessingImage(false);
     }
 
@@ -197,7 +199,7 @@ const QrScanner = ({telegramID}) => {
       const capabilities = track.getCapabilities();
       
       if (!capabilities.torch) {
-        alert('Фонарик не поддерживается на этом устройстве');
+        alert(t('qr.flashNotSupported') || 'Фонарик не поддерживается на этом устройстве');
         return;
       }
       
@@ -207,7 +209,7 @@ const QrScanner = ({telegramID}) => {
       setFlashlight(f => !f);
     } catch (e) {
       console.error('[QR] Ошибка переключения фонарика:', e);
-      alert('Не удалось переключить фонарик');
+      alert(t('qr.flashToggleError') || 'Не удалось переключить фонарик');
     }
   };
 
@@ -242,7 +244,7 @@ const QrScanner = ({telegramID}) => {
         <div className={`qr-nodetect-modal${modalLeaving ? ' leaving' : ''}`}>
           <FiAlertTriangle size={32} color="#e74c3c" style={{ marginRight: 10 }} />
           <span style={{ flex: 1 }}>
-            Не удалось распознать QR-код. Пожалуйста, воспользуйтесь загрузкой фото.
+            {t('qr.notDetected') || 'Не удалось распознать QR-код. Пожалуйста, воспользуйтесь загрузкой фото.'}
           </span>
           <button className="qr-nodetect-close" onClick={handleCloseNoDetectModal}>
             <RxCross2 size={24} color="#fff" />
@@ -254,7 +256,7 @@ const QrScanner = ({telegramID}) => {
       {processingImage && (
         <div className="qr-processing-modal">
           <div className="qr-processing-spinner"></div>
-          <span>Обработка изображения...</span>
+          <span>{t('qr.processing') || 'Обработка изображения...'}</span>
         </div>
       )}
 
@@ -270,7 +272,7 @@ const QrScanner = ({telegramID}) => {
       {/* Оверлей, рамка и анимация */}
       <div className="qr-overlay">
         <p className="qr-hint">
-          Можно сканировать QR код с камеры или из галереи
+          {t('qr.hint') || 'Можно сканировать QR код с камеры или из галереи'}
         </p>
         <div className="qr-highlight-box">
           <div className="qr-corner top-left" />
@@ -302,7 +304,7 @@ const QrScanner = ({telegramID}) => {
           type="button"
           className="qr-icon-btn"
           onClick={scanning ? stopScanner : startScanner}
-          aria-label={scanning ? "Остановить камеру" : "Включить камеру"}
+          aria-label={scanning ? (t('qr.stopCamera') || 'Остановить камеру') : (t('qr.startCamera') || 'Включить камеру')}
         >
           <BsCamera size={28} color="#fff" />
         </button>
@@ -311,7 +313,7 @@ const QrScanner = ({telegramID}) => {
           type="button"
           className="qr-icon-btn"
           onClick={() => fileInputRef.current.click()}
-          aria-label="Галерея"
+          aria-label={t('qr.gallery') || 'Галерея'}
           disabled={scanning}
         >
           <FiImage size={32} color={scanning ? '#888' : '#fff'} />
@@ -328,7 +330,7 @@ const QrScanner = ({telegramID}) => {
           type="button"
           className="qr-icon-btn"
           onClick={() => navigate('/')}
-          aria-label="Закрыть"
+          aria-label={t('common.close') || 'Закрыть'}
         >
           <RxCross2 size={32} color="#fff" />
         </button>

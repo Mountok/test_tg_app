@@ -12,7 +12,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #181818;
+background: var(--card);
   margin-right: 10px;
   display: flex;
   align-items: center;
@@ -23,7 +23,7 @@
   text-align: left;
 }
 .history-header_title p {
-  color: #fff;
+color: var(--text);
   font-size: 22px;
   font-weight: 600;
   margin: 0;
@@ -33,7 +33,7 @@
   margin-top: 10px;
 }
 .history-empty {
-  color: #888;
+color: var(--muted);
   text-align: center;
   margin-top: 40px;
   font-size: 18px;

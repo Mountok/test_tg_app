@@ -9,8 +9,8 @@
 }
 .history-filter-btn {
   width: 100%;
-  background: #232323;
-  color: #fff;
+background: var(--bg-secondary);
+color: var(--text);
   border: none;
   border-radius: 14px;
   padding: 10px 18px;
@@ -46,7 +46,7 @@
   transform: translateY(0);
 }
 .history-filter-list {
-  background: #232323;
+background: var(--bg-secondary);
   border-radius: 14px;
   margin: 0;
   padding: 6px 0;
@@ -55,7 +55,7 @@
 }
 .history-filter-list li {
   padding: 10px 18px;
-  color: #fff;
+color: var(--text);
   cursor: pointer;
   font-size: 15px;
   transition: background 0.15s;

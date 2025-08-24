@@ -1,0 +1,121 @@
+.user-agreement-page {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  padding-bottom: 100px;
+}
+
+.user-agreement-header {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.back-btn:hover {
+  background: var(--hover);
+}
+
+.page-title {
+  font-size: 18px;
+  font-weight: 600;
+  flex: 1;
+}
+
+.agreement-content {
+  padding: 24px 20px;
+  max-width: 100%;
+  line-height: 1.6;
+}
+
+.agreement-content h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+
+.agreement-content h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 24px 0 16px 0;
+  color: var(--text);
+}
+
+.agreement-content p {
+  margin-bottom: 12px;
+  color: var(--text);
+  text-align: justify;
+}
+
+.agreement-content .date {
+  font-style: italic;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.agreement-content ul {
+  margin: 12px 0;
+  padding-left: 20px;
+}
+
+.agreement-content li {
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.agreement-content section {
+  margin-bottom: 24px;
+}
+
+.separator {
+  text-align: center;
+  font-size: 18px;
+  color: var(--muted);
+  margin: 32px 0;
+  font-weight: 300;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 480px) {
+  .agreement-content {
+    padding: 16px;
+  }
+  
+  .agreement-content h1 {
+    font-size: 20px;
+  }
+  
+  .agreement-content h2 {
+    font-size: 16px;
+  }
+  
+  .agreement-content p {
+    font-size: 14px;
+  }
+  
+  .page-title {
+    font-size: 16px;
+  }
+}

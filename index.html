@@ -22,6 +22,21 @@
     </script>
     
     <title>PlataPay</title>
+    <script>
+      (function () {
+        try {
+          var search = new URLSearchParams(window.location.search);
+          var ref = search.get('ref');
+          // Если пришли на сайт с параметром ?ref=CODE — делаем 302-like редирект на TWA ссылку
+          if (ref) {
+            var target = 'https://t.me/PlataPay_bot?startapp=' + encodeURIComponent('ref-' + ref);
+            window.location.replace(target);
+          }
+        } catch (e) {
+          // no-op
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

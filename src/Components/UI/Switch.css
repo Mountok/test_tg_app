@@ -21,14 +21,14 @@
   left: 4px;
   width: 24px;
   height: 24px;
-  background: #888;
+background: var(--muted);
   border-radius: 50%;
   transition: left 0.2s, background 0.2s;
 }
 
 .custom-switch.checked .switch-slider {
   left: 38px;
-  background: #ffe600;
+background: var(--accent);
 }
 
 .custom-switch.disabled {

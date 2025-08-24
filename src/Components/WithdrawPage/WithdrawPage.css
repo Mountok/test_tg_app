@@ -1,0 +1,572 @@
+/* Основной контейнер в стиле приложения */
+.withdraw-page {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  padding: 0;
+  position: relative;
+}
+
+.withdraw-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 20px;
+  padding: 20px;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--muted);
+  border-top: 3px solid var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Форма вывода в стиле приложения */
+.withdraw-form {
+  padding: 20px;
+}
+
+.withdraw-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 0 20px;
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid var(--border);
+}
+
+.back-btn {
+  background: var(--button-bg);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--button-fg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+  transform: scale(1.1);
+  background: var(--accent);
+}
+
+.withdraw-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text);
+}
+
+/* Баланс в стиле приложения */
+.withdraw-balance {
+  margin-bottom: 20px;
+}
+
+.balance-card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid var(--border);
+  margin: 0 20px;
+}
+
+.balance-label {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0 0 8px 0;
+}
+
+.balance-amount {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--accent);
+}
+
+/* Поля ввода в стиле приложения */
+.withdraw-fields {
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.field-group {
+  margin-bottom: 20px;
+}
+
+.field-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.field-input-wrapper {
+  position: relative;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.field-input-wrapper:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(255, 240, 1, 0.1);
+}
+
+.field-input-wrapper.valid {
+  border-color: #22c55e;
+}
+
+.field-input-wrapper.invalid {
+  border-color: #ef4444;
+}
+
+.field-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  color: var(--text);
+  outline: none;
+  border-radius: 12px;
+}
+
+.field-input::placeholder {
+  color: var(--muted);
+}
+
+.field-currency {
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.validation-icon {
+  position: absolute;
+  right: 16px;
+  font-size: 20px;
+}
+
+.validation-icon.valid {
+  color: #22c55e;
+}
+
+.validation-icon.invalid {
+  color: #ef4444;
+}
+
+.validation-message {
+  font-size: 14px;
+  margin: 8px 0 0 0;
+}
+
+.validation-message.valid {
+  color: #22c55e;
+}
+
+.validation-message.invalid {
+  color: #ef4444;
+}
+
+.field-hint {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 8px 0 0 0;
+}
+
+/* Расчет в стиле приложения */
+.withdraw-calculation {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 16px;
+  margin: 0 20px 20px 20px;
+  border: 1px solid var(--border);
+}
+
+.calculation-header {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-align: center;
+  color: var(--accent);
+}
+
+.calculation-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.calculation-row.total {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.calculation-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 8px 0;
+}
+
+/* Действия в стиле приложения */
+.withdraw-actions {
+  padding: 0 20px 20px 20px;
+}
+
+.withdraw-btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 12px;
+  color: var(--button-fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 50px;
+}
+
+.withdraw-btn.enabled {
+  background: var(--button-bg);
+}
+
+.withdraw-btn.enabled:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.withdraw-btn.disabled {
+  background: var(--muted);
+  color: var(--text);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.withdraw-info {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* Подтверждение */
+.withdraw-confirmation {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.confirm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.confirm-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+}
+
+.confirm-details {
+  margin-bottom: 30px;
+}
+
+.confirm-section {
+  margin-bottom: 24px;
+}
+
+.confirm-section h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0 0 12px 0;
+  color: var(--text);
+}
+
+.confirm-address {
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 12px;
+  font-family: monospace;
+  font-size: 14px;
+  word-break: break-all;
+  border: 1px solid var(--border);
+  margin: 0;
+}
+
+.confirm-calculation {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid var(--border);
+}
+
+.confirm-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 14px;
+}
+
+.confirm-row.total {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.confirm-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 12px 0;
+}
+
+.confirm-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.confirm-btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  background: var(--accent);
+  color: #000;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.confirm-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 240, 1, 0.3);
+}
+
+.cancel-btn {
+  width: 100%;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-btn:hover {
+  background: var(--card-bg);
+}
+
+/* Обработка в стиле ТЗ */
+.withdraw-processing {
+  padding: 20px;
+  text-align: center;
+}
+
+.processing-header {
+  margin-bottom: 40px;
+}
+
+.processing-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text);
+}
+
+.processing-progress {
+  margin-bottom: 30px;
+}
+
+.progress-step {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  margin: 0 20px;
+}
+
+.progress-text {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+.progress-bars {
+  font-family: monospace;
+  font-size: 14px;
+  color: var(--accent);
+  letter-spacing: 1px;
+  background: var(--bg);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.processing-info {
+  color: var(--muted);
+  padding: 0 20px;
+}
+
+.processing-info p {
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+/* Результат в стиле приложения */
+.withdraw-result {
+  padding: 20px;
+  text-align: center;
+}
+
+.result-header {
+  margin-bottom: 30px;
+}
+
+.result-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: #22c55e;
+}
+
+.result-details {
+  margin-bottom: 30px;
+}
+
+.result-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+}
+
+.result-message {
+  font-size: 16px;
+  margin: 0 0 24px 0;
+  color: var(--text);
+}
+
+.result-summary {
+  background: var(--card-bg);
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  margin: 0 20px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.address-short {
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 20px;
+}
+
+.result-btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--button-fg);
+  height: 50px;
+}
+
+.result-btn:not(.secondary) {
+  background: var(--button-bg);
+}
+
+.result-btn.secondary {
+  background: var(--card-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.result-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+  .withdraw-page {
+    padding: 16px;
+  }
+  
+  .withdraw-title,
+  .confirm-title,
+  .processing-title,
+  .result-title {
+    font-size: 20px;
+  }
+  
+  .balance-amount {
+    font-size: 28px;
+  }
+  
+  .field-input,
+  .withdraw-btn,
+  .confirm-btn,
+  .cancel-btn,
+  .result-btn {
+    font-size: 14px;
+  }
+}

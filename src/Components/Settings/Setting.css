@@ -1,7 +1,7 @@
 .settings-container {
-  background: #000;
+  background: var(--bg);
   min-height: 100vh;
-  color: #fff;
+  color: var(--text);
   padding: 0 16px 100px 16px;
   font-family: 'Inter', Arial, sans-serif;
 }
@@ -11,14 +11,14 @@
   align-items: center;
   justify-content: flex-start;
   height: 64px;
-  border-bottom: 1px solid #222;
+  border-bottom: 1px solid var(--border);
   margin-bottom: 10px;
 }
 
 .settings-back-btn {
   background: none;
   border: none;
-  color: #fff;
+  color: var(--text);
   font-size: 28px;
   margin-right: 16px;
   cursor: pointer;
@@ -32,7 +32,7 @@
 .settings-profile {
   display: flex;
   align-items: center;
-  background: #181818;
+  background: var(--card);
   border-radius: 24px;
   padding: 20px 24px;
   
@@ -60,11 +60,11 @@
 
 .settings-username {
   font-size: 18px;
-  color: #fff;
+  color: var(--text);
 }
 
 .settings-section-label {
-  color: #888;
+  color: var(--muted);
   font-size: 15px;
   margin-bottom: 8px;
   margin-top: 5px;
@@ -78,19 +78,19 @@
 .settings-item {
   display: flex;
   align-items: center;
-  background: #181818;
+  background: var(--card);
   border-radius: 18px;
   padding: 12px 12px;
   margin-bottom: 10px;
   font-size: 17px;
   font-weight: 400;
-  color: #fff;
+  color: var(--text);
   position: relative;
   transition: background 0.2s;
 }
 
 .settings-item:not(.logout):not(.agreement):hover {
-  background: #232323;
+  background: var(--bg-secondary);
   cursor: pointer;
 }
 
@@ -114,12 +114,12 @@
 
 .settings-arrow {
   margin-left: auto;
-  color: #888;
+  color: var(--muted);
   font-size: 22px;
 }
 
 .logout {
-  background: #181818;
+  background: var(--card);
   color: #ff4d4f;
   font-weight: 500;
 }
@@ -172,4 +172,24 @@
   pointer-events: auto;
   background: rgba(0,0,0,0.7);
   transform: translateX(0);
+}
+
+/* Стили для реферальной программы в настройках */
+.settings-item-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 2px;
+}
+
+.settings-item-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+}
+
+.settings-item-subtitle {
+    font-size: 12px;
+    color: #aaa;
+    line-height: 1.2;
 } 

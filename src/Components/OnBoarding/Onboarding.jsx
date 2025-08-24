@@ -4,31 +4,34 @@ import { useNavigate } from 'react-router-dom';
 import { CreateWallet } from '../../utils/wallet.js';
 import './Onboarding.css';
 import { TelegramInfo } from '../../utils/auth.js';
+import { useI18n } from '../../i18n/I18nProvider.jsx';
 
-const pages = [
+const localizePages = (t) => ([
   {
-    title: 'Добро пожаловать в PlataPay',
-    text: 'сервис для оплаты товаров и услуг через криптовалюту',
-    buttonText: 'Далее',
+    title: t('onboarding.welcomeTitle') || 'Добро пожаловать в PlataPay',
+    text: t('onboarding.welcomeText') || 'сервис для оплаты товаров и услуг через криптовалюту',
+    buttonText: t('common.next') || 'Далее',
   },
   {
-    title: 'Сканируйте QR-код СБП',
-    text: 'и мы автоматически конвертируем вашу криптовалюту в рубли',
-    buttonText: 'Далее',
+    title: t('onboarding.qrTitle') || 'Сканируйте QR-код СБП',
+    text: t('onboarding.qrText') || 'и мы автоматически конвертируем вашу криптовалюту в рубли',
+    buttonText: t('common.next') || 'Далее',
   },
   {
-    title: 'Для начала работы нужно создать личный кошелек',
-    text: 'это займет всего несколько секунд',
-    buttonText: 'Создать',
+    title: t('onboarding.createTitle') || 'Для начала работы нужно создать личный кошелек',
+    text: t('onboarding.createText') || 'это займет всего несколько секунд',
+    buttonText: t('onboarding.createBtn') || 'Создать',
   },
   {
-    title: 'Ваш кошелек создан!',
-    text: 'Чтобы начать пользоваться сервисом, пополните баланс вашего кошелька USDT. После этого вы сможете сканировать QR-коды СБП и совершать покупки.',
-    buttonText: 'Пополнить баланс',
+    title: t('onboarding.readyTitle') || 'Ваш кошелек создан!',
+    text: t('onboarding.readyText') || 'Чтобы начать пользоваться сервисом, пополните баланс вашего кошелька USDT. После этого вы сможете сканировать QR-коды СБП и совершать покупки.',
+    buttonText: t('onboarding.topUpBtn') || 'Пополнить баланс',
   },
-];
+]);
 
 export default function Onboarding({ onFinish }) {
+  const { t } = useI18n();
+  const pages = localizePages(t);
   const [idx, setIdx] = useState(0);
   const [loading, setLoading] = useState(false);
   const [walletId, setWalletId] = useState('');
@@ -45,10 +48,28 @@ export default function Onboarding({ onFinish }) {
         const wallet = await CreateWallet(id);
         const addr = wallet?.data?.address || '';
         // alert(JSON.stringify(addr))
-        setWalletId(addr); 
+        setWalletId(addr);
+        
+        // ПОСЛЕ успешного создания кошелька проверяем реферальный код
+        const pendingRefCode = localStorage.getItem('pending_referral_code');
+        if (pendingRefCode && id) {
+          console.log('[Onboarding] Кошелек создан, теперь регистрируем реферальный код:', pendingRefCode);
+          try {
+            // Импортируем функцию регистрации
+            const { registerByReferralCode } = await import('../../utils/referral');
+            await registerByReferralCode(pendingRefCode);
+            
+            // Убираем код из localStorage после успешной регистрации
+            localStorage.removeItem('pending_referral_code');
+            console.log('[Onboarding] Реферальный код успешно применен после создания кошелька');
+          } catch (refError) {
+            console.error('[Onboarding] Ошибка применения реферального кода:', refError);
+            // Не показываем ошибку пользователю, так как кошелек уже создан
+          }
+        } 
       } catch (err) {
         console.error('Ошибка создания кошелька:', err);
-        alert('Не удалось создать кошелёк. Попробуйте ещё раз.');
+        alert(t('errors.createWalletFailed') || 'Не удалось создать кошелёк. Попробуйте ещё раз.');
         return;
       } finally {
         setLoading(false);
@@ -96,7 +117,7 @@ export default function Onboarding({ onFinish }) {
                 onClick={handleNext}
                 disabled={loading}
               >
-                {loading ? 'Пожалуйста, подождите...' : pages[idx].buttonText}
+              {loading ? (t('common.pleaseWait') || 'Пожалуйста, подождите...') : pages[idx].buttonText}
               </button>
             </div>
           </div>
@@ -151,7 +172,7 @@ export default function Onboarding({ onFinish }) {
           onClick={handleNext}
           disabled={loading}
         >
-          {loading ? 'Пожалуйста, подождите...' : pages[idx].buttonText}
+          {loading ? (t('common.pleaseWait') || 'Пожалуйста, подождите...') : pages[idx].buttonText}
         </button>
       </div>
     </div>
