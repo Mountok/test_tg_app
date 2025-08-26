@@ -22,10 +22,30 @@ export default function WalletPage({ username }) {
     const [balance, setBalance] = useState(0);
     const [trxBalance, setTRXBalance] = useState(0);
     const [usdtBalance, setUSDTBalance] = useState(0);
+    const [usdtInRub, setUsdtInRub] = useState(0);
     const [idBalanceCreated, setIsBalanceCreated] = useState(false);
     const [privatKeyPlatapay, setPrivatKeyPlatapay] = useState("");
 
     const [wallet, SetWallet] = useState({})
+
+    // Функция для получения курса USDT к рублю
+    const fetchUsdtToRubRate = async () => {
+        try {
+            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=rub');
+            const data = await response.json();
+            return data.tether?.rub || 0;
+        } catch (error) {
+            console.error('Ошибка при получении курса USDT/RUB:', error);
+            return 0;
+        }
+    };
+
+    // Функция для конвертации USDT в рубли
+    const convertUsdtToRub = async (usdtAmount) => {
+        const rate = await fetchUsdtToRubRate();
+        return (parseFloat(usdtAmount) * rate).toFixed(2);
+    };
+
     useEffect(() => {
         // alert("WalletPage useEffect")
 
@@ -57,8 +77,11 @@ export default function WalletPage({ username }) {
                 // }
 
                 // 2) После успешного GetBalanceUSDT — грузим баланс
-                GetBalanceUSDT(id,addr).then((res) => {
+                GetBalanceUSDT(id,addr).then(async (res) => {
                     setUSDTBalance(res.available_balance);
+                    // Конвертируем USDT в рубли
+                    const rubAmount = await convertUsdtToRub(res.available_balance);
+                    setUsdtInRub(rubAmount);
                 }).catch((err) => {
                     console.log(err)
                 })
@@ -116,7 +139,7 @@ export default function WalletPage({ username }) {
                         {idBalanceCreated ?
                             <>
                                 <p><span>Wallet<sup>v0.06</sup></span></p>
-                                <p><sup className="wallet-container_header_balance_top_address"> {wallet.address} - {trxBalance}TRX </sup></p>
+                                <p><sup className="wallet-container_header_balance_top_address"> {wallet.address} - {usdtBalance}USDT </sup></p>
                             </>
                             :
                             null
@@ -128,8 +151,8 @@ export default function WalletPage({ username }) {
                         }
                     </div>
                     <div className="wallet-container_header_balance_bottom">
-                        <p>{t('wallet.balanceUSDT')}</p>
-                        <p>{usdtBalance}</p>
+                        <p>{t('wallet.balanceInRubles')}</p>
+                        <p>{usdtInRub} ₽</p>
                     </div>
                 </div>
 

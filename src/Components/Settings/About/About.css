@@ -1,0 +1,205 @@
+.about-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background: var(--bg-color);
+    color: var(--text-color);
+    z-index: 1000;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    -webkit-overflow-scrolling: touch;
+}
+
+.about-header {
+    display: flex;
+    align-items: center;
+    padding: 20px 16px;
+    background: var(--bg-color);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.about-back-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 8px;
+    margin-right: 12px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.about-back-btn:hover {
+    background: var(--hover-bg);
+}
+
+.about-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.about-content {
+    padding: 32px 16px 120px;
+    max-width: 600px;
+    margin: 0 auto;
+    min-height: calc(100vh - 80px);
+}
+
+.about-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+
+.about-logo-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(255, 240, 1, 0.2);
+}
+
+.about-text {
+    margin-bottom: 40px;
+}
+
+.about-paragraph {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.about-paragraph:last-child {
+    margin-bottom: 0;
+}
+
+.about-slogan {
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--accent-color, #FFF001);
+    text-align: center;
+    padding: 20px;
+    background: var(--card-bg, rgba(255, 255, 255, 0.05));
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-top: 24px;
+}
+
+.about-features {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.about-feature {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background: var(--card-bg, rgba(255, 255, 255, 0.05));
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    gap: 16px;
+}
+
+.about-feature-icon {
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent-color, #FFF001);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.about-feature-text {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--text-secondary, rgba(255, 255, 255, 0.8));
+}
+
+/* Dark theme support */
+[data-theme="dark"] .about-container {
+    --bg-color: #1a1a1a;
+    --text-color: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.8);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --hover-bg: rgba(255, 255, 255, 0.1);
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --accent-color: #FFF001;
+}
+
+/* Light theme support */
+[data-theme="light"] .about-container {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+    --border-color: rgba(0, 0, 0, 0.1);
+    --hover-bg: rgba(0, 0, 0, 0.05);
+    --card-bg: rgba(0, 0, 0, 0.02);
+    --accent-color: #FFF001;
+}
+
+.about-feature-icon {
+    color: #000000;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+    .about-header {
+        padding: 16px 12px;
+    }
+    
+    .about-content {
+        padding: 24px 12px 100px;
+        min-height: calc(100vh - 70px);
+    }
+    
+    .about-title {
+        font-size: 18px;
+    }
+    
+    .about-logo-img {
+        width: 64px;
+        height: 64px;
+    }
+    
+    .about-paragraph {
+        font-size: 15px;
+    }
+    
+    .about-slogan {
+        font-size: 16px;
+        padding: 16px;
+    }
+    
+    .about-features {
+        gap: 12px;
+    }
+    
+    .about-feature {
+        padding: 12px;
+        gap: 12px;
+    }
+    
+    .about-feature-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 20px;
+    }
+    
+    .about-feature-text {
+        font-size: 13px;
+    }
+}

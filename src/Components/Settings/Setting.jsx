@@ -7,6 +7,8 @@ import { TelegramInfo } from '../../utils/auth';
 import { useNavigate } from 'react-router-dom';
 import Design from './Design/Design';
 import Privacy from './Privacy/Privacy';
+import FAQ from './FAQ/FAQ';
+import About from './About/About';
 import { useI18n } from '../../i18n/I18nProvider';
 
 const Setting = () => {
@@ -16,6 +18,8 @@ const Setting = () => {
     const [photo_url, setPhoto_url] = useState("")
     const [showDesign, setShowDesign] = useState(false);
     const [showPrivacy, setShowPrivacy] = useState(false);
+    const [showFAQ, setShowFAQ] = useState(false);
+    const [showAbout, setShowAbout] = useState(false);
     useEffect(() => {
         var { username, photo_url } = TelegramInfo() || {}
         setUserinfo(username)
@@ -81,7 +85,7 @@ const Setting = () => {
                     <span>{t('settings.officialAccounts')}</span>
                     <span className="settings-arrow">&gt;</span>
                 </div>
-                <div className="settings-item" onClick={() => window.open('https://t.me/Platapay_support_bot', '_blank')}>
+                <div className="settings-item" onClick={() => setShowFAQ(true)}>
                     <span className="settings-icon yellow">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10 2C12.1217 2 14.1566 2.84285 15.6569 4.34315C17.1571 5.84344 18 7.87827 18 10C18 12.1217 17.1571 14.1566 15.6569 15.6569C14.1566 17.1571 12.1217 18 10 18C7.87827 18 5.84344 17.1571 4.34315 15.6569C2.84285 14.1566 2 12.1217 2 10C2 7.87827 2.84285 5.84344 4.34315 4.34315C5.84344 2.84285 7.87827 2 10 2ZM10.424 5.41943C9.49372 5.41943 8.76457 5.68343 8.224 6.21143C7.67086 6.73943 7.40686 7.46857 7.40686 8.39886H8.84C8.84 7.87086 8.94057 7.456 9.15429 7.16686C9.39314 6.81486 9.78286 6.65143 10.336 6.65143C10.7634 6.65143 11.1029 6.76457 11.3417 7.00343C11.568 7.24229 11.6937 7.56914 11.6937 7.984C11.6937 8.29829 11.5806 8.6 11.3543 8.87657L11.2034 9.05257C10.3863 9.78171 9.896 10.3097 9.73257 10.6491C9.55657 10.9886 9.48114 11.4034 9.48114 11.8811V12.0571H10.9269V11.8811C10.9269 11.5794 10.9897 11.3154 11.1154 11.064C11.2286 10.8377 11.392 10.624 11.6183 10.4354C12.2217 9.90743 12.5863 9.568 12.6994 9.44229C13.0011 9.04 13.1646 8.52457 13.1646 7.896C13.1646 7.12914 12.9131 6.52571 12.4103 6.08571C11.9074 5.63314 11.2411 5.41943 10.424 5.41943ZM10.1977 12.6731C9.94139 12.6662 9.69276 12.7611 9.50629 12.9371C9.41422 13.0239 9.34188 13.1294 9.29416 13.2465C9.24644 13.3636 9.22446 13.4896 9.22971 13.616C9.22971 13.8926 9.31771 14.1189 9.50629 14.2949C9.69136 14.4745 9.93981 14.5739 10.1977 14.5714C10.4743 14.5714 10.7006 14.4834 10.8891 14.3074C10.9832 14.2189 11.0575 14.1116 11.1073 13.9925C11.1571 13.8734 11.1813 13.7451 11.1783 13.616C11.1807 13.49 11.1574 13.3648 11.1099 13.2481C11.0623 13.1314 10.9915 13.0256 10.9017 12.9371C10.7104 12.7608 10.4578 12.6661 10.1977 12.6731Z" fill="#FFF001" />
@@ -90,7 +94,7 @@ const Setting = () => {
                     <span>{t('settings.faq')}</span>
                     <span className="settings-arrow">&gt;</span>
                 </div>
-                <div className="settings-item">
+                <div className="settings-item" onClick={() => setShowAbout(true)}>
                     <span className="settings-icon yellow">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58174 0 0 3.58169 0 8C0 12.4183 3.58174 16 8 16C12.4183 16 16 12.4183 16 8C16 3.58169 12.4183 0 8 0ZM9.00175 4.8C9.00175 5.38003 8.57944 5.8 8.00813 5.8C7.4137 5.8 7.00175 5.38003 7.00175 4.7889C7.00175 4.22076 7.42486 3.8 8.00813 3.8C8.57944 3.8 9.00175 4.22076 9.00175 4.8ZM7.20175 7.2H8.80175V12H7.20175V7.2Z" fill="#FFF001" />
@@ -134,6 +138,12 @@ const Setting = () => {
             <div className={`privacy-modal${showPrivacy ? ' open' : ''}`}>
                 <Privacy onBack={() => setShowPrivacy(false)} />
             </div>
+            {showFAQ && (
+                <FAQ onBack={() => setShowFAQ(false)} />
+            )}
+            {showAbout && (
+                <About onBack={() => setShowAbout(false)} />
+            )}
         </div>
     )
 }

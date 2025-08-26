@@ -180,19 +180,10 @@ function App() {
             })
             .catch(err => {
                 if (err?.status === 401 || err?.response?.status === 401) {
-                    // New user - show onboarding
+                    // New user - show onboarding (НЕ создаем пользователя сразу!)
+                    console.log('[App] Новый пользователь, показываем онбординг без создания аккаунта');
                     setOnboardDone(false);
-                    // Register on backend
-                    Login(id, username, first_name, last_name)
-                        .then(() => {
-                            // НЕ обрабатываем реферальный код сразу - это будет сделано после онбординга
-                            console.log('[App] Пользователь зарегистрирован, реферальный код будет обработан после онбординга');
-                        })
-                        .catch(console.error)
-                        .finally(() => {
-                            // Не ждём завершения регистрации, чтобы показать онбординг
-                            setIsAuthChecking(false);
-                        });
+                    setIsAuthChecking(false);
                 } else {
                     // Any other error - show onboarding anyway
                     setOnboardDone(false);

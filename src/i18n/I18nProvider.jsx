@@ -147,7 +147,41 @@ const dictionaries = {
     'referral.empty': 'У вас пока нет рефералов',
     'referral.shareHint': 'Поделитесь своей реферальной ссылкой с друзьями, чтобы начать зарабатывать!',
     'referral.backToProgram': 'Вернуться к реферальной программе',
-    'referral.registerDate': 'Дата регистрации'
+    'referral.registerDate': 'Дата регистрации',
+
+    // faq
+    'faq.title': 'F.A.Q. — Часто задаваемые вопросы',
+    'faq.question1': 'Что такое PLATA Pay?',
+    'faq.answer1': 'PLATA Pay — это сервис, который позволяет оплачивать покупки криптовалютой USDT через QR-коды СБП, а продавец получает рубли напрямую.',
+    'faq.question2': 'Как это работает?',
+    'faq.answer2': '1. Вы сканируете QR-код СБП в приложении продавца.\n2. Мы принимаем вашу криптовалюту USDT.\n3. Продавец получает рубли в тот же момент.',
+    'faq.question3': 'Нужно ли проходить верификацию?',
+    'faq.answer3': 'На текущем этапе — нет. Вы можете пользоваться сервисом сразу после запуска приложения.',
+    'faq.question4': 'Какие комиссии?',
+    'faq.answer4': 'Комиссия на вывод средств в сети trc-20 (tron) - 4 Usdt',
+    'faq.question5': 'Какой курс конвертации?',
+    'faq.answer5': 'Курс фиксируется в момент транзакции и отображается в приложении перед подтверждением платежа.',
+    'faq.question6': 'В каких странах работает PLATA Pay?',
+    'faq.answer6': 'Сейчас работает в Россия.\nНо скоро выйдем на СНГ',
+    'faq.question7': 'Какой минимум и максимум для перевода?',
+    'faq.answer7': 'Минимальная сумма — 5 USDT, максимальная — зависит от лимитов банка-получателя.',
+    'faq.question8': 'Это безопасно?',
+    'faq.answer8': 'Да. Все транзакции проходят через защищенные каналы. Криптовалюта хранится только на время обмена и не задерживается на наших счетах.',
+    'faq.question9': 'Можно ли использовать PLATA Pay для бизнеса?',
+    'faq.answer9': 'Да! Мы уже тестируем функционал для предпринимателей и интернет-магазинов.',
+    'faq.question10': 'Куда обращаться при проблемах?',
+    'faq.answer10': 'Вы можете написать в нашу службу поддержки:',
+    'faq.contactTitle': 'Куда обращаться при проблемах?',
+
+    // about
+    'about.title': 'О проекте',
+    'about.description1': 'PLATA Pay — это инновационный сервис мгновенных платежей, который объединяет мир криптовалют и привычные фиатные транзакции. Мы помогаем пользователям тратить USDT так же просто, как обычные деньги — в магазинах, онлайн и офлайн, без сложных обменников, комиссий и ожиданий.',
+    'about.description2': 'Через наше приложение вы сканируете QR-код СБП, мы принимаем вашу криптовалюту, а продавец получает рубли напрямую. Это быстро, безопасно и легально оформлено как P2С-операция.',
+    'about.mission': 'Наша миссия — дать каждому человеку свободу пользоваться своими цифровыми активами в реальной жизни.',
+    'about.slogan': 'PLATA Pay — это не просто платежи, это новый уровень финансовой свободы.',
+    'about.feature1': 'Мгновенные платежи',
+    'about.feature2': 'Безопасные транзакции',
+    'about.feature3': 'Легальное оформление'
   },
   en: {
     'settings.title': 'Settings',
@@ -169,7 +203,7 @@ const dictionaries = {
     'design.theme.light': 'Light',
     'design.theme.dark': 'Dark',
     'design.theme.system': 'System',
-
+    'wallet.balanceInRubles': 'Balance in rubles',
     'wallet.greeting': 'Good day,',
     'wallet.balanceUSDT': 'Balance in USDT',
     'wallet.topUp': 'Top up',
@@ -283,7 +317,41 @@ const dictionaries = {
     'referral.empty': 'You have no referrals yet',
     'referral.shareHint': 'Share your referral link with friends to start earning!',
     'referral.backToProgram': 'Back to referral program',
-    'referral.registerDate': 'Registration date'
+    'referral.registerDate': 'Registration date',
+
+    // faq
+    'faq.title': 'F.A.Q. — Frequently Asked Questions',
+    'faq.question1': 'What is PLATA Pay?',
+    'faq.answer1': 'PLATA Pay is a service that allows you to pay for purchases with USDT cryptocurrency through SBP QR codes, while the seller receives rubles directly.',
+    'faq.question2': 'How does it work?',
+    'faq.answer2': '1. You scan the SBP QR code in the seller\'s app.\n2. We accept your USDT cryptocurrency.\n3. The seller receives rubles instantly.',
+    'faq.question3': 'Do I need to complete verification?',
+    'faq.answer3': 'At the current stage - no. You can use the service immediately after launching the app.',
+    'faq.question4': 'What are the fees?',
+    'faq.answer4': 'Withdrawal fee in the trc-20 (tron) network - 4 USDT',
+    'faq.question5': 'What is the conversion rate?',
+    'faq.answer5': 'The rate is fixed at the moment of transaction and displayed in the app before payment confirmation.',
+    'faq.question6': 'In which countries does PLATA Pay work?',
+    'faq.answer6': 'Currently works in Russia.\nBut we will soon expand to CIS countries',
+    'faq.question7': 'What are the minimum and maximum transfer amounts?',
+    'faq.answer7': 'Minimum amount is 5 USDT, maximum depends on the recipient bank\'s limits.',
+    'faq.question8': 'Is it safe?',
+    'faq.answer8': 'Yes. All transactions go through secure channels. Cryptocurrency is stored only during the exchange and is not held in our accounts.',
+    'faq.question9': 'Can PLATA Pay be used for business?',
+    'faq.answer9': 'Yes! We are already testing functionality for entrepreneurs and online stores.',
+    'faq.question10': 'Where to contact for problems?',
+    'faq.answer10': 'You can contact our support service:',
+    'faq.contactTitle': 'Where to contact for problems?',
+
+    // about
+    'about.title': 'About Project',
+    'about.description1': 'PLATA Pay is an innovative instant payment service that connects the world of cryptocurrencies and traditional fiat transactions. We help users spend USDT as easily as regular money — in stores, online and offline, without complex exchanges, fees and waiting.',
+    'about.description2': 'Through our app you scan the SBP QR code, we accept your cryptocurrency, and the seller receives rubles directly. It\'s fast, secure and legally formatted as a P2C operation.',
+    'about.mission': 'Our mission is to give every person the freedom to use their digital assets in real life.',
+    'about.slogan': 'PLATA Pay is not just payments, it\'s a new level of financial freedom.',
+    'about.feature1': 'Instant payments',
+    'about.feature2': 'Secure transactions',
+    'about.feature3': 'Legal compliance'
   },
 };
 
