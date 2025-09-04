@@ -9,6 +9,9 @@ export const ConvertRUBToUSDT = async (QRLink) => {
   try {
     const url = new URL(QRLink);
     const params = new URLSearchParams(url.search);
+    
+
+    console.log(url)
 
     const sumParam = params.get('sum') || params.get('amount');
     const currency = params.get('cur') || 'RUB';
@@ -17,9 +20,26 @@ export const ConvertRUBToUSDT = async (QRLink) => {
     
     // Проверяем, является ли это multiqr.ru - там суммы уже в рублях
     const isMultiQR = url.hostname === 'multiqr.ru';
-    const amount = isMultiQR 
-      ? parseFloat(sumParam) // для multiqr.ru сумма уже в рублях
+    
+    // Проверяем, содержит ли сумма десятичную точку (уже в рублях)
+    const hasDecimalPoint = sumParam.includes('.');
+    
+    console.log('Проверка суммы:', {
+      sumParam: sumParam,
+      isMultiQR: isMultiQR,
+      hasDecimalPoint: hasDecimalPoint
+    });
+    
+    const amount = isMultiQR || hasDecimalPoint
+      ? parseFloat(sumParam) // для multiqr.ru или если уже в рублях (с точкой)
       : parseFloat(sumParam) / 100; // для СБП и других - из копеек в рубли
+    
+    console.log('Результат обработки:', {
+      исходнаяСумма: sumParam,
+      итоговаяСумма: amount,
+      делениеНа100: !(isMultiQR || hasDecimalPoint),
+      причина: isMultiQR ? 'multiqr.ru' : hasDecimalPoint ? 'уже в рублях' : 'СБП (копейки)'
+    });
 
     const response = await axios.post(API_URL+'/api/wallet/convert', {
       amount,

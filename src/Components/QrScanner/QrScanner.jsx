@@ -40,33 +40,76 @@ const QrScanner = ({telegramID}) => {
 
   // Общая обработка результата
   const handleDecoded = async (decodedText, isImage = false) => {
+    const startTime = Date.now();
+    console.log(`[QR] 🔄 Начало обработки результата сканирования. Тип: ${isImage ? 'изображение' : 'камера'}`);
+
     setProcessingImage(false);
-    
+
     if (isImage) {
-      console.log('[QR] Не удалось распознать QR-код, сохраняю изображение в dataURL');
-      console.log('[QR] data:image:', decodedText);
+      console.log('[QR] ❌ Не удалось распознать QR-код в изображении, сохраняю как dataURL');
+      console.log('[QR] 📷 DataURL получен:', decodedText.substring(0, 100) + '...');
+      console.log('[QR] 📊 Длина dataURL:', decodedText.length, 'символов');
       setQrLink(decodedText);
       setModalData({ amountRub: 0, amountUsdt: 0 });
       setShowModal(true);
+      console.log(`[QR] ✅ Обработка завершена за ${Date.now() - startTime}ms`);
       return;
     }
-    console.log('[QR] Успешно распознан QR-код:', decodedText);
+
+    console.log('[QR] ✅ Успешно распознан QR-код из камеры');
+    console.log('[QR] 🔗 Содержимое QR-кода:', decodedText);
+
+    // Анализируем тип ссылки
+    if (decodedText.startsWith('http://') || decodedText.startsWith('https://')) {
+      console.log('[QR] 🌐 Тип ссылки: HTTP/HTTPS URL');
+    } else if (decodedText.startsWith('bitcoin:') || decodedText.startsWith('ethereum:')) {
+      console.log('[QR] ₿ Тип ссылки: Криптовалютный адрес');
+    } else if (decodedText.includes('@') && decodedText.includes('.')) {
+      console.log('[QR] 📧 Тип ссылки: Email адрес');
+    } else {
+      console.log('[QR] ❓ Тип ссылки: Неизвестный формат');
+    }
+
     setQrLink(decodedText);
     try {
+      console.log('[QR] 💰 Начинаю конвертацию RUB в USDT...');
+      const convertStartTime = Date.now();
       const resp = await ConvertRUBToUSDT(decodedText);
+      console.log(`[QR] 💰 Конвертация завершена за ${Date.now() - convertStartTime}ms`);
+      console.log('[QR] 💰 Результат конвертации:', {
+        amountRub: resp.amountRub,
+        amountUsdt: resp.amountUsdt
+      });
       setModalData({ amountRub: resp.amountRub, amountUsdt: resp.amountUsdt });
-    } catch {
+    } catch (error) {
+      console.log('[QR] ❌ Ошибка конвертации:', error.message);
       setModalData({ amountRub: 0, amountUsdt: 0 });
     }
     setShowModal(true);
+    console.log(`[QR] 🎉 Полный процесс обработки завершен за ${Date.now() - startTime}ms`);
   };
 
   // Обработка успешного сканирования
   const handleScanSuccess = (result) => {
     if (result && result.getText()) {
-      console.log('[QR] ZXing распознал QR:', result.getText());
+      const scanTime = Date.now();
+      console.log('[QR] 📱 Камера зафиксировала QR-код');
+      console.log('[QR] 🔍 ZXing успешно распознал содержимое:', result.getText());
+      console.log('[QR] 📏 Длина текста QR-кода:', result.getText().length, 'символов');
+
+      // Логируем формат результата ZXing
+      console.log('[QR] 📋 Детали результата:', {
+        timestamp: new Date(scanTime).toISOString(),
+        hasText: !!result.getText(),
+        textLength: result.getText().length,
+        barcodeFormat: result.getBarcodeFormat?.() || 'неизвестный'
+      });
+
       stopScanner();
+      console.log('[QR] 🛑 Сканер остановлен, передаю данные на обработку');
       handleDecoded(result.getText());
+    } else {
+      console.log('[QR] ⚠️ ZXing вернул пустой результат');
     }
   };
 
@@ -82,34 +125,49 @@ const QrScanner = ({telegramID}) => {
   // Запуск сканера с оптимизацией для iOS
   const startScanner = async () => {
     if (scanning) return;
-    
+
+    console.log('[QR] 🚀 Запуск процесса сканирования QR-кода');
+    const startTime = Date.now();
+
     setScanning(true);
     setShowNoDetectModal(false);
-    
+
     try {
+      console.log('[QR] 📚 Инициализация ZXing BrowserMultiFormatReader');
       const codeReader = new BrowserMultiFormatReader();
       setReader(codeReader);
 
       // Используем оптимизированные настройки камеры
+      console.log('[QR] ⚙️ Получение настроек камеры');
       const videoConstraints = getCameraConstraints();
+      console.log('[QR] 📷 Настройки камеры:', videoConstraints);
 
       // Получаем доступ к камере
+      console.log('[QR] 🎥 Запрос доступа к камере...');
+      const cameraAccessStart = Date.now();
       const mediaStream = await navigator.mediaDevices.getUserMedia(videoConstraints);
+      console.log(`[QR] ✅ Доступ к камере получен за ${Date.now() - cameraAccessStart}ms`);
 
       setStream(mediaStream);
-      
+
       if (videoRef.current) {
+        console.log('[QR] 🎬 Настройка видео элемента');
         videoRef.current.srcObject = mediaStream;
+        console.log('[QR] ▶️ Запуск воспроизведения видео');
         await videoRef.current.play();
+        console.log('[QR] ✅ Видео запущено');
       }
 
       // Запускаем сканирование
+      console.log('[QR] 🔄 Запуск процесса распознавания QR-кодов через ZXing');
+      console.log('[QR] 📱 Используется первая доступная камера');
       await codeReader.decodeFromVideoDevice(
         undefined, // используем первую доступную камеру
         videoRef.current,
         handleScanSuccess,
         handleScanError
       );
+      console.log(`[QR] 🎯 ZXing сканер запущен и готов к работе за ${Date.now() - startTime}ms`);
 
       // Показываем модалку через 15 секунд, если не найден QR
       setTimeout(() => {
@@ -160,31 +218,60 @@ const QrScanner = ({telegramID}) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    console.log('[QR] 📁 Выбран файл из галереи');
+    console.log('[QR] 📄 Информация о файле:', {
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      lastModified: new Date(file.lastModified).toISOString()
+    });
+
+    const processStartTime = Date.now();
     setProcessingImage(true);
-    
+
     try {
+      console.log('[QR] 🔍 Начало обработки изображения через утилиту processQRImage');
+      console.log('[QR] ⚙️ Параметры обработки:', {
+        enableBackendFallback: false,
+        maxAttempts: 8,
+        skipZXingOnIOS: true
+      });
+
       // Используем новый утилитарный файл для обработки
+      const qrProcessStart = Date.now();
       const qrCode = await processQRImage(file, {
         enableBackendFallback: false, // Можно включить, если есть бэкенд
         maxAttempts: 8,
         skipZXingOnIOS: true
       });
 
+      console.log(`[QR] 🔍 Обработка изображения завершена за ${Date.now() - qrProcessStart}ms`);
+
       if (qrCode) {
+        console.log('[QR] ✅ QR-код успешно распознан в изображении:', qrCode);
         handleDecoded(qrCode);
       } else {
+        console.log('[QR] ❌ QR-код не найден в изображении, конвертирую в dataURL');
         // Если не удалось распознать — отправляем dataURL
         const reader = new FileReader();
         reader.onload = () => {
+          console.log('[QR] 📷 Изображение конвертировано в dataURL');
           handleDecoded(reader.result, true);
         };
         reader.readAsDataURL(file);
       }
     } catch (error) {
-      console.error('[QR] Ошибка обработки изображения:', error);
+      console.error('[QR] 💥 Критическая ошибка обработки изображения:', error);
+      console.error('[QR] 📋 Детали ошибки:', {
+        name: error.name,
+        message: error.message,
+        stack: error.stack
+      });
       alert(t('qr.imageProcessError') || 'Ошибка обработки изображения');
       setProcessingImage(false);
     }
+
+    console.log(`[QR] 🏁 Обработка файла завершена за ${Date.now() - processStartTime}ms`);
 
     // сброс, чтобы можно было выбрать тот же файл снова
     e.target.value = '';
@@ -192,23 +279,43 @@ const QrScanner = ({telegramID}) => {
 
   // Функция для переключения фонарика
   const toggleFlashlight = async () => {
-    if (!stream) return;
-    
+    console.log('[QR] 💡 Попытка переключения фонарика');
+
+    if (!stream) {
+      console.log('[QR] ❌ Нет активного видеопотока для управления фонариком');
+      return;
+    }
+
     try {
       const track = stream.getVideoTracks()[0];
+      console.log('[QR] 📹 Получен видеотрек для управления фонариком');
+
       const capabilities = track.getCapabilities();
-      
+      console.log('[QR] ⚙️ Возможности камеры:', capabilities);
+
       if (!capabilities.torch) {
+        console.log('[QR] ❌ Фонарик не поддерживается на этом устройстве');
         alert(t('qr.flashNotSupported') || 'Фонарик не поддерживается на этом устройстве');
         return;
       }
-      
-      await track.applyConstraints({ 
-        advanced: [{ torch: !flashlight }] 
+
+      const newTorchState = !flashlight;
+      console.log(`[QR] 🔄 Переключение фонарика: ${flashlight} → ${newTorchState}`);
+
+      await track.applyConstraints({
+        advanced: [{ torch: newTorchState }]
       });
+
       setFlashlight(f => !f);
+      console.log(`[QR] ✅ Фонарик ${newTorchState ? 'включен' : 'выключен'} успешно`);
+
     } catch (e) {
-      console.error('[QR] Ошибка переключения фонарика:', e);
+      console.error('[QR] 💥 Ошибка переключения фонарика:', e);
+      console.error('[QR] 📋 Детали ошибки фонарика:', {
+        name: e.name,
+        message: e.message,
+        stack: e.stack
+      });
       alert(t('qr.flashToggleError') || 'Не удалось переключить фонарик');
     }
   };
