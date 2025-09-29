@@ -13,10 +13,13 @@ import { RxCross2 } from 'react-icons/rx';
 import { BsCamera } from 'react-icons/bs';
 import { FiAlertTriangle } from 'react-icons/fi';
 import { useI18n } from '../../i18n/I18nProvider.jsx';
+import Modal from '../UI/Modal.jsx';
 
 const QrScanner = ({telegramID}) => {
   const videoRef = useRef(null);
   const fileInputRef = useRef(null);
+  // Флаг, чтобы не обрабатывать один и тот же QR повторно
+  const hasHandledRef = useRef(false);
   const navigate = useNavigate();
   const { t } = useI18n();
 
@@ -31,6 +34,9 @@ const QrScanner = ({telegramID}) => {
   const [stream, setStream] = useState(null);
   const [processingImage, setProcessingImage] = useState(false);
   const [supportInfo, setSupportInfo] = useState(null);
+  const [showAmountModal, setShowAmountModal] = useState(false);
+  const [manualAmount, setManualAmount] = useState('');
+  const [manualError, setManualError] = useState('');
 
   // Получаем информацию о поддержке при инициализации
   useEffect(() => {
@@ -71,6 +77,21 @@ const QrScanner = ({telegramID}) => {
     }
 
     setQrLink(decodedText);
+    // Проверяем наличие суммы в ссылке
+    let sumParam = null;
+    try {
+      const url = new URL(decodedText);
+      const params = new URLSearchParams(url.search);
+      sumParam = params.get('sum') || params.get('amount');
+    } catch (e) {
+      // не URL, пропускаем
+    }
+    if (!sumParam) {
+      // Нет суммы — показываем модалку для ручного ввода
+      stopScanner();
+      setShowAmountModal(true);
+      return;
+    }
     try {
       console.log('[QR] 💰 Начинаю конвертацию RUB в USDT...');
       const convertStartTime = Date.now();
@@ -82,6 +103,12 @@ const QrScanner = ({telegramID}) => {
       });
       setModalData({ amountRub: resp.amountRub, amountUsdt: resp.amountUsdt });
     } catch (error) {
+      // Если конвертация вернула специальную ошибку отсутствия суммы — откроем модалку (на случай иных источников)
+      if (error?.message === 'MISSING_AMOUNT') {
+        stopScanner();
+        setShowAmountModal(true);
+        return;
+      }
       console.log('[QR] ❌ Ошибка конвертации:', error.message);
       setModalData({ amountRub: 0, amountUsdt: 0 });
     }
@@ -92,6 +119,12 @@ const QrScanner = ({telegramID}) => {
   // Обработка успешного сканирования
   const handleScanSuccess = (result) => {
     if (result && result.getText()) {
+      // Если уже обрабатывали — игнорируем последующие срабатывания
+      if (hasHandledRef.current) {
+        return;
+      }
+      hasHandledRef.current = true;
+
       const scanTime = Date.now();
       console.log('[QR] 📱 Камера зафиксировала QR-код');
       console.log('[QR] 🔍 ZXing успешно распознал содержимое:', result.getText());
@@ -126,6 +159,9 @@ const QrScanner = ({telegramID}) => {
   const startScanner = async () => {
     if (scanning) return;
 
+    // Сбрасываем флаг единичной обработки при каждом старте
+    hasHandledRef.current = false;
+
     console.log('[QR] 🚀 Запуск процесса сканирования QR-кода');
     const startTime = Date.now();
 
@@ -136,12 +172,10 @@ const QrScanner = ({telegramID}) => {
       console.log('[QR] 📚 Инициализация ZXing BrowserMultiFormatReader');
       const codeReader = new BrowserMultiFormatReader();
       setReader(codeReader);
-
       // Используем оптимизированные настройки камеры
       console.log('[QR] ⚙️ Получение настроек камеры');
       const videoConstraints = getCameraConstraints();
       console.log('[QR] 📷 Настройки камеры:', videoConstraints);
-
       // Получаем доступ к камере
       console.log('[QR] 🎥 Запрос доступа к камере...');
       const cameraAccessStart = Date.now();
@@ -329,6 +363,29 @@ const QrScanner = ({telegramID}) => {
     }, 350);
   };
 
+  // Обработчик подтверждения ручного ввода суммы
+  const handleManualAmount = async () => {
+    setManualError('');
+    const value = parseFloat(manualAmount.replace(',', '.'));
+    if (isNaN(value) || value <= 0) {
+      setManualError('Введите корректную сумму в рублях');
+      return;
+    }
+
+    try {
+      const resp = await ConvertRUBToUSDT(qrLink, { amountRub: value, from: 'RUB' });
+      setModalData({ amountRub: resp.amountRub, amountUsdt: resp.amountUsdt });
+      setShowAmountModal(false);
+      setShowModal(true);
+    } catch (error) {
+      if (error?.message === 'MISSING_AMOUNT') {
+        setManualError('Сумма не указана. Введите сумму в рублях.');
+      } else {
+        setManualError('Ошибка конвертации. Попробуйте позже.');
+      }
+    }
+  };
+
   return (
     <div className="qr-container">
       {/* Модалка с результатом */}
@@ -345,6 +402,70 @@ const QrScanner = ({telegramID}) => {
           stopScanner();
         }}
       />
+
+      {/* Модалка ручного ввода суммы */}
+      <Modal isOpen={showAmountModal} onClose={() => setShowAmountModal(false)} title="Введите сумму в рублях">
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 18, minWidth: 260 }}>
+          <div style={{ position: 'relative', width: 220 }}>
+            <input
+              type="number"
+              min="1"
+              step="0.01"
+              value={manualAmount}
+              onChange={e => setManualAmount(e.target.value)}
+              placeholder="Сумма в RUB"
+              style={{
+                fontSize: 22,
+                padding: '14px 44px 14px 18px',
+                borderRadius: 14,
+                border: manualError ? '2px solid #e74c3c' : '2px solid #2A2A2A',
+                background: '#181818',
+                color: '#fff',
+                width: '100%',
+                boxShadow: '0 2px 12px 0 rgba(0,0,0,0.10)',
+                outline: 'none',
+                transition: 'border 0.2s, box-shadow 0.2s',
+                fontWeight: 500,
+                letterSpacing: 1,
+                textAlign: 'left',
+              }}
+              autoFocus
+              onFocus={e => e.target.style.border = '2px solid #4F8CFF'}
+              onBlur={e => e.target.style.border = manualError ? '2px solid #e74c3c' : '2px solid #2A2A2A'}
+            />
+            <span style={{
+              position: 'absolute',
+              right: 16,
+              top: '50%',
+              transform: 'translateY(-50%)',
+              color: '#4F8CFF',
+              fontSize: 22,
+              pointerEvents: 'none',
+              fontWeight: 700
+            }}>₽</span>
+          </div>
+          {manualError && <div style={{ color: '#e74c3c', marginTop: 2, fontSize: 15 }}>{manualError}</div>}
+          <button
+            style={{
+              marginTop: 10,
+              padding: '12px 36px',
+              fontSize: 19,
+              borderRadius: 10,
+              background: 'linear-gradient(90deg, #4F8CFF 0%, #2A2A2A 100%)',
+              color: '#fff',
+              border: 'none',
+              cursor: 'pointer',
+              fontWeight: 600,
+              boxShadow: '0 2px 8px 0 rgba(79,140,255,0.10)',
+              letterSpacing: 1,
+              transition: 'background 0.2s, box-shadow 0.2s',
+            }}
+            onClick={handleManualAmount}
+          >
+            ОК
+          </button>
+        </div>
+      </Modal>
 
       {/* Минималистичная модалка */}
       {showNoDetectModal && (

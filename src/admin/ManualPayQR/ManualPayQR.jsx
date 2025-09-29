@@ -40,13 +40,13 @@ const ManualPayQR = () => {
     return (
         <div>
             <nav style={{ marginBottom: 18 }}>
-                <Link to="/admin/wallets-history" style={{ marginRight: 16 }}>История по кошелькам</Link>
-                <Link to="/admin/withdraw-orders" style={{ marginRight: 16 }}>Заказы на вывод</Link>
-                <Link to="/admin/withdraw-history" style={{ marginRight: 16 }}>История выводов</Link>
+                <Link to="/x7k9m2p8/wallets-history" style={{ marginRight: 16 }}>История по кошелькам</Link>
+                <Link to="/x7k9m2p8/withdraw-orders" style={{ marginRight: 16 }}>Заказы на вывод</Link>
+                <Link to="/x7k9m2p8/withdraw-history" style={{ marginRight: 16 }}>История выводов</Link>
                 {/* другие ссылки, если есть */}
             </nav>
             <Routes>
-                <Route path="/admin/wallets-history" element={<AdminWalletsHistoryPage />} />
+                <Route path="/x7k9m2p8/wallets-history" element={<AdminWalletsHistoryPage />} />
                 {/* другие роуты, если есть */}
             </Routes>
             <div className="manual_pay_panel">

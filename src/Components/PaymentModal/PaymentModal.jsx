@@ -40,6 +40,8 @@ const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) =>
 
   const handleButton =  async (e) => {
     e.preventDefault()
+    if (paymentState === "in process") return; // защита от повторных нажатий
+    setPaymentState("in process");
     // alert(qrLink)
     var balanceControl = false
 
@@ -139,7 +141,7 @@ const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) =>
           {paymentState === "in process" ? (
             <button className="modal-pay process">{t('payment.processing') || 'Обработка платежа'}</button>
           ) : paymentState === "idle" ? (
-            <button className="modal-pay" onClick={handleButton}>{t('payment.pay') || 'Оплатить'}</button>
+            <button className="modal-pay" onClick={handleButton} disabled={paymentState === "in process"}>{t('payment.pay') || 'Оплатить'}</button>
           ) : paymentState === "cancel" ? (
             <button className="modal-pay cancel shake-once">{t('payment.noBalance') || 'Недостаточно баланса'}</button>
           ) : null}

@@ -7,7 +7,8 @@ import {
     Link,
     Navigate,
     useLocation,
-    useSearchParams
+    useSearchParams,
+    useNavigate
 } from 'react-router-dom';
 
 import QrScanner from './Components/QrScanner/QrScanner';
@@ -245,10 +246,38 @@ function App() {
                     />
                     <Route path='/history' element={<History telegramID={telegramID}/>} />
                     <Route path="/scanner" element={<QrScanner telegramID={telegramID} />} />
-                    <Route path='/admin/manual-pay' element={<ManualPayQR telegramID={telegramID}/>} />
-                    <Route path='/admin/wallets-history' element={<AdminWalletsHistoryPage />} />
-                    <Route path='/admin/withdraw-orders' element={<AdminWithdrawOrdersPage />} />
-                    <Route path='/admin/withdraw-history' element={<AdminWithdrawHistoryPage />} />
+                    <Route
+                        path='/x7k9m2p8/manual-pay'
+                        element={
+                            <AdminGuard>
+                                <ManualPayQR telegramID={telegramID} />
+                            </AdminGuard>
+                        }
+                    />
+                    <Route
+                        path='/x7k9m2p8/wallets-history'
+                        element={
+                            <AdminGuard>
+                                <AdminWalletsHistoryPage />
+                            </AdminGuard>
+                        }
+                    />
+                    <Route
+                        path='/x7k9m2p8/withdraw-orders'
+                        element={
+                            <AdminGuard>
+                                <AdminWithdrawOrdersPage />
+                            </AdminGuard>
+                        }
+                    />
+                    <Route
+                        path='/x7k9m2p8/withdraw-history'
+                        element={
+                            <AdminGuard>
+                                <AdminWithdrawHistoryPage />
+                            </AdminGuard>
+                        }
+                    />
                     <Route path='/deposit' element={<Deposit telegramID={telegramID}/>} />
                     <Route path='/withdraw' element={<WithdrawPage telegramID={telegramID}/>} />
                     <Route path='/settings' element={<Setting/>} />
@@ -270,7 +299,7 @@ function BottomNav() {
     const location = useLocation();
     return (
         <>
-        {location.pathname === '/scanner' || location.pathname === '/deposit' || location.pathname == "/admin/manual-pay" ? 
+        {location.pathname === '/scanner' || location.pathname === '/deposit' || location.pathname == "/x7k9m2p8/manual-pay" ? 
         (null)
         : (
         <nav className="bottom-nav">
@@ -295,3 +324,36 @@ function BottomNav() {
 }
 
 export default App;
+
+function AdminGuard({ children }) {
+    const navigate = useNavigate();
+    const [isAllowed, setIsAllowed] = React.useState(false);
+
+    React.useEffect(() => {
+        // Уже авторизован в этой сессии
+        if (sessionStorage.getItem('admin_access_granted') === 'true') {
+            setIsAllowed(true);
+            return;
+        }
+
+        const secretFromEnv = import.meta.env.VITE_ADMIN_KEY;
+        const entered = window.prompt('Введите секретный ключ для доступа к админке');
+
+        if (!entered) {
+            alert('Доступ в админку отменен');
+            navigate('/');
+            return;
+        }
+
+        if (entered === secretFromEnv) {
+            sessionStorage.setItem('admin_access_granted', 'true');
+            setIsAllowed(true);
+        } else {
+            alert('Неверный секретный ключ');
+            navigate('/');
+        }
+    }, [navigate]);
+
+    if (!isAllowed) return null;
+    return children;
+}

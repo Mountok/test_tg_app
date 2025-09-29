@@ -28,14 +28,27 @@ export default function WalletPage({ username }) {
 
     const [wallet, SetWallet] = useState({})
 
-    // Функция для получения курса USDT к рублю
+    // Функция для получения курса USDT к рублю с кэшированием на 5 минут
     const fetchUsdtToRubRate = async () => {
+        const cacheKey = 'usdtToRubRate';
+        const cacheTimeKey = 'usdtToRubRateTime';
+        const now = Date.now();
+        const cacheTime = localStorage.getItem(cacheTimeKey);
+        if (cacheTime && now - cacheTime < 5 * 60 * 1000) {
+            // Используем кэш, если не старше 5 минут
+            return parseFloat(localStorage.getItem(cacheKey));
+        }
         try {
             const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=rub');
             const data = await response.json();
-            return data.tether?.rub || 0;
+            const rate = data.tether?.rub || 0;
+            localStorage.setItem(cacheKey, rate);
+            localStorage.setItem(cacheTimeKey, now);
+            return rate;
         } catch (error) {
-            console.error('Ошибка при получении курса USDT/RUB:', error);
+            // Если ошибка — пробуем вернуть кэш, если есть
+            const cached = localStorage.getItem(cacheKey);
+            if (cached) return parseFloat(cached);
             return 0;
         }
     };
@@ -48,6 +61,8 @@ export default function WalletPage({ username }) {
 
     useEffect(() => {
         // alert("WalletPage useEffect")
+
+        
 
         const { id } = TelegramInfo() || {};
 

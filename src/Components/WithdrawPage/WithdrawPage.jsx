@@ -37,6 +37,7 @@ const WithdrawPage = ({ telegramID }) => {
   // Загрузка баланса при инициализации
   useEffect(() => {
     loadUserBalance();
+
   }, [telegramID]);
   
   const loadUserBalance = async () => {

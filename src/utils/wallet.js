@@ -4,6 +4,8 @@ import axios from "axios";
 const API_URL = "https://plataplay.duckdns.org";
 // const API_URL = "http://localhost:8880";
 
+var api_seckert_key = import.meta.env.VITE_ADMIN_KEY;
+
 export const CreateWallet = async (telegramId) => {
     var data = await axios.post(API_URL+"/api/wallet/create", {}, {
         headers: {
@@ -132,8 +134,10 @@ export const TransactionVirtual = async (amount,addr) => {
 }
 
 export const GetAdminWalletsWithHistory = async (adminSecret) => {
+    // Encode admin secret to base64 to handle non-ASCII characters in HTTP headers
+    const encodedSecret = btoa(unescape(encodeURIComponent(adminSecret)));
     const { data } = await axios.get(API_URL + "/api/admin/wallets-with-history", {
-        headers: { 'X-Admin-Secret': adminSecret }
+        headers: { 'X-Admin-Secret': encodedSecret }
     });
     return data;
 }  
@@ -157,9 +161,11 @@ export const GetEstimateTRX = async (address,amount) => {
 // Получение списка заказов на вывод для админ панели
 export const GetWithdrawWaitingList = async () => {
     try {
+        // Encode admin secret to base64 to handle non-ASCII characters in HTTP headers
+        var api_seckert_key = import.meta.env.VITE_ADMIN_KEY;
         const { data } = await axios.get(API_URL + "/api/admin/withdraw/waiting", {
             headers: {
-                "X-Admin-Secret": "@$KC@f~vms|IXP#",
+                "X-Admin-Secret": api_seckert_key,
                 "X-Telegram-ID": "1"
             }
         });
@@ -173,9 +179,11 @@ export const GetWithdrawWaitingList = async () => {
 // Обработка заказа на вывод средств
 export const ProcessWithdrawOrder = async (orderId) => {
     try {
+        // Encode admin secret to base64 to handle non-ASCII characters in HTTP headers
+        const encodedSecret = btoa(unescape(encodeURIComponent(api_seckert_key)));
         const { data } = await axios.put(`${API_URL}/api/admin/withdraw/${orderId}`, {}, {
             headers: {
-                "X-Admin-Secret": "@$KC@f~vms|IXP#",
+                "X-Admin-Secret": encodedSecret,
                 "X-Telegram-ID": "1"
             }
         });
@@ -190,9 +198,11 @@ export const ProcessWithdrawOrder = async (orderId) => {
 // Получение истории заказов на вывод для админ панели
 export const GetWithdrawHistory = async () => {
     try {
+        // Encode admin secret to base64 to handle non-ASCII characters in HTTP headers
+        const encodedSecret = btoa(unescape(encodeURIComponent(api_seckert_key)));
         const { data } = await axios.get(API_URL + "/api/admin/withdraw/history", {
             headers: {
-                "X-Admin-Secret": "@$KC@f~vms|IXP#",
+                "X-Admin-Secret": encodedSecret,
                 "X-Telegram-ID": "1"
             }
         });
