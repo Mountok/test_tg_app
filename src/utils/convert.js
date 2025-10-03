@@ -38,8 +38,13 @@ export const ConvertRUBToUSDT = async (QRLink, options = {}) => {
       const hasDecimalPoint = sumParam.includes('.');
       
       amount = parseFloat(sumParam);
-      if (isNSPK && bank === '100000000005') {
-        // Для этого банка всегда копейки
+      const banksAlwaysCents = [
+        '100000000005',
+        '100000000284',
+        // ...добавляй сюда новые по мере обнаружения
+      ];
+      if (isNSPK && banksAlwaysCents.includes(bank)) {
+        // Для этих банков всегда копейки
         amount = amount / 100;
       } else if (!hasDecimalPoint && amount > 10000) {
         // Общая эвристика для остальных
