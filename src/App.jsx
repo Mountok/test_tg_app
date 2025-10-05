@@ -37,6 +37,7 @@ import ReferralListPage from './Components/ReferralPage/ReferralListPage.jsx';
 import Toast from './Components/UI/Toast.jsx';
 import { PinProvider, usePin } from './pin/PinProvider.jsx';
 import { registerByReferralCode } from './utils/referral';
+import UnderConstruction from './Components/UnderConstruction';
 
 function App() {
     const [userName, setUserName] = useState();
@@ -279,7 +280,9 @@ function App() {
                         }
                     />
                     <Route path='/deposit' element={<Deposit telegramID={telegramID}/>} />
-                    <Route path='/withdraw' element={<WithdrawPage telegramID={telegramID}/>} />
+                    <Route path='/withdraw' element={<UnderConstruction />} />
+                    {/* <Route path='/withdraw' element={<WithdrawPage telegramID={telegramID}/>} /> */}
+
                     <Route path='/settings' element={<Setting/>} />
                     <Route path='/settings/user-agreement' element={<UserAgreement/>} />
                     <Route path='/exchange' element={<Exchange/>} />

@@ -68,6 +68,8 @@ const dictionaries = {
     'withdraw.amount': 'Сумма вывода',
     'withdraw.submit': 'Вывести средства',
     'withdraw.processingTime': 'Обработка займет 15-30 секунд',
+    'withdraw.underConstructionTitle': 'Страница в разработке',
+    'withdraw.underConstructionText': 'Функция вывода средств скоро появится. Следите за обновлениями!',
 
     // common
     'common.next': 'Далее',
@@ -203,6 +205,7 @@ const dictionaries = {
     'design.theme.light': 'Light',
     'design.theme.dark': 'Dark',
     'design.theme.system': 'System',
+    'wallet.withdraw': 'Withdraw',
     'wallet.balanceInRubles': 'Balance in rubles',
     'wallet.greeting': 'Good day,',
     'wallet.balanceUSDT': 'Balance in USDT',
@@ -342,6 +345,16 @@ const dictionaries = {
     'faq.question10': 'Where to contact for problems?',
     'faq.answer10': 'You can contact our support service:',
     'faq.contactTitle': 'Where to contact for problems?',
+
+
+    'withdraw.title': 'Withdraw USDT',
+    'withdraw.availableBalance': 'Available balance', 
+    'withdraw.recipientAddress': 'Recipient address',
+    'withdraw.amount': 'Withdraw amount',
+    'withdraw.submit': 'Withdraw',
+    'withdraw.processingTime': 'Processing will take 15-30 seconds',
+    'withdraw.underConstructionTitle': 'Withdraw page is under construction',
+    'withdraw.underConstructionText': 'Withdrawals will be available soon. Stay tuned!',
 
     // about
     'about.title': 'About Project',

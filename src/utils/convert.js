@@ -41,7 +41,8 @@ export const ConvertRUBToUSDT = async (QRLink, options = {}) => {
       const banksAlwaysCents = [
         '100000000005',
         '100000000284',
-        // ...добавляй сюда новые по мере обнаружения
+        '100000000022',
+        // ...добавлять сюда новые по мере обнаружения
       ];
       if (isNSPK && banksAlwaysCents.includes(bank)) {
         // Для этих банков всегда копейки
