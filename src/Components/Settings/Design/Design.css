@@ -59,6 +59,7 @@
   display: flex;
   align-items: center;
   background: var(--card);
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
   border-radius: 18px;
   padding: 16px 18px;
   margin-bottom: 2px;
@@ -75,18 +76,12 @@
   color: #ffe600;
 }
 
-.design-item.selected .design-check {
-  color: #ffe600;
-  font-size: 20px;
+.design-dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffe600;
   margin-right: 12px;
-  display: flex;
-  align-items: center;
-}
-
-.design-check {
-  color: #ffe600;
-  font-size: 20px;
-  margin-right: 12px;
-  display: flex;
-  align-items: center;
+  box-shadow: 0 0 0 2px #ffe60022;
 } 

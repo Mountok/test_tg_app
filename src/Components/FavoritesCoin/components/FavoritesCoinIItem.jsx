@@ -14,8 +14,7 @@ const FavoritesCoinItem = ({ icon, name, shortname, price, percent }) => (
     <div className="favorite_coin_item_price">
       <p className="favorite_coin_item_price_value">${price}</p>
       <p
-        className="favorite_coin_item_price_percent"
-        style={{ color: percent >= 0 ? 'green' : 'red' }}
+        className={`favorite_coin_item_price_percent ${percent >= 0 ? 'up' : 'down'}`}
       >
         {percent >= 0 ? '+' : ''}{percent}%
       </p>

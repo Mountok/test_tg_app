@@ -29,26 +29,26 @@ const Design = ({ onBack }) => {
       <div className="design-section-label">{t('design.selectLanguage')}</div>
       <div className="design-section">
         <div className={`design-item${lang === 'ru' ? ' selected' : ''}`} onClick={() => setLanguage('ru')}>
-          {lang === 'ru' && <span className="design-check">✔</span>}
+          {lang === 'ru' && <span className="design-dot" />}
           <span>Русский</span>
         </div>
         <div className={`design-item${lang === 'en' ? ' selected' : ''}`} onClick={() => setLanguage('en')}>
-          {lang === 'en' && <span className="design-check">✔</span>}
+          {lang === 'en' && <span className="design-dot" />}
           <span>Английский</span>
         </div>
       </div>
       <div className="design-section-label">{t('design.theme')}</div>
       <div className="design-section">
         <div className={`design-item${theme === 'light' ? ' selected' : ''}`} onClick={() => setTheme('light')}>
-          {theme === 'light' && <span className="design-check">✔</span>}
+          {theme === 'light' && <span className="design-dot" />}
           <span>{t('design.theme.light')}</span>
         </div>
         <div className={`design-item${theme === 'dark' ? ' selected' : ''}`} onClick={() => setTheme('dark')}>
-          {theme === 'dark' && <span className="design-check">✔</span>}
+          {theme === 'dark' && <span className="design-dot" />}
           <span>{t('design.theme.dark')}</span>
         </div>
         <div className={`design-item${theme === 'system' ? ' selected' : ''}`} onClick={() => setTheme('system')}>
-          {theme === 'system' && <span className="design-check">✔</span>}
+          {theme === 'system' && <span className="design-dot" />}
           <span>{t('design.theme.system')}</span>
         </div>
       </div>

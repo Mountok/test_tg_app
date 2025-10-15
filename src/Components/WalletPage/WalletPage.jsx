@@ -153,7 +153,6 @@ export default function WalletPage({ username }) {
                     <div className="wallet-container_header_balance_top">
                         {idBalanceCreated ?
                             <>
-                                <p><span>Wallet<sup>v0.06</sup></span></p>
                                 <p><sup className="wallet-container_header_balance_top_address"> {wallet.address} - {usdtBalance}USDT </sup></p>
                             </>
                             :

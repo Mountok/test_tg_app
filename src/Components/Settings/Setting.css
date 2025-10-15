@@ -79,6 +79,8 @@
   display: flex;
   align-items: center;
   background: var(--card);
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+
   border-radius: 18px;
   padding: 12px 12px;
   margin-bottom: 10px;
@@ -185,7 +187,7 @@
 .settings-item-title {
     font-size: 16px;
     font-weight: 500;
-    color: #fff;
+    color: var(--text);
 }
 
 .settings-item-subtitle {

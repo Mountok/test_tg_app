@@ -1,9 +1,10 @@
 /* src/components/PriceCard/PriceCard.css */
 .price-card {
-  background: #171717;
+  background: var(--card);
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
   border-radius: 16px;
   padding: 1rem;
-color: var(--text);
+  color: var(--text);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;

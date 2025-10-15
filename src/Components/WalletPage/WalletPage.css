@@ -94,6 +94,7 @@ color: var(--text);
 .wallet-container_header_balance_bottom {
     margin-bottom: 10px;
     background-color:   rgb(236 229 67);
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
     border-radius: 20px;
     padding: 20px 20px 5px 20px;
 }
@@ -103,7 +104,7 @@ color: var(--muted);
     line-height: 10px;
 }
 .wallet-container_header_balance_bottom p:nth-child(2){
-color: var(--text);
+color: black;
     font-size: 50px;
     line-height: 60px;
     font-weight: 700;

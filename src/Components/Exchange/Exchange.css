@@ -1,7 +1,7 @@
 .exchange-container {
-  background: #000;
+  background: var(--bg);
   min-height: 100vh;
-  color: #fff;
+  color: var(--text);
   padding: 0 16px 100px 16px;
   font-family: 'Inter', Arial, sans-serif;
 }
@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   height: 64px;
-  border-bottom: 1px solid #222;
+  border-bottom: 1px solid var(--border);
   justify-content: space-between;
   position: relative;
 }
@@ -25,7 +25,7 @@
 .exchange-back-btn {
   background: none;
   border: none;
-  color: #fff;
+  color: var(--text);
   font-size: 28px;
   cursor: pointer;
   display: flex;
@@ -40,10 +40,11 @@
   font-size: 22px;
   font-weight: 500;
   margin: 0;
+  color: var(--text);
 }
 
 .exchange-main-block {
-  background: #181818;
+  background: var(--card);
   border-radius: 28px;
   margin: 24px 0 18px 0;
   padding: 24px 20px 20px 20px;
@@ -60,7 +61,7 @@
 .exchange-amount-input {
   background: none;
   border: none;
-  color: #fff;
+  color: var(--text);
   font-size: 32px;
   font-weight: 600;
   width: 120px;
@@ -70,19 +71,19 @@
 .exchange-currency-select {
   display: flex;
   align-items: center;
-  background: #232323;
+  background: var(--bg-secondary);
   border-radius: 16px;
   padding: 6px 14px;
   font-size: 18px;
   font-weight: 500;
-  color: #fff;
+  color: var(--text);
 }
 
 .exchange-currency-icon {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: #222;
+  background: var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,7 +97,7 @@
   border-radius: 50%;
   object-fit: cover;
   margin-right: 8px;
-  background: #222;
+  background: var(--border);
 }
 
 .exchange-currency-list {
@@ -104,7 +105,7 @@
   top: 100%;
   left: 0;
   right: 0;
-  background: #181818;
+  background: var(--card);
   border-radius: 16px;
   box-shadow: 0 2px 12px 0 rgba(0,0,0,0.12);
   z-index: 10;
@@ -118,15 +119,15 @@
   padding: 10px 16px;
   cursor: pointer;
   font-size: 16px;
-  color: #fff;
+  color: var(--text);
   transition: background 0.15s;
 }
 .exchange-currency-list-item:hover {
-  background: #232323;
+  background: var(--bg-secondary);
 }
 
 .exchange-equals {
-  color: #888;
+  color: var(--muted);
   font-size: 15px;
   margin-bottom: 8px;
 }
@@ -134,12 +135,12 @@
 .exchange-result {
   font-size: 32px;
   font-weight: 700;
-  color: #fff;
+  color: var(--text);
 }
 
 .exchange-rate-info {
   margin: 12px 0 18px 0;
-  color: #fff;
+  color: var(--text);
   font-size: 16px;
 }
 
@@ -170,7 +171,7 @@
 }
 
 .exchange-courses-label {
-  color: #fff;
+  color: var(--text);
   font-size: 18px;
   font-weight: 500;
   margin: 18px 0 10px 0;
@@ -179,14 +180,14 @@
 .exchange-search-row {
   display: flex;
   align-items: center;
-  background: #181818;
+  background: var(--card);
   border-radius: 16px;
   padding: 8px 14px;
   margin-bottom: 10px;
 }
 
 .exchange-search-icon {
-  color: #888;
+  color: var(--muted);
   font-size: 18px;
   margin-right: 10px;
 }
@@ -194,7 +195,7 @@
 .exchange-search-input {
   background: none;
   border: none;
-  color: #fff;
+  color: var(--text);
   font-size: 16px;
   width: 100%;
   outline: none;
@@ -207,13 +208,15 @@
 .exchange-course-item {
   display: flex;
   align-items: center;
-  background: #181818;
+  background: var(--card);
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+
   border-radius: 18px;
   padding: 16px 18px;
   margin-bottom: 10px;
   font-size: 17px;
   font-weight: 400;
-  color: #fff;
+  color: var(--text);
   position: relative;
 }
 
@@ -221,7 +224,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #232323;
+  background: var(--bg-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -235,13 +238,13 @@
   border-radius: 50%;
   object-fit: cover;
   margin-right: 12px;
-  background: #232323;
+  background: var(--bg-secondary);
 }
 
 .exchange-course-name {
   flex: 1;
   font-size: 17px;
-  color: #fff;
+  color: var(--text);
 }
 
 .exchange-course-value {
@@ -256,7 +259,7 @@
 }
 
 .exchange-loading {
-  color: #888;
+  color: var(--muted);
   text-align: center;
   padding: 24px 0;
 } 

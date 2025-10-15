@@ -1,5 +1,5 @@
 .history {
-  background: #111;
+  background: var(--bg);
   min-height: 100vh;
   padding: 0 0 80px 0;
 }

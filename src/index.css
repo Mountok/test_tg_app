@@ -10,6 +10,7 @@
   --text: #111111;
   --muted: #666666;
   --card: #ffffff;
+  --setting_button: #f3f3f386;
   --border: #e6e6e6;
   --accent: #FFF001;
   --button-bg: #f5f5f5;
@@ -21,7 +22,8 @@
   --bg-secondary: #181818;
   --text: #ffffff;
   --muted: #aaaaaa;
-  --card: #181818;
+  --card: #222222;
+  --setting_button: #222222;
   --border: #222222;
   --accent: #FFF001;
   --button-bg: #1e1e1e;

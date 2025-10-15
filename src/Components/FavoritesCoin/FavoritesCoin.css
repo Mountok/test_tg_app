@@ -14,6 +14,7 @@
     height: 50px;
     padding: 0 20px;
     background-color: var(--color-background);
+
 }
 .favorites_coin_filter_item{
     margin-left: 4px;
@@ -46,7 +47,8 @@
 
 .favorite_coin_item{
     display: flex;
-    background-color: #161616;
+    background-color: var(--card);
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
     border-radius: 20px;
     padding: 16px;
     flex-direction: row;
@@ -72,10 +74,10 @@
 }
 .favorite_coin_item_name{
     font-weight: 500;
-    color: #E8E8E8;
+    color: var(--text);
 }
 .favorite_coin_item_shortname{
-    color: #858585;
+    color: var(--muted);
 }
 .favorite_coin_item_price{
     display: flex;
@@ -86,6 +88,12 @@
 .favorite_coin_item_price_value{}
 .favorite_coin_item_price_percent{
     font-weight: 400;
+}
+.favorite_coin_item_price_percent.up {
+    color: #34d399;
+}
+.favorite_coin_item_price_percent.down {
+    color: #f87171;
 }
 
 .favorites_coin_filter_item.active {
