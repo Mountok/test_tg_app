@@ -56,7 +56,7 @@ export default function WalletPage({ username }) {
     // Функция для конвертации USDT в рубли
     const convertUsdtToRub = async (usdtAmount) => {
         const rate = await fetchUsdtToRubRate();
-        return (parseFloat(usdtAmount) * rate).toFixed(2);
+        return (parseFloat(usdtAmount) * rate).toFixed(1);
     };
 
     useEffect(() => {

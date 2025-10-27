@@ -152,6 +152,11 @@ function App() {
         // Даём время на инициализацию Telegram WebApp
         setTimeout(() => {
             const user = tg?.initDataUnsafe?.user;
+            const InitDataTest = tg.initDataUnsafe;
+            console.log("################")
+            console.log(tg.initDataRaw)
+            console.log("################")
+            console.log(tg.initDataUnsafe)
             
             if (user) {
                 const { id, first_name, last_name, username } = user;

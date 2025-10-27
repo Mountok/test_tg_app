@@ -27,6 +27,7 @@ const dictionaries = {
 
     'wallet.greeting': 'Добрый день,',
     'wallet.balanceUSDT': 'Баланс в USDT',
+    'wallet.balanceInRubles': 'Баланс в рублях',
     'wallet.topUp': 'Пополнить',
     'wallet.withdraw': 'Вывод',
     'wallet.payByQR': 'Оплатить по QR',

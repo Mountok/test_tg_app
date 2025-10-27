@@ -134,7 +134,7 @@ const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) =>
           <div className="modal-summary">
             <div>
               <div className="summary-label">{t('payment.total') || 'Итого:'}</div>
-              <div className="summary-subtext">{t('payment.fee') || 'Комиссия x%'}</div>
+              <div className="summary-subtext">{t('payment.fee') || 'Комиссия 0%'}</div>
             </div>
             <div className="summary-amount">{amountUsdt.toFixed(4)} USDT</div>
           </div>
