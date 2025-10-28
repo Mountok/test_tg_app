@@ -14,6 +14,7 @@ import PriceCard from "../PriceCard/PriceCard.jsx";
 import FavoritesCoin from "../FavoritesCoin/FavoritesCoin.jsx";
 import { TelegramInfo } from "../../utils/auth.js";
 import { useI18n } from "../../i18n/I18nProvider.jsx";
+import { useTheme } from '../../theme/ThemeProvider';
 
 export default function WalletPage({ username }) {
     const { t } = useI18n();
@@ -27,6 +28,8 @@ export default function WalletPage({ username }) {
     const [privatKeyPlatapay, setPrivatKeyPlatapay] = useState("");
 
     const [wallet, SetWallet] = useState({})
+
+    const { resolvedTheme } = useTheme();
 
     // Функция для получения курса USDT к рублю с кэшированием на 5 минут
     const fetchUsdtToRubRate = async () => {
@@ -144,8 +147,12 @@ export default function WalletPage({ username }) {
                         </div>
                     </div>
                     <div className="wallet-container_header_top_settings">
-                        <PiHeadsetFill />
-                        <IoNotifications />
+                        <PiHeadsetFill 
+                          style={resolvedTheme === 'light' ? { background:'#F2F2F2', color:'#858585', borderRadius:10, width:40, height:40 } : undefined} 
+                        />
+                        <IoNotifications 
+                          style={resolvedTheme === 'light' ? { background:'#F2F2F2', color:'#858585', borderRadius:10, width:40, height:40 } : undefined} 
+                        />
                     </div>
                 </div>
 
@@ -171,15 +178,15 @@ export default function WalletPage({ username }) {
                 </div>
 
                 <div className="wallet-container_header_buttons">
-                    <button onClick={() => navigateTo("/deposit")} className="wallet-container_header_button_send">
+                    <button onClick={() => navigateTo("/deposit")} className="wallet-container_header_button_send" style={{width: '50%'}}>
                         <LuDownload />
                         <p>{t('wallet.topUp')}</p>
                     </button>
-                    <button onClick={() => navigateTo("/withdraw")} className="wallet-container_header_button_withdraw">
+                    {/* <button onClick={() => navigateTo("/withdraw")} className="wallet-container_header_button_withdraw">
                         <LuUpload />
                         <p>{t('wallet.withdraw') || 'Вывод'}</p>
-                    </button>
-                    <button onClick={() => navigateTo("/scanner")} className="wallet-container_header_button_qr">
+                    </button> */}
+                    <button onClick={() => navigateTo("/scanner")} className="wallet-container_header_button_qr" style={{width: '50%'}}>
                         <BsQrCodeScan />
                         <p>{t('wallet.payByQR')}</p>
                     </button>
