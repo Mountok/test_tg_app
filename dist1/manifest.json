@@ -1,0 +1,28 @@
+{
+  "name": "QR Scanner App",
+  "short_name": "QR Scanner",
+  "description": "Приложение для сканирования QR-кодов с оптимизацией для iOS/Safari",
+  "start_url": "/?utm_source=pwa&utm_medium=telegram",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["utilities", "productivity"],
+  "lang": "ru",
+  "dir": "ltr"
+} 

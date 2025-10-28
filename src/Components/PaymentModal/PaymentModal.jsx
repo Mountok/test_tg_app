@@ -21,12 +21,18 @@ const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) =>
     setPaymentState('in process');
     const interval = setInterval(async () => {
       try {
-        const resp = await CheckOrderStatus(orderID, telegramID);
-        console.log('Проверка статуса заказа:', resp.data);
-        // если платёж завершён
-        if (resp.data === true) {
+        const resp = await CheckOrderStatus(orderID);
+        // resp: { paid, cancelled, status }
+        if (resp.paid) {
           setPaymentState('success');
           clearInterval(interval);
+        } else if (resp.cancelled) {
+          setPaymentState('cancelled');
+          clearInterval(interval);
+        } else if (resp.status === 'pending') {
+          setPaymentState('in process');
+        } else {
+          setPaymentState('idle');
         }
       } catch (err) {
         console.error('Ошибка при проверке статуса заказа:', err);
@@ -100,7 +106,7 @@ const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) =>
             </div>
             <div className="modal-success-text">{t('payment.success') || 'Оплата успешно проведена!'}</div>
             <div className="modal-success-amount">{amountUsdt.toFixed(4)} USDT</div>
-            <PaymentDetails open={detailsOpen} onToggle={() => setDetailsOpen(o => !o)} amountUsdt={amountUsdt} />
+            <PaymentDetails open={detailsOpen} onToggle={() => setDetailsOpen(o => !o)} amountUsdt={amountUsdt} status={paymentState} />
           </div>
           <button className="modal-success-btn" onClick={onClose}>{t('common.back') || 'Вернуться назад'}</button>
         </div>
@@ -144,6 +150,8 @@ const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) =>
             <button className="modal-pay" onClick={handleButton} disabled={paymentState === "in process"}>{t('payment.pay') || 'Оплатить'}</button>
           ) : paymentState === "cancel" ? (
             <button className="modal-pay cancel shake-once">{t('payment.noBalance') || 'Недостаточно баланса'}</button>
+          ) : paymentState === "cancelled" ? (
+            <button className="modal-pay cancel shake-once">Оплата отменена</button>
           ) : null}
         </div>
       )}

@@ -21,16 +21,12 @@ import { TbTransfer } from 'react-icons/tb';
 import { LuHistory } from 'react-icons/lu';
 import { TbSettings2 } from 'react-icons/tb';
 import Onboarding from './Components/OnBoarding/Onboarding.jsx';
-import ManualPayQR from './admin/ManualPayQR/ManualPayQR.jsx';
 import History from './Components/HistoryPage/History.jsx';
 import Deposit from './Components/DepositPage/Deposit.jsx';
 import WithdrawPage from './Components/WithdrawPage/WithdrawPage.jsx';
 import Setting from './Components/Settings/Setting.jsx';
 import UserAgreement from './Components/Settings/UserAgreement/UserAgreement.jsx';
 import Exchange from './Components/Exchange/Exchange.jsx';
-import AdminWalletsHistoryPage from './admin/ManualPayQR/component/AdminWalletsHistoryPage.jsx';
-import AdminWithdrawOrdersPage from './admin/ManualPayQR/component/AdminWithdrawOrdersPage.jsx';
-import AdminWithdrawHistoryPage from './admin/ManualPayQR/component/AdminWithdrawHistoryPage.jsx';
 import ReferralPage from './Components/ReferralPage/ReferralPage.jsx';
 import ReferralListPage from './Components/ReferralPage/ReferralListPage.jsx';
 // import ReferralHandler from './Components/ReferralPage/ReferralHandler.jsx'; // ОТКЛЮЧЕН: дублирует логику
@@ -124,13 +120,18 @@ function App() {
     };
 
     useEffect(() => {
-        // Временно: убираем блокировку для диагностики Telegram WebView
+        // Проверка на запуск только внутри мобильного Telegram Mini App по платформе
         const tg = window?.Telegram?.WebApp;
-        
-        // Парсим реферальный код из startapp параметра
+        const platform = tg?.platform;
+        if (!platform || (!["ios", "android"].includes(platform))) {
+            setIsBlockedEnv(true);
+            return;
+        }
+        // Временно: убираем блокировку для диагностики Telegram WebView
         const startApp = tg?.initDataUnsafe?.start_param;
         console.log('[App] startApp параметр:', startApp);
         console.log('[App] Полные initDataUnsafe:', tg?.initDataUnsafe);
+        console.log(tg)
         
         if (startApp && startApp.startsWith('ref-')) {
             const referralCode = startApp.replace('ref-', '');
@@ -207,9 +208,9 @@ function App() {
             <div className="blocked-container">
                 <div className="blocked-card">
                     <img src="/images/logo.png" alt="PlataPay" className="blocked-logo" />
-                    <h1 className="blocked-title">Откройте приложение в Telegram</h1>
+                    <h1 className="blocked-title">Откройте приложение в мобильном Telegram</h1>
                     <p className="blocked-text">
-                        Это приложение доступно только внутри Telegram Mini Apps.
+                        Это приложение доступно только внутри мобильного приложения Telegram на iOS или Android.
                     </p>
                     <a
                         className="btn-telegram"
@@ -252,38 +253,6 @@ function App() {
                     />
                     <Route path='/history' element={<History telegramID={telegramID}/>} />
                     <Route path="/scanner" element={<QrScanner telegramID={telegramID} />} />
-                    <Route
-                        path='/x7k9m2p8/manual-pay'
-                        element={
-                            <AdminGuard>
-                                <ManualPayQR telegramID={telegramID} />
-                            </AdminGuard>
-                        }
-                    />
-                    <Route
-                        path='/x7k9m2p8/wallets-history'
-                        element={
-                            <AdminGuard>
-                                <AdminWalletsHistoryPage />
-                            </AdminGuard>
-                        }
-                    />
-                    <Route
-                        path='/x7k9m2p8/withdraw-orders'
-                        element={
-                            <AdminGuard>
-                                <AdminWithdrawOrdersPage />
-                            </AdminGuard>
-                        }
-                    />
-                    <Route
-                        path='/x7k9m2p8/withdraw-history'
-                        element={
-                            <AdminGuard>
-                                <AdminWithdrawHistoryPage />
-                            </AdminGuard>
-                        }
-                    />
                     <Route path='/deposit' element={<Deposit telegramID={telegramID}/>} />
                     <Route path='/withdraw' element={<UnderConstruction />} />
                     {/* <Route path='/withdraw' element={<WithdrawPage telegramID={telegramID}/>} /> */}

@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- iOS PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="QR Scanner" />
+    <link rel="apple-touch-icon" href="/images/logo.png" />
+    
+    <!-- Telegram WebApp -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        Telegram.WebApp.expand();
+        Telegram.WebApp.ready();
+    </script>
+    
+    <title>PlataPay</title>
+    <script>
+      (function () {
+        try {
+          var search = new URLSearchParams(window.location.search);
+          var ref = search.get('ref');
+          // Если пришли на сайт с параметром ?ref=CODE — делаем 302-like редирект на TWA ссылку
+          if (ref) {
+            var target = 'https://t.me/PlataPay_bot?startapp=' + encodeURIComponent('ref-' + ref);
+            window.location.replace(target);
+          }
+        } catch (e) {
+          // no-op
+        }
+      })();
+    </script>
+    <script type="module" crossorigin src="/assets/index-DnZSTMXl.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DVB28dRX.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

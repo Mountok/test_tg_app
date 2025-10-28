@@ -6,6 +6,19 @@ const API_URL = "https://plataplay.duckdns.org";
 
 var api_seckert_key = import.meta.env.VITE_ADMIN_KEY;
 
+// Axios interceptor for JWT Authorization
+axios.interceptors.request.use((config) => {
+    // Only attach if request URL contains /api
+    if (config.url && config.url.includes('/api')) {
+        const jwt = localStorage.getItem('jwt_token');
+        if (jwt) {
+            config.headers = config.headers || {};
+            config.headers['Authorization'] = `Bearer ${jwt}`;
+        }
+    }
+    return config;
+}, (error) => Promise.reject(error));
+
 export const CreateWallet = async (telegramId) => {
     var data = await axios.post(API_URL+"/api/wallet/create", {}, {
         headers: {

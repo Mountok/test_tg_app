@@ -1,6 +1,6 @@
 import { FiChevronRight, FiChevronDown, FiCalendar, FiDollarSign } from 'react-icons/fi';
 
-export default function PaymentDetails({ open, onToggle, amountUsdt }) {
+export default function PaymentDetails({ open, onToggle, amountUsdt, status }) {
   return (
     <div className={`modal-details${open ? ' open' : ''}`}> 
       <button className="modal-details-toggle" onClick={onToggle}>
@@ -30,7 +30,9 @@ export default function PaymentDetails({ open, onToggle, amountUsdt }) {
         </div>
         <div className="modal-details-row">
           <span>Статус</span>
-          <span className="modal-details-value" style={{color:'#26a17b'}}>Успешно</span>
+          <span className="modal-details-value" style={{color: status==='success' ? '#26a17b' : status==='cancelled' ? '#e14c4c' : undefined}}>
+            {status === 'success' ? 'Успешно' : status === 'cancelled' ? 'Оплата отменена' : status === 'in process' ? 'Ожидает оплаты' : '—'}
+          </span>
         </div>
       </div>
     </div>
