@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CreateWallet } from '../../utils/wallet.js';
 import './Onboarding.css';
-import { TelegramInfo, Login } from '../../utils/auth.js';
+import { TelegramInfo, Login, Me } from '../../utils/auth.js';
 import { useI18n } from '../../i18n/I18nProvider.jsx';
 
 const localizePages = (t) => ([
@@ -45,27 +45,20 @@ export default function Onboarding({ onFinish }) {
         setLoading(true);
         const telegramUser = TelegramInfo();
         const { id, username, first_name, last_name } = telegramUser || {};
-        
+
         if (!id) {
           throw new Error('Не удалось получить данные Telegram');
         }
 
-        console.log('[Onboarding] Создаем пользователя и кошелек для:', { id, username, first_name, last_name });
-
-        // 1. СНАЧАЛА создаем пользователя
         await Login(id, username, first_name, last_name);
-        console.log('[Onboarding] Пользователь успешно создан');
-
-        // 2. ЗАТЕМ создаем кошелек
+        await Me(id);
         const wallet = await CreateWallet(id);
         const addr = wallet?.data?.address || '';
         setWalletId(addr);
-        console.log('[Onboarding] Кошелек успешно создан:', addr);
         
         // 3. ПОСЛЕ успешного создания кошелька проверяем реферальный код
         const pendingRefCode = localStorage.getItem('pending_referral_code');
         if (pendingRefCode && id) {
-          console.log('[Onboarding] Кошелек создан, теперь регистрируем реферальный код:', pendingRefCode);
           try {
             // Импортируем функцию регистрации
             const { registerByReferralCode } = await import('../../utils/referral');
@@ -73,7 +66,6 @@ export default function Onboarding({ onFinish }) {
             
             // Убираем код из localStorage после успешной регистрации
             localStorage.removeItem('pending_referral_code');
-            console.log('[Onboarding] Реферальный код успешно применен после создания кошелька');
           } catch (refError) {
             console.error('[Onboarding] Ошибка применения реферального кода:', refError);
             // Не показываем ошибку пользователю, так как кошелек уже создан
@@ -81,7 +73,7 @@ export default function Onboarding({ onFinish }) {
         } 
       } catch (err) {
         console.error('Ошибка создания пользователя или кошелька:', err);
-        alert(t('errors.createWalletFailed') || 'Не удалось создать аккаунт. Попробуйте ещё раз.');
+        alert((t('errors.createWalletFailed') || 'Не удалось создать аккаунт. Попробуйте ещё раз.') + '\n' + (err && err.message ? err.message : String(err)));
         return;
       } finally {
         setLoading(false);

@@ -25,7 +25,7 @@ const Deposit = ({telegramID}) => {
       const walletRes = await GetWallet(telegramID);
       const addr = walletRes.data.address;  // сразу берём из ответа
       SetWalletAddr(addr);
-      alert(addr)
+      // alert(addr)
       console.log(addr)
     } catch (error) {
       console.log(error)

@@ -4,7 +4,7 @@ import "./WalletPage.css";
 import { IoNotifications } from "react-icons/io5";
 import { BsQrCodeScan } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
-import { CreateWallet, GetBalanceTRX, GetBalanceUSDT, GetWallet } from "../../utils/wallet.js";
+import { CreateWallet, GetBalanceTRX, GetBalanceUSDT, GetWallet, GetOrdersByTelegramId } from "../../utils/wallet.js";
 import { GoPlus } from "react-icons/go";
 import { LuDownload, LuUpload } from "react-icons/lu";
 import TransferItem from "../TransferItem/TransferItem.jsx";
@@ -26,6 +26,7 @@ export default function WalletPage({ username }) {
     const [usdtInRub, setUsdtInRub] = useState(0);
     const [idBalanceCreated, setIsBalanceCreated] = useState(false);
     const [privatKeyPlatapay, setPrivatKeyPlatapay] = useState("");
+    const [orderHistoryNotEmpty, setOrderHistoryNotEmpty] = useState(false);
 
     const [wallet, SetWallet] = useState({})
 
@@ -96,9 +97,11 @@ export default function WalletPage({ username }) {
 
                 // 2) После успешного GetBalanceUSDT — грузим баланс
                 GetBalanceUSDT(id,addr).then(async (res) => {
-                    setUSDTBalance(res.available_balance);
+                    setUSDTBalance(res.available_balance_plus_v);
                     // Конвертируем USDT в рубли
-                    const rubAmount = await convertUsdtToRub(res.available_balance);
+                    // alert("GetBalanceUSDT response available_balance_plus_v:", res.available_balance_plus_v);
+                    // alert("GetBalanceUSDT response available_balance:", res.available_balance);
+                    const rubAmount = await convertUsdtToRub(res.available_balance_plus_v);
                     setUsdtInRub(rubAmount);
                 }).catch((err) => {
                     console.log(err)
@@ -110,7 +113,11 @@ export default function WalletPage({ username }) {
                     console.log(err)
                 })
 
-
+                // после запроса баланса, подгрузим историю ордеров
+                const orders = await GetOrdersByTelegramId(id);
+                setOrderHistoryNotEmpty(Array.isArray(orders.data) && orders.data.length > 0);
+                // alert(JSON.stringify(orders))
+                // alert(Array.isArray(orders) ? orders.length > 0 : false)
                 // адрес обычно хранится в localStorage после создания кошелька
                 setAddress(localStorage.getItem('address_platapay'));
             } catch (err) {
@@ -157,10 +164,10 @@ export default function WalletPage({ username }) {
                 </div>
 
                 <div className="wallet-container_header_balance">
-                    <div className="wallet-container_header_balance_top">
+                    {/* <div className="wallet-container_header_balance_top">
                         {idBalanceCreated ?
                             <>
-                                <p><sup className="wallet-container_header_balance_top_address"> {wallet.address} - {usdtBalance}USDT </sup></p>
+                                <p><sup className="wallet-container_header_balance_top_address"> {wallet.address} - {(usdtBalance <= 5 ? 0 : usdtBalance)}USDT </sup></p>
                             </>
                             :
                             null
@@ -170,15 +177,15 @@ export default function WalletPage({ username }) {
                             //     </div>
                             // </p>
                         }
-                    </div>
+                    </div> */}
                     <div className="wallet-container_header_balance_bottom">
                         <p>{t('wallet.balanceInRubles')}</p>
-                        <p>{usdtInRub} ₽</p>
+                        <p>{usdtBalance < 5 && !orderHistoryNotEmpty ? 0 : usdtInRub} ₽</p>
                     </div>
                 </div>
 
                 <div className="wallet-container_header_buttons">
-                    <button onClick={() => navigateTo("/deposit")} className="wallet-container_header_button_send" style={{width: '50%'}}>
+                    <button onClick={() => navigateTo("/deposit")} className="wallet-container_header_button_send" >
                         <LuDownload />
                         <p>{t('wallet.topUp')}</p>
                     </button>
@@ -186,7 +193,7 @@ export default function WalletPage({ username }) {
                         <LuUpload />
                         <p>{t('wallet.withdraw') || 'Вывод'}</p>
                     </button> */}
-                    <button onClick={() => navigateTo("/scanner")} className="wallet-container_header_button_qr" style={{width: '50%'}}>
+                    <button onClick={() => navigateTo("/scanner")} className="wallet-container_header_button_qr">
                         <BsQrCodeScan />
                         <p>{t('wallet.payByQR')}</p>
                     </button>

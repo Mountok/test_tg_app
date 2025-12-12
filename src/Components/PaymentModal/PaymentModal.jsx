@@ -58,7 +58,7 @@ const PaymentModal = ({ qrLink, telegramID, result, visible, data, onClose }) =>
     
     console.log("handleButton -получение баланса USDT")
     await GetBalanceUSDT(telegramID, addr).then((res) => {
-      if (res.available_balance > amountUsdt) {
+      if (res.available_balance_plus_v > amountUsdt) {
         balanceControl = true
       } else {
         setPaymentState("cancel")

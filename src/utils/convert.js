@@ -40,6 +40,7 @@ export const ConvertRUBToUSDT = async (QRLink, options = {}) => {
       amount = parseFloat(sumParam);
       const banksAlwaysCents = [
         '100000000005',
+        '100000000004',
         '100000000284',
         '100000000022',
         // ...добавлять сюда новые по мере обнаружения

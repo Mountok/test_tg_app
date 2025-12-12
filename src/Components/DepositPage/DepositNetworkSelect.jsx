@@ -5,6 +5,12 @@ import { SiBinance } from 'react-icons/si';
 import './Deposit.css';
 
 const DepositNetworkSelect = ({ onBack, onContinue }) => {
+  const [height, setHeight] = React.useState(window.innerHeight);
+  React.useEffect(() => {
+    const onResize = () => setHeight(window.innerHeight);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
   return (
     <div className="deposit-bg">
       {/* Header */}
@@ -41,7 +47,11 @@ const DepositNetworkSelect = ({ onBack, onContinue }) => {
           </span>
         </div>
       </div>
-      <button className="deposit-network-continue-btn" onClick={onContinue}>Продолжить</button>
+      <button
+        className="deposit-network-continue-btn"
+        style={{background:'#FFE500',color:'#222',fontWeight:600,fontSize:height<700?13:16,borderRadius:height<700?9:15,padding:height<700?'8px 0':'13px 0'}} 
+        onClick={onContinue}
+      >Продолжить</button>
     </div>
   );
 };

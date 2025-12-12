@@ -17,6 +17,7 @@ export const Login = async (telegramId, username, firstname, lastname) => {
 export const Me = async (telegramId) => {
     var { data } = await axios.post(`${API_URL}/auth/me`, { telegram_id: telegramId })
     // Сохраняем токен в localStorage (если есть)
+    // alert(data.token)
     if(data.token) localStorage.setItem('jwt_token', data.token)
     return data
 }

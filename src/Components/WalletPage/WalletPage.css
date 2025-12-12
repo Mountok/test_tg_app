@@ -117,7 +117,7 @@ color: black;
 }
 .wallet-container_header_buttons button{
     color: var(--button-fg);
-    width: 30%;
+    width: 45%;
     outline: none;
     font-size: 12px;
     background-color: var(--button-bg);
