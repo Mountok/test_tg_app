@@ -189,10 +189,10 @@ export default function WalletPage({ username }) {
                         <LuDownload />
                         <p>{t('wallet.topUp')}</p>
                     </button>
-                    {/* <button onClick={() => navigateTo("/withdraw")} className="wallet-container_header_button_withdraw">
+                    <button onClick={() => navigateTo("/withdraw")} className="wallet-container_header_button_withdraw">
                         <LuUpload />
                         <p>{t('wallet.withdraw') || 'Вывод'}</p>
-                    </button> */}
+                    </button>
                     <button onClick={() => navigateTo("/scanner")} className="wallet-container_header_button_qr">
                         <BsQrCodeScan />
                         <p>{t('wallet.payByQR')}</p>

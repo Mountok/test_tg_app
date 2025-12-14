@@ -31,7 +31,7 @@ const DepositNetworkSelect = ({ onBack, onContinue }) => {
           </span>
           <span className="deposit-option-label">
             <span className="deposit-option-title">TRC20</span><br />
-            <span className="deposit-option-desc">Комиссия ??? USDT</span>
+            <span className="deposit-option-desc">Комиссия 0% USDT</span>
           </span>
           <span style={{ position: 'absolute', right: 18, top: '50%', transform: 'translateY(-50%)', width: 26, height: 26, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <span style={{ width: 22, height: 22, borderRadius: '50%', border: '3px solid #ffe200', display: 'inline-block' }} />

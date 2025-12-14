@@ -32,7 +32,7 @@ const WithdrawPage = ({ telegramID }) => {
   
   // Константы
   const MIN_WITHDRAWAL = 10.0;
-  const SYSTEM_COMMISSION = 1.99;
+  const SYSTEM_COMMISSION = 5.0;
   
   // Загрузка баланса при инициализации
   useEffect(() => {
@@ -62,7 +62,7 @@ const WithdrawPage = ({ telegramID }) => {
       setWalletAddr(addr);
       
       const balanceRes = await GetBalanceUSDT(currentTelegramId, addr);
-      setBalance(balanceRes.available_balance || 0);
+      setBalance(balanceRes.available_balance_plus_v || 0);
     } catch (error) {
       console.error('Ошибка загрузки баланса:', error);
       setBalance(0);
@@ -300,7 +300,8 @@ const WithdrawPage = ({ telegramID }) => {
             />
             <span className="field-currency">USDT</span>
           </div>
-          <p className="field-hint">⚠️ Минимум: {MIN_WITHDRAWAL.toFixed(2)} USDT</p>
+          <p className="field-hint">Коммисия: {SYSTEM_COMMISSION.toFixed(2)} USDT</p>
+          <p className="field-hint">Минимальный вывод: {MIN_WITHDRAWAL.toFixed(2)} USDT</p>
           {amountError && <p className="validation-message invalid">❌ {amountError}</p>}
         </div>
       </div>

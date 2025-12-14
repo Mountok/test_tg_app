@@ -121,110 +121,9 @@ export const GetPrivatKey = async (telegramId) => {
     return data
 }
 
-export const TransactionTestnet = async (key,amount) => {
-    var {data} = await axios.post(`${API_URL}/api/wallet/withdraw/test`,{
-        "priv_key": key,
-        "to_address": "TG2FN9BxfTjX41tAyTeRTnqqrDKtpjyfEn",
-        "amount": amount,
-        "usdt_contract": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"
-    },{
-        headers: {
-            "X-Telegram-ID": 1
-        }
-    })
-    return data
-}
-export const TransactionVirtual = async (amount,addr) => {
-    var {data} = await axios.post(`${API_URL}/api/wallet/virtual-withdraw`,{
-        "address": addr,
-        "amount": amount
-    },{
-        headers: {
-            "X-Telegram-ID": 1
-        }
-    })
-    return data
-}
-
-export const GetAdminWalletsWithHistory = async (adminSecret) => {
-    // Encode admin secret to base64 to handle non-ASCII characters in HTTP headers
-    const encodedSecret = btoa(unescape(encodeURIComponent(adminSecret)));
-    const { data } = await axios.get(API_URL + "/api/admin/wallets-with-history", {
-        headers: { 'X-Admin-Secret': encodedSecret }
-    });
-    return data;
-}  
 
 
-export const GetEstimateTRX = async (address,amount) => {
-    const {data} = await axios.post(API_URL + "/api/wallet/estimate-trx", {
-        "from_address": address,
-        "to_address": "TG2FN9BxfTjX41tAyTeRTnqqrDKtpjyfEn",
-        "amount": amount,
-        "usdt_contract": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"
-        
-    }, {
-        headers: {
-            "X-Telegram-ID": 1
-        }
-    })
-    return data
-}
 
-// Получение списка заказов на вывод для админ панели
-export const GetWithdrawWaitingList = async () => {
-    try {
-        // Encode admin secret to base64 to handle non-ASCII characters in HTTP headers
-        var api_seckert_key = import.meta.env.VITE_ADMIN_KEY;
-        const { data } = await axios.get(API_URL + "/api/admin/withdraw/waiting", {
-            headers: {
-                "X-Admin-Secret": api_seckert_key,
-                "X-Telegram-ID": "1"
-            }
-        });
-        return data;
-    } catch (error) {
-        console.error('[GetWithdrawWaitingList] Ошибка получения списка заказов на вывод:', error);
-        throw error;
-    }
-};
-
-// Обработка заказа на вывод средств
-export const ProcessWithdrawOrder = async (orderId) => {
-    try {
-        // Encode admin secret to base64 to handle non-ASCII characters in HTTP headers
-        const encodedSecret = btoa(unescape(encodeURIComponent(api_seckert_key)));
-        const { data } = await axios.put(`${API_URL}/api/admin/withdraw/${orderId}`, {}, {
-            headers: {
-                "X-Admin-Secret": encodedSecret,
-                "X-Telegram-ID": "1"
-            }
-        });
-        console.log('[ProcessWithdrawOrder] Заказ обработан:', data);
-        return data;
-    } catch (error) {
-        console.error('[ProcessWithdrawOrder] Ошибка обработки заказа на вывод:', error);
-        throw error;
-    }
-};
-
-// Получение истории заказов на вывод для админ панели
-export const GetWithdrawHistory = async () => {
-    try {
-        // Encode admin secret to base64 to handle non-ASCII characters in HTTP headers
-        const encodedSecret = btoa(unescape(encodeURIComponent(api_seckert_key)));
-        const { data } = await axios.get(API_URL + "/api/admin/withdraw/history", {
-            headers: {
-                "X-Admin-Secret": encodedSecret,
-                "X-Telegram-ID": "1"
-            }
-        });
-        return data;
-    } catch (error) {
-        console.error('[GetWithdrawHistory] Ошибка получения истории заказов на вывод:', error);
-        throw error;
-    }
-};
 
 // Функция для отправки запроса на вывод средств через новый API
 export const SendWithdrawRequest = async (telegramId, fromAddress, toAddress, amount) => {
@@ -277,25 +176,5 @@ export const SendWithdrawRequest = async (telegramId, fromAddress, toAddress, am
         } else {
             throw new Error(error.message || 'Неизвестная ошибка при выводе средств');
         }
-    }
-}
-
-// УСТАРЕВШАЯ функция - оставляем для обратной совместимости
-export const WithdrawWithCommission = async (telegramId, toAddress, amount) => {
-    console.warn('[WithdrawWithCommission] УСТАРЕВШАЯ функция! Используйте SendWithdrawRequest');
-    
-    // Получаем адрес кошелька пользователя для from_address
-    try {
-        const walletData = await GetWallet(telegramId);
-        const fromAddress = walletData.data?.address;
-        
-        if (!fromAddress) {
-            throw new Error('Не удалось получить адрес кошелька');
-        }
-        
-        return await SendWithdrawRequest(telegramId, fromAddress, toAddress, amount);
-    } catch (error) {
-        console.error('[WithdrawWithCommission] Ошибка:', error);
-        throw error;
     }
 }

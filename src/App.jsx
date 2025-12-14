@@ -254,8 +254,8 @@ function App() {
                     <Route path='/history' element={<History telegramID={telegramID}/>} />
                     <Route path="/scanner" element={<QrScanner telegramID={telegramID} />} />
                     <Route path='/deposit' element={<Deposit telegramID={telegramID}/>} />
-                    <Route path='/withdraw' element={<UnderConstruction />} />
-                    {/* <Route path='/withdraw' element={<WithdrawPage telegramID={telegramID}/>} /> */}
+                    {/* <Route path='/withdraw' element={<UnderConstruction />} /> */}
+                    <Route path='/withdraw' element={<WithdrawPage telegramID={telegramID}/>} />
 
                     <Route path='/settings' element={<Setting/>} />
                     <Route path='/settings/user-agreement' element={<UserAgreement/>} />
