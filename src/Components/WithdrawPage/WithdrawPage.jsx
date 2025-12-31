@@ -257,13 +257,13 @@ const WithdrawPage = ({ telegramID }) => {
         <button className="back-btn" onClick={() => navigate('/')}>
           <FiArrowLeft />
         </button>
-        <h1 className="withdraw-title">💸 {t('withdraw.title') || 'Вывод USDT'}</h1>
+        <h1 className="withdraw-title">{t('withdraw.title') || 'Вывод USDT'}</h1>
         <div></div>
       </div>
       
       <div className="withdraw-balance">
         <div className="balance-card">
-          <p className="balance-label">💰 {t('withdraw.availableBalance') || 'Доступный баланс'}</p>
+          <p className="balance-label">{t('withdraw.availableBalance') || 'Доступный баланс'}</p>
           <p className="balance-amount">{balance.toFixed(2)} USDT</p>
         </div>
       </div>
@@ -271,7 +271,7 @@ const WithdrawPage = ({ telegramID }) => {
       <div className="withdraw-fields">
         {/* Адрес получателя */}
         <div className="field-group">
-          <label className="field-label">📍 {t('withdraw.recipientAddress') || 'Адрес получателя'}</label>
+          <label className="field-label"> {t('withdraw.recipientAddress') || 'Адрес получателя'}</label>
           <div className={`field-input-wrapper ${addressValid === true ? 'valid' : addressValid === false ? 'invalid' : ''}`}>
             <input
               type="text"
@@ -283,13 +283,13 @@ const WithdrawPage = ({ telegramID }) => {
             {addressValid === true && <BsCheckCircle className="validation-icon valid" />}
             {addressValid === false && <BsXCircle className="validation-icon invalid" />}
           </div>
-          {addressValid === true && <p className="validation-message valid">✅ Валидный TRON адрес</p>}
-          {addressError && <p className="validation-message invalid">❌ {addressError}</p>}
+          {addressValid === true && <p className="validation-message valid">Валидный TRON адрес</p>}
+          {addressError && <p className="validation-message invalid"> {addressError}</p>}
         </div>
         
         {/* Сумма вывода */}
         <div className="field-group">
-          <label className="field-label">💵 {t('withdraw.amount') || 'Сумма вывода'}</label>
+          <label className="field-label"> {t('withdraw.amount') || 'Сумма вывода'}</label>
           <div className={`field-input-wrapper ${amountValid === true ? 'valid' : amountValid === false ? 'invalid' : ''}`}>
             <input
               type="text"
@@ -309,7 +309,6 @@ const WithdrawPage = ({ telegramID }) => {
       {/* Расчет */}
       {amount && parseFloat(amount) >= MIN_WITHDRAWAL && (
         <div className="withdraw-calculation">
-          <div className="calculation-header">📊 РАСЧЕТ</div>
           <div className="calculation-row">
             <span>Сумма к выводу:</span>
             <span>{requested.toFixed(2)} USDT</span>
@@ -318,13 +317,10 @@ const WithdrawPage = ({ telegramID }) => {
             <span>Комиссия системы:</span>
             <span>-{commission.toFixed(2)} USDT</span>
           </div>
-          <div className="calculation-row">
-            <span>TRX для газа:</span>
-            <span>за наш счет</span>
-          </div>
+
           <div className="calculation-divider"></div>
           <div className="calculation-row total">
-            <span>💎 Вы получите:</span>
+            <span>Вы получите:</span>
             <span>{userReceives.toFixed(2)} USDT</span>
           </div>
         </div>
@@ -339,7 +335,7 @@ const WithdrawPage = ({ telegramID }) => {
           {loading ? '🔄 Обработка...' : '🚀 ' + (t('withdraw.submit') || 'Вывести средства')}
         </button>
         <p className="withdraw-info">
-          ℹ️ {t('withdraw.processingTime') || 'Запрос будет обработан в течение 5 минут'}
+        ]{t('withdraw.processingTime') || 'Запрос будет обработан в течение 5 минут'}
         </p>
       </div>
     </div>
